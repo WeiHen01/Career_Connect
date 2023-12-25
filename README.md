@@ -1,16 +1,14 @@
-# bitu3923_group05
+# **InPloyed** (Job Searching System)
 
-A new Flutter project.
 
-## Getting Started
+## BITU3923 Workshop 2
 
-This project is a starting point for a Flutter application.
+This project is used for subject **Workshop 2** which is developed by **Group 5**.
 
-A few resources to get you started if this is your first Flutter project:
+This project is done in **Semester 1 Year 2023/2024**.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Group Members:**
+1. NG WEI HEN (B032110201)
+2. NOOR FARAH ELLYANA BINTI MOHD JASMER	(B032210059)
+3. NUR AINA SYAZWANI BINTI MOHAMAD NAZRI (B032110220)
+4. NUR HANI BINTI ABDUL RANI (B032220050)
