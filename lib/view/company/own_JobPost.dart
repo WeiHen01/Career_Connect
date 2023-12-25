@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class OwnJobPost extends StatefulWidget {
 }
 
 class _OwnJobPostState extends State<OwnJobPost> {
+
 
   late int adsId, applyId;
   int AdsId = 0;
@@ -85,6 +87,40 @@ class _OwnJobPostState extends State<OwnJobPost> {
     }
   }
 
+  Future<void> deleteJob() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/job/company/delete/ownPost/${widget.ownPostId}",
+        server: "http://$server:8080");
+
+    await req.delete();
+
+    if (req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Successful delete the post',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+
+      Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Fail to delete job post!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+      throw Exception('Failed to fetch user');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,17 +165,17 @@ class _OwnJobPostState extends State<OwnJobPost> {
               children: [
                 Row(
                   children: [
-                    Image.asset('images/logo.png', width: 160, height: 60,),
-                    SizedBox(width: 30),
                     Expanded(
                       child: Text(companyName, style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 25,
                       ), softWrap: true,
                       ),
                     ),
                   ],
                 ),
+
+                SizedBox(height: 10),
 
                 Row(
                   children: [
@@ -392,7 +428,7 @@ class _OwnJobPostState extends State<OwnJobPost> {
                      * Navigate to register() function
                      * for web service request
                      */
-
+                    deleteJob();
                   },
                   child: Container(
                     width: double.infinity,
