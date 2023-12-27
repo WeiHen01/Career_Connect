@@ -16,7 +16,7 @@ class OneSignalController{
       'app_id': _appId,
       // send to specific user
       //'include_external_user_ids': users,
-      'include_external_user_ids': ['2'],
+      'include_external_user_ids': users,
 
       // send to all users subscribed
       //'included_segments': ['All'],
