@@ -21,8 +21,9 @@ import 'package:http/http.dart' as http;
 
 class HomeNavi extends StatefulWidget {
 
-  const HomeNavi({Key? key, required this.username, required this.tabIndexes}) : super(key: key);
+  const HomeNavi({Key? key, required this.username, required this.id, required this.tabIndexes}) : super(key: key);
   final String username;
+  final int id;
   final int tabIndexes;
   // const HomeNavi({required this.username});
 
@@ -186,7 +187,7 @@ class _HomeNaviState extends State<HomeNavi> {
            */
           HomePage(username: widget.username),
           Search(user: userid),
-          UserForum(id: userid),
+          UserForum(id: widget.id),
           Account(username: widget.username),
 
         ],

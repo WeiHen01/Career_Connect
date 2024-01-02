@@ -119,8 +119,8 @@ class _LoginPageState extends State<LoginPage> {
       if (req.status() == 200) {
         // Successful login
         final userData = req.result();
-        int id = userData["userId"];
-        String usertype = userData["userType"];
+        var id = userData["userId"];
+        var usertype = userData["userType"];
 
         // Handle the user data as needed
         // For example, you can navigate to the home screen or save user details to the app state.
@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeNavi(username: loggedUsername, tabIndexes: 0,),
+              builder: (context) => HomeNavi(username: loggedUsername, id: id, tabIndexes: 0,),
             ), (route) => false);
 
       }

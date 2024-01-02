@@ -164,6 +164,7 @@ class IPAddressInput extends StatelessWidget {
                                       builder: (context) =>
                                           HomeNavi(
                                               username: username ?? "",
+                                              id: userID ?? 0,
                                               tabIndexes: 0
                                           ),
                                     ), (route) => false);

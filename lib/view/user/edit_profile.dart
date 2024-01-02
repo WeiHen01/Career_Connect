@@ -167,7 +167,7 @@ class _UserEditState extends State<UserEdit> {
       );
 
       Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => HomeNavi(username: username, tabIndexes: 3,)), (route) => false
+          MaterialPageRoute(builder: (context) => HomeNavi(username: username, id: widget.id ?? 0, tabIndexes: 3,)), (route) => false
       );
     }
     else
