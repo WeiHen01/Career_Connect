@@ -4,6 +4,7 @@ import 'package:bitu3923_group05/view/widget/register_role.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 
+import '../admin/adminlogin.dart';
 import '../user/login.dart';
 
 class UserRole extends StatefulWidget {
@@ -108,11 +109,11 @@ class _UserRoleState extends State<UserRole> {
 
               GestureDetector(
                 onTap: (){
-                  /*Navigator.pushReplacement(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(
                           builder: (context) => AdminLoginPage()
-                      )
-                  ),*/
+                      ));
+
                 },
                 child: Card(
                   elevation: 10,

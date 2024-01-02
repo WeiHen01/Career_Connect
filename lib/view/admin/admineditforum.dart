@@ -83,9 +83,7 @@ class _EditForumState extends State<EditForum> {
         fontSize: 16.0,
       );
 
-      OneSignalController onesignal = OneSignalController();
-      //onesignal.SendNotification("Successful approved!", "You have approve the request.");
-
+      Navigator.pop(context);
 
     }
     else{
