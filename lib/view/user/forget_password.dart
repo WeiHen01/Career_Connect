@@ -4,11 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:art_sweetalert/art_sweetalert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controller/request_controller.dart';
 import '../../models/user.dart';
 
 class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+  final String usertypePassed;
+  const ForgetPassword({required this.usertypePassed});
 
   @override
   State<ForgetPassword> createState() => _ForgetPasswordState();
@@ -18,7 +21,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   TextEditingController emailTextCtrl = TextEditingController();
   int userid = 0;
-  String userType = "";
+  String UserType = "";
 
   Future<void> validateReset() async{
     if(emailTextCtrl.text == ""){
@@ -33,47 +36,64 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       );
     }
     else{
-      final response = await http.get(Uri.parse('http://10.0.2.2:8080/inployed/user/allusers/email/${emailTextCtrl.text}'));
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      WebRequestController req = WebRequestController(
+          path: "/inployed/user/allusers/email/${widget.usertypePassed}/${emailTextCtrl.text}",
+          server: "http://$server:8080");
+      await req.get();
+      // final response = await http.get(Uri.parse('http://10.0.2.2:8080/inployed/user/allusers/email/${userType}/${emailTextCtrl.text}'));
 
-      if (response.statusCode == 200) {
-        // Parse the JSON response into a `User` object.
-        final user = User.fromJson(jsonDecode(response.body));
+      try{
+        if (req.status() == 200) {
+          // Parse the JSON response into a `User` object.
+          final user = User.fromJson(req.result());
 
-        setState(() {
-          userid = user.userId;
-          userType = user.userType;
+          setState(() {
+            userid = user.userId;
+            UserType = user.userType;
 
+            ArtSweetAlert.show(
+              context: context,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "ACCOUNT FOUND!",
+                text: "The email is valid! You may reset your password now. "
+                    "UserType = ${UserType} ",
+                onConfirm: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ResetPassword(user: userid, usertype: UserType,)),
+                  );
+                },
+              ),
+
+            );
+
+          });
+        } else {
           ArtSweetAlert.show(
             context: context,
             artDialogArgs: ArtDialogArgs(
-              type: ArtSweetAlertType.success,
-              title: "ACCOUNT FOUND!",
-              text: "The email is valid! You may reset your password now. "
-                  "UserType = ${userType} ",
-              onConfirm: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ResetPassword(user: userid, usertype: userType,)),
-                );
-              },
+              type: ArtSweetAlertType.danger,
+              title: "ACCOUNT MISSING!",
+              text: "This account is not exist!",
             ),
 
           );
-
-        });
-      } else {
-        ArtSweetAlert.show(
-          context: context,
-          artDialogArgs: ArtDialogArgs(
-            type: ArtSweetAlertType.danger,
-            title: "ACCOUNT MISSING!",
-            text: "This account is not exist!",
-          ),
-
-        );
-        throw Exception('Failed to fetch user');
+          throw Exception('Failed to fetch user');
+        }
+      }catch(e){
+        print('Error fetching user : $e');
       }
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.usertypePassed);
   }
 
   @override

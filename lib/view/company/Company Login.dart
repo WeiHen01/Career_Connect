@@ -351,7 +351,7 @@ class _CompanyLoginState extends State<CompanyLogin> {
                                     TextButton(onPressed: (){
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context)
-                                          => ForgetPassword()));
+                                          => ForgetPassword(usertypePassed: "Company",)));
                                     }, child: Text("Reset here",
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,

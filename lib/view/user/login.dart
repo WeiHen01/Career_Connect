@@ -346,7 +346,7 @@ class _LoginPageState extends State<LoginPage> {
                                   TextButton(onPressed: (){
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context)
-                                        => ForgetPassword()));
+                                        => ForgetPassword(usertypePassed: "Job Seeker",)));
                                   }, child: Text("Reset here",
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w700,
