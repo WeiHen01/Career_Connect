@@ -219,6 +219,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     children: [
                       Text("ADMIN",
                           style: GoogleFonts.poppins(
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 35,
                             shadows: [
@@ -231,6 +232,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                           )),
                       Text("LOGIN",
                           style: GoogleFonts.poppins(
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 35,
                             shadows: [

@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user.dart';
 import 'adminhome_navi.dart';
@@ -51,6 +53,10 @@ class _AdminEditState extends State<AdminEdit> {
         position = user.userPosition;
         password = user.password;
 
+        usernamectrl.text = username;
+        emailctrl.text = email;
+        positionctrl.text = position;
+        passwordctrl.text = password;
       });
     } else {
       throw Exception('Failed to fetch user');
@@ -150,11 +156,76 @@ class _AdminEditState extends State<AdminEdit> {
     }
   }
 
+  String imageUrl = "images/avatar01.jpg";
+  late Uint8List? _images = Uint8List(0); // Default image URL
+  Future<void> fetchProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    final response = await http.get(Uri.parse(
+        'http://$server:8080/inployed/image/getProfileImage/${widget.id}')
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _images = response.bodyBytes;
+      });
+    } else {
+      // Handle errors, e.g., display a default image
+      return null;
+    }
+  }
+
+  Future<void> uploadImage() async {
+
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+
+    if (_image == null) {
+      return;
+    }
+
+    final uri = Uri.parse('http://$server:8080/inployed/image/updateImage/${widget.id}'); // Replace with your API URL
+    final request = http.MultipartRequest('PUT', uri);
+    request.fields['userId'] = '${widget.id}';// Replace with the user ID
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'image',
+        _image!.path,
+      ),
+    );
+
+    try {
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+          msg: 'Image is updated successfully',
+          backgroundColor: Colors.white,
+          textColor: Colors.red,
+          gravity: ToastGravity.CENTER,
+          toastLength: Toast.LENGTH_SHORT,
+          fontSize: 16.0,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Image failed to update successfully',
+          backgroundColor: Colors.white,
+          textColor: Colors.red,
+          gravity: ToastGravity.CENTER,
+          toastLength: Toast.LENGTH_SHORT,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUser();
+    fetchProfileImage();
   }
 
   @override
@@ -212,11 +283,16 @@ class _AdminEditState extends State<AdminEdit> {
                             image: _image == null
                                 ? DecorationImage(
                                 fit: BoxFit.cover,
-                                image: AssetImage("images/avatar01.jpg")
+                                image: MemoryImage(_images!)
+                            )
+                                : _image != null
+                                ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image: FileImage(_image!)
                             )
                                 : DecorationImage(
                                 fit: BoxFit.cover,
-                                image: FileImage(_image!)
+                                image: AssetImage(imageUrl)
                             )
                         ),
                         ),

@@ -75,7 +75,7 @@ class _AdminStatsState extends State<AdminStats> {
     return [
       PieChartSectionData(
         color: Colors.blue,
-        title: 'Job Seekers',
+        title: 'Job Seekers ${jobseekers.length.toDouble()}',
         titleStyle: GoogleFonts.poppins(
           fontSize: 18,
           color: Colors.black,
@@ -86,7 +86,7 @@ class _AdminStatsState extends State<AdminStats> {
       ),
       PieChartSectionData(
         color: Colors.green,
-        title: 'Company Users',
+        title: 'Company Users ${companyuser.length.toDouble()}',
         titleStyle: GoogleFonts.poppins(
           fontSize: 18,
           color: Colors.black,
@@ -115,7 +115,7 @@ class _AdminStatsState extends State<AdminStats> {
         ),
         title: Center(
           child: Text(
-            'Pie Chart ',
+            'User Statistics',
             style: GoogleFonts.poppins(
               fontSize: 30,
               color: Colors.black,
@@ -125,6 +125,7 @@ class _AdminStatsState extends State<AdminStats> {
         ),
       ),
       body: Container(
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -134,19 +135,46 @@ class _AdminStatsState extends State<AdminStats> {
           ),
         ),
         child: jobseekers.isNotEmpty && companyuser.isNotEmpty
-            ? PieChart(
-                PieChartData(
-                  pieTouchData: PieTouchData(
-                    touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                      // Handle touch interactions here
-                    },
+            ? Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Pie Chart',
+                    style: GoogleFonts.poppins(
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  sections: showingSections(),
-                  borderData: FlBorderData(show: false),
-                  centerSpaceRadius: 0,
-                  sectionsSpace: 0,
-                ),
-              )
+
+                  Expanded(
+                    child: PieChart(
+                        PieChartData(
+                          pieTouchData: PieTouchData(
+                            touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                              // Handle touch interactions here
+                            },
+                          ),
+                          sections: showingSections(),
+                          borderData: FlBorderData(show: false),
+                          centerSpaceRadius: 0,
+                          sectionsSpace: 0,
+                        ),
+                      ),
+                  ),
+
+                  Text(
+                    'Bar Chart',
+                    style: GoogleFonts.poppins(
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            )
             : CircularProgressIndicator(),
       ),
     );

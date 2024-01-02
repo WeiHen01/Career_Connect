@@ -93,54 +93,43 @@ class _AdminHomePageState extends State<AdminHomePage> {
                     )
                 ),
               ),
-              bottom:  TabBar(
-                dividerColor: Colors.transparent,
-                tabs: <Widget>[
-                  Tab(
-                    text: "Dashboard",
-                  ),
-                ],
-                labelStyle: GoogleFonts.poppins(
-                    fontSize: 25,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600
-                ),
-                unselectedLabelColor: Colors.white,
-                indicatorColor: Colors.black,
-                indicator: BoxDecoration(
-                    color: Color(0xFFA6C1EE),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    )
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-              ),
 
-              title: Image.asset('images/logo.png',
+              title: Image.asset('images/logo_admin.png',
                 width: 140, height: 50,
               ),
             ),
-            body: TabBarView(
-                children: [
-                  /**
-                   * Tab 1 - Dashboard
-                   */
-                  advertisements != null
-                      ? Container(
-                      decoration: BoxDecoration(
-                      color: Color(0xFFA6C1EE),
-                    ),
-                        child: RefreshIndicator(
-                          onRefresh: () async{
-                            await Future.delayed(Duration(seconds: 2));
-                            getAdvertisement();
-                            _scrollController.animateTo(
-                              -100.0,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                            );
-                          },
+            body: advertisements != null
+                ? Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                  color: Color(0xFFA6C1EE),
+                ),
+                  child: RefreshIndicator(
+                    onRefresh: () async{
+                      await Future.delayed(Duration(seconds: 2));
+                      getAdvertisement();
+                      _scrollController.animateTo(
+                        -100.0,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: Column(
+                      children: [
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Dashboard",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25
+                                )
+                            ),
+                          ],
+                        ),
+
+                        Expanded(
                           child: ListView.builder(
                             controller: _scrollController,
                             scrollDirection: Axis.horizontal,
@@ -423,10 +412,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             },
                           ),
                         ),
-                  )
-                      : Center(child: CircularProgressIndicator(),),
-                ]
-            )
+                      ],
+                    ),
+                  ),
+                            )
+                : Center(child: CircularProgressIndicator(),)
         )
     );
   }
