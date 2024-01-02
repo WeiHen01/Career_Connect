@@ -446,26 +446,7 @@ class _AdminAccountState extends State<AdminAccount> {
                   ],
                 ),
 
-                Row(
-                  children: [
-                    IconButton(onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: (context)=>AdminHomeNavi(username: 'Norlan', tabIndexes: 0, userid: 1)),
-                              (route)=>false);
-                    }, icon: Icon(Icons.person), style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(Colors.black)
-                    ),),
 
-                    TextButton(onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: (context)=>AdminHomeNavi(username: 'Norlan', tabIndexes: 0, userid: 1)),
-                              (route)=>false);
-                    }, child: Text("Switch to Personal Mode", style: GoogleFonts.poppins(
-                        color: Colors.black, fontSize: 18
-                    )))
-
-                  ],
-                ),
               ],
             ),
           ),

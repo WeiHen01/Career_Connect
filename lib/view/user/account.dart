@@ -421,27 +421,6 @@ class _AccountState extends State<Account> {
                     )))
                   ],
                 ),
-
-                Row(
-                  children: [
-                    IconButton(onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: (context)=>CompanyHomeNavi(username: "Amirul", id: 3, tabIndexes: 0, company: 2,)), (route)=>false);
-                    }, icon: Icon(Icons.business), style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(Colors.black)
-                    ),),
-
-                    TextButton(onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: (context)=>CompanyHomeNavi(username: "Amirul", id: 3, tabIndexes: 0, company: 2,)), (route)=>false);
-                    }, child: Text("Switch to Company Mode", style: GoogleFonts.poppins(
-                        color: Colors.black, fontSize: 18
-                    )))
-
-                  ],
-                ),
-
-
               ],
             ),
           ),
