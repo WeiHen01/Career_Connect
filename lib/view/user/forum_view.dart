@@ -379,12 +379,19 @@ class _UserForumPostState extends State<UserForumPost> {
   Forum? _forum;
   Future<void> getForumByID() async {
 
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/inployed/forum/${widget.id}'));
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/forum/${widget.id}",
+        server: "http://$server:8080");
 
-    if (response.statusCode == 200) {
+    await req.get();
+    if (req.status() == 200) {
 
       // Parse the JSON response into a `User` object.
-      final forum = Forum.fromJson(jsonDecode(response.body));
+      // Parse the JSON response into a `User` object.
+      final Map<String, dynamic> responseData = req.result();
+      final forum = Forum.fromJson(responseData);
 
       setState(() {
         _forum = forum;
