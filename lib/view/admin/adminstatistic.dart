@@ -166,14 +166,6 @@ class _AdminStatsState extends State<AdminStats> {
                       ),
                   ),
 
-                  Text(
-                    'Bar Chart',
-                    style: GoogleFonts.poppins(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
                 ],
               ),
             )
