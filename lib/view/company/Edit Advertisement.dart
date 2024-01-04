@@ -96,8 +96,28 @@ class _EditCompanyAdsState extends State<EditCompanyAds> {
         descTxtCtrl.text = job.jobDescription;
         jobtimeCtrl.text = job.jobTime;
         industryCtrl.text = job.industry;
-        salaryMinCtrl.text = job.salary;
-        salaryMaxCtrl.text = job.salary;
+        dropdownRemote = job.jobRemote;
+        dropdownJobCommit = job.jobCommit;
+        dropdownDate = job.jobDate;
+
+        // Split the string using ' - ' as the delimiter
+        List<String> parts = job.salary.split(' - ');
+
+        // Ensure that we have two parts
+        if (parts.length == 2) {
+          // Extract the amounts and remove 'RM' before parsing
+          String amountA = parts[0].replaceAll('RM', '');
+          String amountB = parts[1].replaceAll('RM', '');
+
+          // Parse the extracted amounts to integers
+          int variableA = int.tryParse(amountA) ?? 0;
+          int variableB = int.tryParse(amountB) ?? 0;
+
+          salaryMinCtrl.text = variableA.toString();
+          salaryMaxCtrl.text = variableB.toString();
+        } else {
+          print('Invalid input format');
+        }
 
       });
     } else {
@@ -145,7 +165,7 @@ class _EditCompanyAdsState extends State<EditCompanyAds> {
     }
 
     if (dropdownJobCommit != null && dropdownJobCommit.toString().isNotEmpty) {
-      requestBody["jobCommit"] = dropdownDate;
+      requestBody["jobCommit"] = dropdownJobCommit;
     }
 
     if (dropdownRemote != null && dropdownRemote.toString().isNotEmpty) {
@@ -174,8 +194,18 @@ class _EditCompanyAdsState extends State<EditCompanyAds> {
         fontSize: 16.0,
       );
 
-      OneSignalController onesignal = OneSignalController();
-      //onesignal.SendNotification("Successful approved!", "You have approve the request.");
+      positionTxtCtrl.clear();
+      descTxtCtrl.clear();
+      jobtimeCtrl.clear();
+      industryCtrl.clear();
+      dropdownRemote = "";
+      dropdownJobCommit = "";
+      dropdownDate = "";
+      salaryMinCtrl.clear();
+      salaryMaxCtrl.clear();
+
+      Navigator.pop(context);
+
 
 
     }
