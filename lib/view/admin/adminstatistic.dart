@@ -79,7 +79,7 @@ class _AdminStatsState extends State<AdminStats> {
     return [
       PieChartSectionData(
         color: Colors.blue,
-        title: 'Job Seekers ${(jobseekers.length / (jobseekers.length + companyuser.length)).toDouble() * 100}%',
+        title: 'Job Seekers: ${(jobseekers.length / (jobseekers.length + companyuser.length)).toDouble() * 100}%',
         titleStyle: GoogleFonts.poppins(
           fontSize: 15,
           color: Colors.black,

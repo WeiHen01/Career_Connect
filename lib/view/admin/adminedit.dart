@@ -136,11 +136,12 @@ class _AdminEditState extends State<AdminEdit> {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
     WebRequestController req = WebRequestController
-      (path: "/inployed/user/updateAdmin/${widget.id}",
+      (path: "/inployed/user/update/${widget.id}",
         server: "http://$server:8080");
 
     req.setBody(requestBody);
     await req.put();
+
     print(req.result());
 
     if(req.status() == 200) {
@@ -153,9 +154,11 @@ class _AdminEditState extends State<AdminEdit> {
         fontSize: 16.0,
       );
 
+      uploadImage();
+
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder:
-              (context) => AdminHomeNavi(username: username, userid: widget.id, tabIndexes: 3,)),
+              (context) => AdminHomeNavi(username: username, userid: widget.id, tabIndexes: 4,)),
               (route) => false
       );
     }
