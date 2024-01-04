@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controller/request_controller.dart';
 import '../../models/user.dart';
 import 'adminhome_navi.dart';
 
@@ -38,30 +39,44 @@ class _AdminEditState extends State<AdminEdit> {
    */
   Future<void> getUser() async {
 
-    final response = await http.get(Uri.parse(''
-        'http://10.0.2.2:8080/inployed/user/account/adminId/${widget.id}'));
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/user/account/adminId/${widget.id}",
+        server: "http://$server:8080");
 
-    if (response.statusCode == 200) {
+    await req.get();
 
-      // Parse the JSON response into a `User` object.
-      final user = User.fromJson(jsonDecode(response.body));
+    try{
+      if (req.status()== 200) {
 
-      setState(() {
-        _user = user;
-        username = user.username;
-        email = user.userEmail;
-        position = user.userPosition;
-        password = user.password;
+        // Parse the JSON response into a `User` object.
+        final user = User.fromJson(req.result());
 
-        usernamectrl.text = username;
-        emailctrl.text = email;
-        positionctrl.text = position;
-        passwordctrl.text = password;
-      });
-    } else {
-      throw Exception('Failed to fetch user');
+        setState(() {
+          _user = user;
+
+          username = user.username;
+          email = user.userEmail;
+          position = user.userPosition;
+          password = user.password;
+
+          usernamectrl.text = username;
+          emailctrl.text = email;
+          positionctrl.text = position;
+          passwordctrl.text = password;
+
+        });
+      } else {
+        throw Exception('Failed to fetch user');
+      }
+    }catch (e) {
+      print('Error fetching user : $e');
+      // Handle the exception as needed, for example, show an error message to the user
     }
   }
+
+
 
   ImagePicker picker = ImagePicker();
   File? _image;
@@ -118,17 +133,17 @@ class _AdminEditState extends State<AdminEdit> {
       password = passwordctrl.text;
     }
 
-    final response = await http.put(Uri.parse("http://10.0.2.2:8080/inployed/user/updateAdmin/${widget.id}"),
-      headers:{
-        "Content-type":"Application/json"
-      },
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/updateAdmin/${widget.id}",
+        server: "http://$server:8080");
 
-      body: jsonEncode(requestBody),
-    );
+    req.setBody(requestBody);
+    await req.put();
+    print(req.result());
 
-    print(response.body);
-
-    if(response.statusCode == 200) {
+    if(req.status() == 200) {
       Fluttertoast.showToast(
         msg: 'Update successfully',
         backgroundColor: Colors.white,
@@ -172,6 +187,87 @@ class _AdminEditState extends State<AdminEdit> {
     } else {
       // Handle errors, e.g., display a default image
       return null;
+    }
+  }
+
+  String _getMonthName(int month) {
+    // Convert the numeric month to its corresponding name
+    List<String> monthNames = [
+      "", // Month names start from index 1
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    return monthNames[month];
+  }
+
+  String _formatTimeIn12Hour(DateTime dateTime) {
+    int hour = dateTime.hour;
+    int minute = dateTime.minute;
+    String period = (hour < 12) ? 'AM' : 'PM';
+
+    // Convert to 12-hour format
+    hour = (hour > 12) ? hour - 12 : hour;
+    hour = (hour == 0) ? 12 : hour;
+
+    // Format the time as a string
+    String formattedTime = "$hour:${minute.toString().padLeft(2, '0')} $period";
+    return formattedTime;
+  }
+
+
+  /**
+   * Functions for Soft delete account
+   * by disable account status(update user status to inactive)
+   */
+  Future<void>UpdateLastEditedDateTime(int? userId) async
+  {
+    DateTime currentDay = DateTime.now();
+    DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
+    // Format the date as a string
+    String applyStartDate = "${currentDate.day} ${_getMonthName(currentDate.month)} ${currentDate.year}";
+
+    String applyStartTime = _formatTimeIn12Hour(currentDay);
+
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/LastupdatedTimeDate/${userId}/${applyStartDate}/${applyStartTime}",
+        server: "http://$server:8080");
+
+    await req.put();
+
+    print(req.result());
+
+    if(req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Updated timestamp successfully!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: 'Fail to update timestamp!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
     }
   }
 
