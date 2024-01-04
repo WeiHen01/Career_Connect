@@ -28,6 +28,7 @@ class _AdminForumState extends State<AdminForum> {
   TextEditingController forumdescTextCtrl = TextEditingController();
   User? user;
 
+
   String _getMonthName(int month) {
     // Convert the numeric month to its corresponding name
     List<String> monthNames = [
@@ -53,7 +54,7 @@ class _AdminForumState extends State<AdminForum> {
     return formattedTime;
   }
 
-  Future<void> addNewForum(int? user) async {
+  Future<void> addNewForum() async {
     DateTime currentDay = DateTime.now();
     DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
     // Format the date as a string
@@ -84,7 +85,7 @@ class _AdminForumState extends State<AdminForum> {
         "forumDate": postDate,
         "forumTime": postTime,
         "adminID": {
-          "userId": user,
+          "userId": widget.id,
         },
       });
 
@@ -598,7 +599,7 @@ class _AdminForumState extends State<AdminForum> {
                           SizedBox(height: 10),
                           InkWell(
                             onTap: () {
-                              addNewForum(widget.id ?? 0);
+                              addNewForum();
                             },
                             child: Container(
                               width: double.infinity,

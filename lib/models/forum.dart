@@ -11,7 +11,7 @@ class Forum {
   String forumTime = "";
 
   // foreign key
-  User admin;
+  User? admin;
 
   /**
    * constructor
@@ -29,7 +29,9 @@ class Forum {
         forumDesc = json["forumDesc"],
         forumDate = json["forumDate"],
         forumTime = json["forumTime"],
-        admin = User.fromJson(json["adminID"]);
+        admin = json["adminID"] != null && json["adminID"] is Map<String, dynamic>
+            ? User.fromJson(json["adminID"])
+            : null;
 
 
   /**
@@ -50,6 +52,6 @@ class Forum {
   String get _forumTime => forumTime;
   set _forumTime(String value) => forumTime = value;
 
-  User get _admin => admin;
-  set _admin(User value) => admin = value;
+  User? get _admin => admin;
+  set _admin(User? value) => admin = value;
 }

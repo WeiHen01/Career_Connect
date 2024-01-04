@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:art_sweetalert/art_sweetalert.dart';
 
 import 'package:crypto/crypto.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -122,6 +123,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         );
 
         String loggedUsername = usernameTextCtrl.text;
+        OneSignal.login(id.toString());
+
+
+
 
         /** saving key **/
         final prefs = await SharedPreferences.getInstance();
@@ -130,6 +135,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         prefs.setInt("userId", id);
         prefs.setString("password", md5.convert(utf8.encode(passwordTextCtrl.text)).toString());
         prefs.setString("username", loggedUsername);
+
+        UpdateLoginDateTime(id);
 
         // clear the text field
         usernameTextCtrl.clear();
@@ -166,6 +173,87 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           fontSize: 16.0,
         );
       }
+    }
+  }
+
+  String _getMonthName(int month) {
+    // Convert the numeric month to its corresponding name
+    List<String> monthNames = [
+      "", // Month names start from index 1
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    return monthNames[month];
+  }
+
+  String _formatTimeIn12Hour(DateTime dateTime) {
+    int hour = dateTime.hour;
+    int minute = dateTime.minute;
+    String period = (hour < 12) ? 'AM' : 'PM';
+
+    // Convert to 12-hour format
+    hour = (hour > 12) ? hour - 12 : hour;
+    hour = (hour == 0) ? 12 : hour;
+
+    // Format the time as a string
+    String formattedTime = "$hour:${minute.toString().padLeft(2, '0')} $period";
+    return formattedTime;
+  }
+
+
+  /**
+   * Functions for Soft delete account
+   * by disable account status(update user status to inactive)
+   */
+  Future<void>UpdateLoginDateTime(int? userId) async
+  {
+    DateTime currentDay = DateTime.now();
+    DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
+    // Format the date as a string
+    String applyStartDate = "${currentDate.day} ${_getMonthName(currentDate.month)} ${currentDate.year}";
+
+    String applyStartTime = _formatTimeIn12Hour(currentDay);
+
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/updateLoginTimeDate/${userId}/${applyStartDate}/${applyStartTime}",
+        server: "http://$server:8080");
+
+    await req.put();
+
+    print(req.result());
+
+    if(req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Your login timestamp is recorded successfully!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: 'Fail to record your login timestamp!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
     }
   }
 

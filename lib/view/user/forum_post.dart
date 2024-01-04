@@ -179,7 +179,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                     )
                 ),
                 margin: EdgeInsets.only(
-                  top: 300, bottom: 30
+                  top: 380, bottom: 30
                 ),
                 child: Column(
                   children: [
@@ -232,6 +232,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                                   ? EdgeInsets.only(left: 60, bottom: 10)
                                   : EdgeInsets.only(right: 60, bottom: 10),
                               child: Container(
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: (post.user.userId != widget.user)
                                       ? Colors.indigo
@@ -339,27 +340,29 @@ class _ForumPostViewState extends State<ForumPostView> {
                                               ),
                                             ),
 
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start ,
-                                              children: [
-                                                Text('${post.postTitle}', style: GoogleFonts.poppins(
-                                                  color: (post.user.userId == widget.user)
-                                                    ? Colors.black : Colors.white,
-                                                  fontWeight: FontWeight.bold,
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(post.postTitle, style: GoogleFonts.poppins(
+                                                    color: (post.user.userId == widget.user)
+                                                        ? Colors.black : Colors.white,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 20,
-                                                ),),
+                                                  ), softWrap: true, textAlign: TextAlign.justify,
+                                                  ),
 
-                                                Text('${post.postDesc}', style: GoogleFonts.poppins(
+                                                  Text(post.postDesc, style: GoogleFonts.poppins(
                                                     fontSize: 15,
-                                                  color: (post.user.userId == widget.user)
-                                                      ? Colors.black : Colors.white,
-                                                ), maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
+                                                    color: (post.user.userId == widget.user)
+                                                        ? Colors.black : Colors.white,
+                                                  ), softWrap: true, textAlign: TextAlign.justify,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
 
-                                            Spacer(),
+
 
                                             Visibility(
                                               visible:  (post.user.userId == widget.user)? true : false,
@@ -410,7 +413,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                       ),
                     closedBuilder: (context, _)=>  Container(
                         padding: EdgeInsets.all(10),
-                        height: 300,
+                        height: 370,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -529,7 +532,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                                       ), textAlign: TextAlign.justify,
                                       ),
 
-                                      Text('${_forum?.admin.username}', style: GoogleFonts.poppins(
+                                      Text('${_forum?.admin?.username}', style: GoogleFonts.poppins(
                                         fontSize: 18, fontWeight: FontWeight.bold,
                                       ), textAlign: TextAlign.justify,
                                       ),

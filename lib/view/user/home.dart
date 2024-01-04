@@ -433,7 +433,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                         height: 500,
                                         padding: EdgeInsets.all(15),
-                                        width: 290,
+                                        width: 320,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius: BorderRadius.circular(10),
@@ -740,7 +740,7 @@ class _HomePageState extends State<HomePage> {
 
                                                     },
                                                     child: Container(
-                                                      width: 135,
+                                                      width: 155,
                                                       height: 40,
                                                       decoration: BoxDecoration(
                                                         color: Colors.white,

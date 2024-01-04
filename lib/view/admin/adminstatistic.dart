@@ -61,6 +61,7 @@ class _AdminStatsState extends State<AdminStats> {
     // Fetch jobseekers and companyuser data
     await getJobSeeker();
     await getCompanyUser();
+
   }
 
   @override
@@ -71,26 +72,27 @@ class _AdminStatsState extends State<AdminStats> {
     fetchData();
   }
 
+  double JobSeekerPercent = 0.0;
+  double CompanyUserPercent = 0.0;
+
   List<PieChartSectionData> showingSections() {
     return [
       PieChartSectionData(
         color: Colors.blue,
-        title: 'Job Seekers ${jobseekers.length.toDouble()}',
+        title: 'Job Seekers ${(jobseekers.length / (jobseekers.length + companyuser.length)).toDouble() * 100}%',
         titleStyle: GoogleFonts.poppins(
-          fontSize: 18,
+          fontSize: 15,
           color: Colors.black,
-          fontWeight: FontWeight.w600,
         ),
         value: jobseekers.length.toDouble(),
         radius: 150,
       ),
       PieChartSectionData(
-        color: Colors.green,
-        title: 'Company Users ${companyuser.length.toDouble()}',
+        color: Colors.red,
+        title: 'Company Users: ${(companyuser.length / (jobseekers.length + companyuser.length)).toDouble() * 100}%',
         titleStyle: GoogleFonts.poppins(
-          fontSize: 18,
+          fontSize: 15,
           color: Colors.black,
-          fontWeight: FontWeight.w600,
         ),
         value: companyuser.length.toDouble(),
         radius: 150,

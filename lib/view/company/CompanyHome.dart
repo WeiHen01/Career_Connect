@@ -321,7 +321,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                                     );
                                                   },
                                                   child: Container(
-                                                    width: 135,
+                                                    width: 155,
                                                     height: 40,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,

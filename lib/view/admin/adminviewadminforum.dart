@@ -181,7 +181,7 @@ class _ViewAdminForumState extends State<ViewAdminForum> {
                           ), textAlign: TextAlign.justify,
                           ),
 
-                          Text('${forums?.admin.username}', style: GoogleFonts.poppins(
+                          Text('${forums?.admin?.username}', style: GoogleFonts.poppins(
                             fontSize: 18, fontWeight: FontWeight.bold,
                           ), textAlign: TextAlign.justify,
                           ),

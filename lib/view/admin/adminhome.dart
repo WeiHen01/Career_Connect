@@ -6,8 +6,10 @@ import 'package:bitu3923_group05/view/admin/adminjobdescview.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import '../../controller/request_controller.dart';
 import '../../models/advertisement.dart';
 import '../../models/job_apply.dart';
 
@@ -53,10 +55,16 @@ class _AdminHomePageState extends State<AdminHomePage> {
   late List<Advertisement> advertisements = [];
 
   Future<void> getAdvertisement() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/inployed/job'));
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/job",
+        server: "http://$server:8080");
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
+    await req.get();
+
+    if (req.status() == 200) {
+      List<dynamic> data = req.result();
       setState(() {
         advertisements = data.map((json) => Advertisement.fromJson(json)).toList();
       });
@@ -369,7 +377,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
                                                   },
                                                   child: Container(
-                                                    width: 135,
+                                                    width: 155,
                                                     height: 40,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,

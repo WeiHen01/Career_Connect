@@ -308,7 +308,7 @@ class _UserForumState extends State<UserForum> {
                                       ), textAlign: TextAlign.justify,
                                       ),
 
-                                      Text('${forum.admin.username}', style: GoogleFonts.poppins(
+                                      Text('${forum.admin?.username}', style: GoogleFonts.poppins(
                                           fontSize: 18, fontWeight: FontWeight.bold,
                                       ), textAlign: TextAlign.justify,
                                       ),

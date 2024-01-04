@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controller/request_controller.dart';
 import '../../models/advertisement.dart';
 
 class AdminJobDescView extends StatefulWidget {
@@ -130,12 +132,18 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
    */
   Future<void> getAds() async {
 
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/inployed/job/$adsId'));
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/job/$adsId",
+        server: "http://$server:8080");
 
-    if (response.statusCode == 200) {
+    await req.get();
+
+    if (req.status() == 200) {
 
       // Parse the JSON response into a `User` object.
-      final ads = Advertisement.fromJson(jsonDecode(response.body));
+      final ads = Advertisement.fromJson(req.result());
 
       setState(() {
         adsVer = ads;

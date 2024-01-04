@@ -12,6 +12,11 @@ class User {
   String userType = "";
   String userStatus = "Active";
   String adminId = "";
+  String lastAccessDate = "";
+  String lastAccessTime = "";
+  String lastUpdateDate = "";
+  String lastUpdateTime = "";
+
   Company? company;
 
   /**
@@ -33,6 +38,10 @@ class User {
     userPosition = json["userPosition"],
     userStatus = json["userStatus"],
     userType = json["userType"],
+    lastAccessDate = json["accessDate"],
+    lastAccessTime = json["accessTime"],
+    lastUpdateDate = json["updateDate"] != null? json["updateDate"] : null,
+    lastUpdateTime = json["updateTime"] != null? json["updateTime"] : null,
     company = json["company"] != null && json["company"] is Map<String, dynamic>
             ? Company.fromJson(json["company"])
             : null;
@@ -58,6 +67,12 @@ class User {
 
   String get _userStatus => userStatus;
   set _userStatus(String value) => userStatus = value;
+
+  String get _lastAccessDate => lastAccessDate;
+  set _lastAccessDate(String value) => userStatus = value;
+
+  String get _lastAccessTime => lastAccessTime;
+  set _lastAccessTime(String value) => lastAccessTime = value;
 
   Company? get _company => company;
   set _company(Company? value) => company = value;

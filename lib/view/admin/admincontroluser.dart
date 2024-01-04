@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controller/request_controller.dart';
 import '../../models/user.dart';
-import '../company/Company Profile.dart';
 import '../company/View_Account.dart';
 
 
@@ -42,6 +41,7 @@ class _AdminControlState extends State<AdminControl> {
    */
   ScrollController _scroll02Controller = ScrollController();
   late List<User> jobseekers = [];
+
   Future<void> getJobSeeker() async {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
@@ -167,13 +167,95 @@ class _AdminControlState extends State<AdminControl> {
     }
   }
 
+  String _getMonthName(int month) {
+    // Convert the numeric month to its corresponding name
+    List<String> monthNames = [
+      "", // Month names start from index 1
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    return monthNames[month];
+  }
+
+  String _formatTimeIn12Hour(DateTime dateTime) {
+    int hour = dateTime.hour;
+    int minute = dateTime.minute;
+    String period = (hour < 12) ? 'AM' : 'PM';
+
+    // Convert to 12-hour format
+    hour = (hour > 12) ? hour - 12 : hour;
+    hour = (hour == 0) ? 12 : hour;
+
+    // Format the time as a string
+    String formattedTime = "$hour:${minute.toString().padLeft(2, '0')} $period";
+    return formattedTime;
+  }
+
+
+  /**
+   * Functions for Soft delete account
+   * by disable account status(update user status to inactive)
+   */
+  Future<void>UpdateLastEditedDateTime(int? userId) async
+  {
+    DateTime currentDay = DateTime.now();
+    DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
+    // Format the date as a string
+    String applyStartDate = "${currentDate.day} ${_getMonthName(currentDate.month)} ${currentDate.year}";
+
+    String applyStartTime = _formatTimeIn12Hour(currentDay);
+
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/LastupdatedTimeDate/${userId}/${applyStartDate}/${applyStartTime}",
+        server: "http://$server:8080");
+
+    await req.put();
+
+    print(req.result());
+
+    if(req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Updated timestamp successfully!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: 'Fail to udpate timestamp!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getAllUser();
     getJobSeeker();
     getCompanyUser();
-    getAllUser();
+
     SchedulerBinding.instance?.addPostFrameCallback((_) {
       _scroll02Controller.animateTo(
           _scroll02Controller.position.maxScrollExtent,
@@ -291,7 +373,7 @@ Widget build(BuildContext context) {
                                       bottom: 10
                                   ),
 
-                                  height: 100,
+                                  height: 140,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                           colors: [ Color.fromRGBO(249, 151, 119, 1),
@@ -337,12 +419,21 @@ Widget build(BuildContext context) {
                                           children: [
                                             Icon(Icons.work, color: Colors.white,),
                                             SizedBox(width: 5),
-                                            Text("Position: ${request.userPosition}",
+                                            Text("Position: ",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.black, fontSize: 20
+                                                  color: Colors.white, fontSize: 15
                                               ),
                                               textAlign: TextAlign.left,
+                                            ),
+                                            
+                                            Expanded(
+                                              child: Text("${request.userPosition}",
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.white, fontSize: 15
+                                                ),
+                                                textAlign: TextAlign.left,
+                                              ),
                                             ),
                                           ],
                                       ),
@@ -355,6 +446,7 @@ Widget build(BuildContext context) {
                         ],
                       ),
                 ) : Center(child: CircularProgressIndicator(),),
+
                 /**
                  * Tab 2 - Job Seeker
                  */
@@ -405,7 +497,7 @@ Widget build(BuildContext context) {
                                       bottom: 10
                                   ),
 
-                                  height: 150,
+                                  height: 170,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                           colors: [ Color.fromRGBO(249, 151, 119, 1),
@@ -454,58 +546,67 @@ Widget build(BuildContext context) {
                                         color: Colors.white,
                                       ),
 
+                                      Text("Last Access to the system: ${request.lastAccessDate}  ${request.lastAccessTime}",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12, color: Colors.white
+                                          )
+                                      ),
+
+                                      Text("Last Updated to the system: ${request.lastUpdateDate} ${request.lastUpdateTime}",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12, color: Colors.white
+                                          )
+                                      ),
+
+
+                                      Spacer(),
+
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
+                                          InkWell(
+                                            onTap: ()
+                                            {
+                                              /**
+                                               * Navigate to login() function
+                                               * for web service request
+                                               */
+                                              print("Status: ${request?.userStatus}");
 
-                                          Row(
-                                            children: [
-                                              SizedBox(width: 10),
-
-                                              InkWell(
-                                                onTap: ()
-                                                {
-                                                  /**
-                                                   * Navigate to login() function
-                                                   * for web service request
-                                                   */
-                                                  print("Status: ${request?.userStatus}");
-
-                                                  if(request?.userStatus == "Active"){
-                                                    UpdateStatus(request?.userId, "Inactive");
-                                                  }
-                                                  if(request?.userStatus == "Inactive") {
-                                                    UpdateStatus(request?.userId, "Active");
-                                                  }
-                                                },
-                                                child: Container(
-                                                  width: 180,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Color(0xFF1f1f1f), // Shadow color
-                                                        offset: Offset(0, 2), // Offset of the shadow
-                                                        blurRadius: 4, // Spread of the shadow
-                                                        spreadRadius: 0, // Spread radius of the shadow
-                                                      ),
-                                                    ],
+                                              if(request?.userStatus == "Active"){
+                                                UpdateStatus(request?.userId, "Inactive");
+                                                UpdateLastEditedDateTime(request?.userId);
+                                              }
+                                              if(request?.userStatus == "Inactive") {
+                                                UpdateStatus(request?.userId, "Active");
+                                                UpdateLastEditedDateTime(request?.userId);
+                                              }
+                                            },
+                                            child: Container(
+                                              width: 180,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Color(0xFF1f1f1f), // Shadow color
+                                                    offset: Offset(0, 2), // Offset of the shadow
+                                                    blurRadius: 4, // Spread of the shadow
+                                                    spreadRadius: 0, // Spread radius of the shadow
                                                   ),
-                                                  child: Center(
-                                                    child: Text((request?.userStatus == "Inactive")
-                                                        ? "Enable"
-                                                        : "Disable",
-                                                        style: GoogleFonts.poppins(
-                                                            fontSize: 16, color: Colors.black,
-                                                            fontWeight: FontWeight.w600
-                                                        )),
-                                                  ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
+                                              child: Center(
+                                                child: Text((request?.userStatus == "Inactive")
+                                                    ? "Enable"
+                                                    : "Disable",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 16, color: Colors.black,
+                                                        fontWeight: FontWeight.w600
+                                                    )),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -570,7 +671,7 @@ Widget build(BuildContext context) {
                                         bottom: 10
                                     ),
 
-                                    height: 150,
+                                    height: 190,
                                     decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                             colors: [ Color.fromRGBO(249, 151, 119, 1),
@@ -619,6 +720,20 @@ Widget build(BuildContext context) {
                                           color: Colors.white,
                                         ),
 
+                                        Text("Last Access to the system: ${request.lastAccessDate}  ${request.lastAccessTime}",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12, color: Colors.white
+                                            )
+                                        ),
+
+                                        Text("Last Updated to the system: ${request.lastUpdateDate} ${request.lastUpdateTime}",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12, color: Colors.white
+                                            )
+                                        ),
+
+                                        Spacer(),
+
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -637,9 +752,11 @@ Widget build(BuildContext context) {
 
                                                     if(request?.userStatus == "Active"){
                                                       UpdateStatus(request?.userId, "Inactive");
+                                                      UpdateLastEditedDateTime(request?.userId);
                                                     }
                                                     if(request?.userStatus == "Inactive") {
                                                       UpdateStatus(request?.userId, "Active");
+                                                      UpdateLastEditedDateTime(request?.userId);
                                                     }
 
                                                   },
