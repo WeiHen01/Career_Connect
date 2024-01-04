@@ -33,6 +33,47 @@ class _AdminEditState extends State<AdminEdit> {
   final TextEditingController positionctrl = TextEditingController();
   final TextEditingController passwordctrl = TextEditingController();
 
+  Future<void>UpdateLastEditedDateTime(int? userId) async
+  {
+    DateTime currentDay = DateTime.now();
+    DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
+    // Format the date as a string
+    String applyStartDate = "${currentDate.day} ${_getMonthName(currentDate.month)} ${currentDate.year}";
+
+    String applyStartTime = _formatTimeIn12Hour(currentDay);
+
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/LastupdatedTimeDate/${userId}/${applyStartDate}/${applyStartTime}",
+        server: "http://$server:8080");
+
+    await req.put();
+
+    print(req.result());
+
+    if(req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Updated timestamp successfully!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: 'Fail to update timestamp!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   /**
    * Function to display account information
    * based on username passed from Login page
@@ -155,6 +196,7 @@ class _AdminEditState extends State<AdminEdit> {
       );
 
       uploadImage();
+      UpdateLastEditedDateTime(widget.id);
 
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder:
@@ -229,50 +271,6 @@ class _AdminEditState extends State<AdminEdit> {
   }
 
 
-  /**
-   * Functions for Soft delete account
-   * by disable account status(update user status to inactive)
-   */
-  Future<void>UpdateLastEditedDateTime(int? userId) async
-  {
-    DateTime currentDay = DateTime.now();
-    DateTime currentDate = DateTime(currentDay.year, currentDay.month, currentDay.day);
-    // Format the date as a string
-    String applyStartDate = "${currentDate.day} ${_getMonthName(currentDate.month)} ${currentDate.year}";
-
-    String applyStartTime = _formatTimeIn12Hour(currentDay);
-
-    final prefs = await SharedPreferences.getInstance();
-    String? server = prefs.getString("localhost");
-    WebRequestController req = WebRequestController
-      (path: "/inployed/user/LastupdatedTimeDate/${userId}/${applyStartDate}/${applyStartTime}",
-        server: "http://$server:8080");
-
-    await req.put();
-
-    print(req.result());
-
-    if(req.status() == 200) {
-      Fluttertoast.showToast(
-        msg: 'Updated timestamp successfully!',
-        backgroundColor: Colors.white,
-        textColor: Colors.red,
-        gravity: ToastGravity.CENTER,
-        toastLength: Toast.LENGTH_SHORT,
-        fontSize: 16.0,
-      );
-    }
-    else{
-      Fluttertoast.showToast(
-        msg: 'Fail to update timestamp!',
-        backgroundColor: Colors.white,
-        textColor: Colors.red,
-        gravity: ToastGravity.CENTER,
-        toastLength: Toast.LENGTH_SHORT,
-        fontSize: 16.0,
-      );
-    }
-  }
 
   Future<void> uploadImage() async {
 
