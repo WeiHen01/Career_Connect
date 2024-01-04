@@ -153,44 +153,47 @@ class _UserForumState extends State<UserForum> {
                                     topLeft: Radius.circular(10),
                                   )
                               ),
-                              child: Column(
-                                children: [
-                                  Text(forum.forumName, style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: Colors.black,
-                                  ), textAlign: TextAlign.justify,
-                                  ),
-
-                                  Divider(
-                                    color: Colors.black,
-                                    thickness: 2.0,
-                                  ),
-
-                                  Text(forum.forumDesc, style: GoogleFonts.poppins(
-                                    fontSize: 18, color: Colors.black,
-                                  ), maxLines: 3, textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,),
-
-                                  SizedBox(height: 5),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(forum.forumDate, style: GoogleFonts.poppins(
-                                        fontSize: 18, color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ), maxLines: 3, overflow: TextOverflow.ellipsis,),
-
-                                      Spacer(),
-
-                                      Text(forum.forumTime, style: GoogleFonts.poppins(
-                                        fontSize: 18, color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ), maxLines: 3, overflow: TextOverflow.ellipsis,),
-                                    ],
-                                  ),
-                                ],
+                              child: Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(forum.forumName, style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                      color: Colors.black,
+                                    ), textAlign: TextAlign.justify,
+                                    ),
+                                
+                                    Divider(
+                                      color: Colors.black,
+                                      thickness: 2.0,
+                                    ),
+                                
+                                    Text(forum.forumDesc, style: GoogleFonts.poppins(
+                                      fontSize: 18, color: Colors.black,
+                                    ), maxLines: 3, textAlign: TextAlign.justify,
+                                      overflow: TextOverflow.ellipsis,),
+                                
+                                    SizedBox(height: 5),
+                                
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(forum.forumDate, style: GoogleFonts.poppins(
+                                          fontSize: 18, color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ), maxLines: 3, overflow: TextOverflow.ellipsis,),
+                                
+                                        Spacer(),
+                                
+                                        Text(forum.forumTime, style: GoogleFonts.poppins(
+                                          fontSize: 18, color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ), maxLines: 3, overflow: TextOverflow.ellipsis,),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
