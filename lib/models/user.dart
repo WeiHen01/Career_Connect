@@ -12,10 +12,10 @@ class User {
   String userType = "";
   String userStatus = "Active";
   String adminId = "";
-  String lastAccessDate = "";
-  String lastAccessTime = "";
-  String lastUpdateDate = "";
-  String lastUpdateTime = "";
+  String? lastAccessDate = "";
+  String? lastAccessTime = "";
+  String? lastUpdateDate = "";
+  String? lastUpdateTime = "";
 
   Company? company;
 
@@ -68,11 +68,17 @@ class User {
   String get _userStatus => userStatus;
   set _userStatus(String value) => userStatus = value;
 
-  String get _lastAccessDate => lastAccessDate;
-  set _lastAccessDate(String value) => userStatus = value;
+  String? get _lastAccessDate => lastAccessDate;
+  set _lastAccessDate(String? value) => lastAccessDate = value;
 
-  String get _lastAccessTime => lastAccessTime;
-  set _lastAccessTime(String value) => lastAccessTime = value;
+  String? get _lastAccessTime => lastAccessTime;
+  set _lastAccessTime(String? value) => lastAccessTime = value;
+
+  String? get _lastUpdateDate => lastUpdateDate;
+  set _lastUpdateDate(String? value) => lastUpdateDate = value;
+
+  String? get _lastUpdateTime => lastUpdateTime;
+  set _lastUpdateTime(String? value) => lastUpdateTime = value;
 
   Company? get _company => company;
   set _company(Company? value) => company = value;
