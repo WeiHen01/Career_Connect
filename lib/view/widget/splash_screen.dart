@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(seconds: 15), ()
+    Future.delayed(Duration(seconds: 5), ()
     {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => IPAddressInput()));
@@ -82,6 +82,12 @@ class _SplashScreenState extends State<SplashScreen>
                 fontSize: 20, color: Colors.black,
                 fontWeight: FontWeight.bold,)
             ),
+
+            const CircularProgressIndicator(
+              color: Colors.yellow,
+              strokeWidth: 5.0,
+
+            )
 
 
           ],
