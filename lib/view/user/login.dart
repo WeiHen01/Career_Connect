@@ -103,27 +103,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
+
+
   /**
    * User login web service function
    */
   Future login() async{
-
-    /**
-     * validation
-     */
-    if(usernameTextCtrl.text == "" || passwordTextCtrl.text == ""){
-
-      ArtSweetAlert.show(
-          context: context,
-          artDialogArgs: ArtDialogArgs(
-            type: ArtSweetAlertType.danger,
-            title: "EMPTY INPUT!",
-            text: "Both text fields cannot be blank!",
-          )
-      );
-
-    }
-    else {
+    // Validate the form fields
+    if (_formKey.currentState!.validate()) {
       /**
        * Here we request web service using URL API
        * for login module
@@ -223,11 +210,30 @@ class _LoginPageState extends State<LoginPage> {
           fontSize: 16.0,
         );
       }
+
     }
+    else {
+      /**
+       * validation
+       */
+      if(usernameTextCtrl.text == "" || passwordTextCtrl.text == ""){
+
+        ArtSweetAlert.show(
+            context: context,
+            artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.danger,
+              title: "EMPTY INPUT!",
+              text: "Both text fields cannot be blank!",
+            )
+        );
+      }
+    }
+
+
+
   }
 
-
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   /**
    * Functions for Soft delete account
@@ -303,263 +309,277 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-
-                    /**
-                     * Title
-                     */
-                    Text("LOGIN",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40, color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              color: Color(0xFF545454),
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 4.0,
-                            ),
-                          ],
-                        )
-                    ),
-
-                    //Spacing
-                    SizedBox(width: 20),
-
-                    /**
-                     * Illustration
-                     */
-                    Image.asset("images/login01.png",
-                      height: 250, width: 220,),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+              
                       /**
-                       * Create a region box for login form
+                       * Title
                        */
-                      child: Container(
-                          padding: EdgeInsets.all(20),
-                          height: 450,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.center,
-                                end: Alignment.bottomCenter,
-                                colors: [Color(0xFFF3F3F3), Color(0xFFC8C8C8)],
+                      Text("LOGIN",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40, color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                color: Color(0xFF545454),
+                                offset: Offset(2.0, 2.0),
+                                blurRadius: 4.0,
                               ),
-                              borderRadius: BorderRadius.circular(15)
-                          ),
-
-                          child: Column(
-                            children: [
-                              /**
-                               * The Username Field
-                               */
-                              TextField(
-                                controller: usernameTextCtrl,
-                                decoration: InputDecoration(
-                                  //errorText: 'Please enter a valid value',
-                                    prefixIcon: Icon(Icons.person),
-                                    filled: true,
-                                    fillColor: Colors.white70,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: "Enter your username",
-                                    hintStyle: GoogleFonts.poppins(
-                                        fontSize: 15, fontWeight: FontWeight.bold
-                                    ),
-                                    labelText: "Enter your username",
-                                    labelStyle: GoogleFonts.poppins(
-                                      fontSize: 15,
-                                    )
-                                ),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 15
-                                ),
-
-                              ),
-
-                              SizedBox(height: 20),
-
-                              /**
-                               * The Password Field
-                               */
-                              TextField(
-                                // Hide text when _password is false
-                                obscureText: !_password,
-                                controller: passwordTextCtrl,
-                                decoration: InputDecoration(
-                                  //errorText: 'Please enter a valid value',
-                                    filled: true,
-                                    fillColor: Colors.white70,
-                                    prefixIcon: Icon(Icons.lock),
-                                    suffixIcon: Tooltip(
-                                      message: _password ? 'Hide Password' : 'Show Password',
-                                      child: IconButton(
-                                        onPressed: togglePassword,
-                                        icon: Icon(_password
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
-                                      ),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: "Enter your password",
-                                    hintStyle: GoogleFonts.poppins(
-                                        fontSize: 15, fontWeight: FontWeight.bold
-                                    ),
-                                    labelText: "Enter your password",
-                                    labelStyle: GoogleFonts.poppins(
-                                      fontSize: 15,
-                                    )
-                                ),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 15
-                                ),
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text("Forget Password?",
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.black, fontSize: 15
-                                      )
-                                  ),
-                                  TextButton(onPressed: (){
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context)
-                                        => ForgetPassword(usertypePassed: "Job Seeker",)));
-                                  }, child: Text("Reset here",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black, fontSize: 15
-                                    ),),
-                                  ),
-                                ],
-                              ),
-
-                              SizedBox(height: 20),
-
-                              /**
-                               * Login button
-                               */
-                              InkWell(
-                                onTap: ()
-                                {
-                                  /**
-                                   * Navigate to login() function
-                                   * for web service request
-                                   */
-                                  login();
-
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                          Color.fromRGBO(98, 58, 162, 1),]
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFF1f1f1f), // Shadow color
-                                        offset: Offset(0, 2), // Offset of the shadow
-                                        blurRadius: 4, // Spread of the shadow
-                                        spreadRadius: 0, // Spread radius of the shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                        "Login",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20, color: Colors.white,
-                                            fontWeight: FontWeight.w600
-                                        )),
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(height: 20),
-
-                              InkWell(
-                                onTap: ()
-                                {
-                                  /**
-                                   * Navigate to login() function
-                                   * for web service request
-                                   */
-                                  Navigator.push(context, MaterialPageRoute(builder:
-                                      (context) => UserRole())
-                                  );
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFF1f1f1f), // Shadow color
-                                        offset: Offset(0, 2), // Offset of the shadow
-                                        blurRadius: 4, // Spread of the shadow
-                                        spreadRadius: 0, // Spread radius of the shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                        "Change Role",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20, color: Colors.black,
-                                            fontWeight: FontWeight.w600
-                                        )),
-                                  ),
-                                ),
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("No account yet?",
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.black, fontSize: 12
-                                      )
-                                  ),
-                                  TextButton(onPressed: (){
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(builder: (context)
-                                        => UserRegisterRole()));
-                                  }, child: Text("Create an account?",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black, fontSize: 12
-                                    ),),
-                                  ),
-                                ],
-                              ),
-
-
                             ],
                           )
                       ),
-                    ),
-                  ],
-                ),
-              ],
+              
+                      //Spacing
+                      SizedBox(width: 20),
+              
+                      /**
+                       * Illustration
+                       */
+                      Image.asset("images/login01.png",
+                        height: 250, width: 220,),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Center(
+                        /**
+                         * Create a region box for login form
+                         */
+                        child: Container(
+                            padding: EdgeInsets.all(20),
+                            height: 480,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.center,
+                                  end: Alignment.bottomCenter,
+                                  colors: [Color(0xFFF3F3F3), Color(0xFFC8C8C8)],
+                                ),
+                                borderRadius: BorderRadius.circular(15)
+                            ),
+              
+                            child: Column(
+                              children: [
+                                /**
+                                 * The Username Field
+                                 */
+                                TextFormField(
+                                  controller: usernameTextCtrl,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your username';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    //errorText: 'Please enter a valid value',
+                                      prefixIcon: Icon(Icons.person),
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      hintText: "Enter your username",
+                                      hintStyle: GoogleFonts.poppins(
+                                          fontSize: 15, fontWeight: FontWeight.bold
+                                      ),
+                                      labelText: "Enter your username",
+                                      labelStyle: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      )
+                                  ),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 15
+                                  ),
+              
+                                ),
+              
+                                SizedBox(height: 20),
+              
+                                /**
+                                 * The Password Field
+                                 */
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your password';
+                                    }
+                                    return null;
+                                  },
+                                  // Hide text when _password is false
+                                  obscureText: !_password,
+                                  controller: passwordTextCtrl,
+                                  decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white70,
+                                      prefixIcon: Icon(Icons.lock),
+                                      suffixIcon: Tooltip(
+                                        message: _password ? 'Hide Password' : 'Show Password',
+                                        child: IconButton(
+                                          onPressed: togglePassword,
+                                          icon: Icon(_password
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      hintText: "Enter your password",
+                                      hintStyle: GoogleFonts.poppins(
+                                          fontSize: 15, fontWeight: FontWeight.bold
+                                      ),
+                                      labelText: "Enter your password",
+                                      labelStyle: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      )
+                                  ),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 15
+                                  ),
+                                ),
+              
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text("Forget Password?",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.black, fontSize: 15
+                                        )
+                                    ),
+                                    TextButton(onPressed: (){
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)
+                                          => ForgetPassword(usertypePassed: "Job Seeker",)));
+                                    }, child: Text("Reset here",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black, fontSize: 15
+                                      ),),
+                                    ),
+                                  ],
+                                ),
+              
+                                SizedBox(height: 20),
+              
+                                /**
+                                 * Login button
+                                 */
+                                InkWell(
+                                  onTap: ()
+                                  {
+                                    /**
+                                     * Navigate to login() function
+                                     * for web service request
+                                     */
+                                    login();
+              
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: [ Color.fromRGBO(249, 151, 119, 1),
+                                            Color.fromRGBO(98, 58, 162, 1),]
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0xFF1f1f1f), // Shadow color
+                                          offset: Offset(0, 2), // Offset of the shadow
+                                          blurRadius: 4, // Spread of the shadow
+                                          spreadRadius: 0, // Spread radius of the shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                          "Login",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20, color: Colors.white,
+                                              fontWeight: FontWeight.w600
+                                          )),
+                                    ),
+                                  ),
+                                ),
+              
+                                SizedBox(height: 20),
+              
+                                InkWell(
+                                  onTap: ()
+                                  {
+                                    /**
+                                     * Navigate to login() function
+                                     * for web service request
+                                     */
+                                    Navigator.push(context, MaterialPageRoute(builder:
+                                        (context) => UserRole())
+                                    );
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0xFF1f1f1f), // Shadow color
+                                          offset: Offset(0, 2), // Offset of the shadow
+                                          blurRadius: 4, // Spread of the shadow
+                                          spreadRadius: 0, // Spread radius of the shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                          "Change Role",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20, color: Colors.black,
+                                              fontWeight: FontWeight.w600
+                                          )),
+                                    ),
+                                  ),
+                                ),
+              
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("No account yet?",
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.black, fontSize: 12
+                                        )
+                                    ),
+                                    TextButton(onPressed: (){
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context)
+                                          => UserRegisterRole()));
+                                    }, child: Text("Create an account?",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black, fontSize: 12
+                                      ),),
+                                    ),
+                                  ],
+                                ),
+              
+              
+                              ],
+                            )
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
