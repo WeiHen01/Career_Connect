@@ -110,11 +110,11 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         /** saving key **/
         final prefs = await SharedPreferences.getInstance();
 
-        prefs.setString("userType", userType);
-        prefs.setInt("userId", id);
+        prefs.setString("usertype", userType);
+        prefs.setInt("loggedUserId", id);
         prefs.setString("password",
             md5.convert(utf8.encode(passwordTextCtrl.text)).toString());
-        prefs.setString("username", loggedUsername);
+        prefs.setString("loggedUsername", loggedUsername);
 
         UpdateLoginDateTime(id);
 

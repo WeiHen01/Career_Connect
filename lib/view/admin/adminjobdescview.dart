@@ -213,18 +213,17 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Image.asset('images/logo.png', width: 160, height: 60,),
-                    SizedBox(width: 15,),
-                    Expanded(
-                      child: Text(companyName, style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ), softWrap: true,
-                      ),
-                    ),
-                  ],
+                Center(
+                  child: Text(companyName, style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ), softWrap: true,
+                  ),
+                ),
+
+                Divider(
+                  color: Colors.black,
+                  thickness: 2
                 ),
 
                 SizedBox(height: 20),
@@ -402,7 +401,7 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
                         ),
                         child: Center(
                           child: Text(
-                              "Cancel",
+                              "Back",
                               style: GoogleFonts.poppins(
                                   fontSize: 25, color: Colors.black,
                                   fontWeight: FontWeight.w600

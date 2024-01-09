@@ -57,6 +57,39 @@ class _ViewAdminForumState extends State<ViewAdminForum> {
     }
   }
 
+  Future<void> deleteAllPostsUnderCertainForum() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/post/deletePost/${widget.forumId}",
+        server: "http://$server:8080");
+
+    await req.delete();
+
+    if (req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Successful delete all the posts under the forum',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+      deleteForum();
+
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Fail to delete job post!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+      throw Exception('Failed to fetch user');
+    }
+  }
+
   Future<void> deleteForum() async {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
@@ -271,7 +304,7 @@ class _ViewAdminForumState extends State<ViewAdminForum> {
                            * Navigate to register() function
                            * for web service request
                            */
-                          deleteForum();
+                          deleteAllPostsUnderCertainForum();
                         },
                         child: Container(
                           width: double.infinity,

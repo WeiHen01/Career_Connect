@@ -218,52 +218,6 @@ class _AdminAccountState extends State<AdminAccount> {
               ),
               child: Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     InkWell(
-                  //       onTap: ()
-                  //       {
-                  //         /**
-                  //          * Navigate to login() function
-                  //          * for web service request
-                  //          */
-                  //         Navigator.push(context, MaterialPageRoute(
-                  //           builder: (context) => AdminEdit(id:userid),
-                  //         ),
-                  //         );
-                  //       },
-                  //       child: Container(
-                  //         width: double.infinity,
-                  //         height: 40,
-                  //         decoration: BoxDecoration(
-                  //           gradient: LinearGradient(
-                  //               colors: [ Color.fromRGBO(249, 151, 119, 1),
-                  //                 Color.fromRGBO(98, 58, 162, 1),]
-                  //           ),
-                  //           borderRadius: BorderRadius.circular(10),
-                  //           boxShadow: [
-                  //             BoxShadow(
-                  //               color: Color(0xFF1f1f1f), // Shadow color
-                  //               offset: Offset(0, 2), // Offset of the shadow
-                  //               blurRadius: 4, // Spread of the shadow
-                  //               spreadRadius: 0, // Spread radius of the shadow
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         child: Center(
-                  //           child: Text(
-                  //               "Edit your profile",
-                  //               style: GoogleFonts.poppins(
-                  //                   fontSize: 20, color: Colors.white,
-                  //                   fontWeight: FontWeight.w600
-                  //               )),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
                   InkWell(
                     onTap: ()
                     {
@@ -308,6 +262,11 @@ class _AdminAccountState extends State<AdminAccount> {
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 10),
+
+                  Image.asset("images/admin.png")
+
                 ],
               ),
             ),
