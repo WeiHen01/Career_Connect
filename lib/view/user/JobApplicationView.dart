@@ -70,12 +70,17 @@ class _JobApplyViewState extends State<JobApplyView> {
         jobPosition = ads.jobPosition;
         jobDescription = ads.jobDescription;
         jobRemote = ads.jobRemote;
+        jobDate = ads.jobDate;
+        jobTime = ads.jobTime;
         AdsDate = ads.AdsDate;
         AdsTime = ads.AdsTime;
         jobCommit = ads.jobCommit;
         salary = ads.salary;
         industry = ads.industry;
         companyName = ads.company.companyName;
+        companyCity = ads.company.companyCity;
+        companyState = ads.company.companyState;
+        companyCountry = ads.company.companyCountry;
 
       });
     } else {
@@ -201,7 +206,7 @@ class _JobApplyViewState extends State<JobApplyView> {
                         TableCell(
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("8am-5pm",
+                            child: Text(jobTime,
                                 style: GoogleFonts.poppins(
                                     fontSize: 18
                                 )
@@ -222,7 +227,9 @@ class _JobApplyViewState extends State<JobApplyView> {
                         TableCell(
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("Location",
+                            child: Text("${companyCity}, "
+                                "${companyState},"
+                                "${companyCountry}",
                                 style: GoogleFonts.poppins(
                                     fontSize: 18
                                 )

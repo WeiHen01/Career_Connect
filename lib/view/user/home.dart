@@ -121,6 +121,8 @@ class _HomePageState extends State<HomePage> {
         List<String> companyIdsAsString = advertisements.map((ad) => ad.company.companyId.toString()).toList();
 
         print(companyIdsAsString);
+
+
       });
 
       SchedulerBinding.instance?.addPostFrameCallback((_) {
@@ -175,6 +177,47 @@ class _HomePageState extends State<HomePage> {
       throw Exception('Failed to fetch job');
     }
   }
+
+  /**
+   * This is to retrieve all job apply made by the user
+   */
+
+  late List<JobApply> jobApplyRequests = [];
+  bool? enableButton;
+  Future<void> getJobApplyRequest(int? id) async {
+    print(id);
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$id",
+        server: "http://$server:8080");
+
+    await req.get();
+
+    if (req.status() == 200) {
+      List<dynamic> data = req.result();
+      setState(() {
+        jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
+        print("Job Apply based on $id: ${jobApplyRequests.length}");
+      });
+
+      if(jobApplyRequests.length < 3){
+        setState(() {
+          enableButton = true;
+        });
+      }
+      else {
+        setState(() {
+          enableButton = false;
+        });
+      }
+
+
+    } else {
+      throw Exception('Failed to fetch job');
+    }
+  }
+
+
 
   String _getMonthName(int month) {
     // Convert the numeric month to its corresponding name
@@ -340,27 +383,6 @@ class _HomePageState extends State<HomePage> {
                 )
             ),
           ),
-          actions: [
-            IconButton(onPressed: (){
-              showMenu(
-                context: context,
-                position: RelativeRect.fromLTRB(100, 100, 0, 0),
-                items: <PopupMenuEntry>[
-                  PopupMenuItem(
-                    child: Text('Notification 1'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Notification 2'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Option 3'),
-                  ),
-                ],
-              );
-            },
-                icon: Icon(Icons.notifications, color: Colors.white,)
-            ),
-          ],
           bottom:  TabBar(
             dividerColor: Colors.transparent,
 
@@ -421,6 +443,9 @@ class _HomePageState extends State<HomePage> {
                             reverse: true,
                             itemBuilder: (context, index) {
                               final ad = advertisements[index];
+
+                              //getJobApplyRequest(ad.AdsId);
+
                               return OpenContainer(
                                   closedColor: Color(0xFFA6C1EE),
                                   transitionType: ContainerTransitionType.fade,
@@ -682,15 +707,13 @@ class _HomePageState extends State<HomePage> {
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   InkWell(
-                                                    onTap: () async
-                                                    {
-                                                      /**
-                                                       * Navigate to login() function
-                                                       * for web service request
-                                                       */
-                                                      addJobApply(userid, ad.AdsId, ad.company?.companyId);
-
-                                                    },
+                                                    onTap: () async {
+                                                          /**
+                                                           * Navigate to login() function
+                                                           * for web service request
+                                                           */
+                                                            addJobApply(userid, ad.AdsId, ad.company?.companyId);
+                                                          } ,
                                                     child: Container(
                                                       width: 100,
                                                       height: 40,
@@ -710,14 +733,17 @@ class _HomePageState extends State<HomePage> {
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
-                                                            Icon(Icons.send, color: Colors.black),
+                                                            Icon(Icons.send,
+                                                                color: Colors.black),
                                                             SizedBox(width: 5),
                                                             Text(
                                                                 "Apply",
                                                                 style: GoogleFonts.poppins(
-                                                                    fontSize: 15, color: Colors.black,
+                                                                    fontSize: 15,
+                                                                    color: Colors.black,
                                                                     fontWeight: FontWeight.w600
-                                                                )),
+                                                                )
+                                                            ),
                                                           ],
                                                         ),
                                                       ),
