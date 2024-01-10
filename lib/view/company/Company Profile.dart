@@ -618,7 +618,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.all(15),
                     width: double.infinity,
-                    height: 280,
+                    height: 260,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
