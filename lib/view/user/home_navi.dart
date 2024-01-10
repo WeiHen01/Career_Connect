@@ -185,7 +185,7 @@ class _HomeNaviState extends State<HomeNavi> {
            * The index of the screen starts from 0 in sequence
            * which is related to variable tabIndex later on
            */
-          HomePage(username: widget.username),
+          HomePage(username: widget.username, user: widget.id),
           Search(user: widget.id),
           UserForum(id: widget.id),
           Account(username: widget.username),

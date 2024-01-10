@@ -24,8 +24,9 @@ import '../../models/job_apply.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.username}) : super(key: key);
+  const HomePage({Key? key, required this.username, required this.user}) : super(key: key);
   final String username;
+  final int user;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
         _user = user;
         userid = user.userId;
         print(userid);
-        getJobApply(userid);
+
       });
     } else {
       throw Exception('Failed to fetch user');
@@ -349,6 +350,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getUser();
     getAdvertisement();
+    getJobApply(widget.user);
     SchedulerBinding.instance?.addPostFrameCallback((_) {
       _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
@@ -356,12 +358,7 @@ class _HomePageState extends State<HomePage> {
           curve: Curves.fastOutSlowIn);
     });
 
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-          _scroll02Controller.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 1),
-          curve: Curves.fastOutSlowIn);
-    });
+
 
   }
 
@@ -436,6 +433,7 @@ class _HomePageState extends State<HomePage> {
                               duration: const Duration(milliseconds: 1),
                               curve: Curves.fastOutSlowIn);
                         });
+
                         return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             controller: _scrollController,
@@ -837,12 +835,10 @@ class _HomePageState extends State<HomePage> {
                   builder: (context) {
                     SchedulerBinding.instance?.addPostFrameCallback((_) {
                       _scroll02Controller.animateTo(
-                        _scroll02Controller.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 1),
-                        curve: Curves.fastOutSlowIn,
-                      );
+                          _scroll02Controller.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 1),
+                          curve: Curves.fastOutSlowIn);
                     });
-
                     return ListView.builder(
                         scrollDirection: Axis.vertical,
                         controller: _scroll02Controller,
@@ -850,7 +846,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(8),
                         itemCount: jobRequests.length,
                         itemBuilder: (BuildContext context, int index){
-                          getJobApply(_user?.userId);
+                          //getJobApply(_user?.userId);
                           final requests = jobRequests[index];
 
                           // Function to get the index of a month from its name
