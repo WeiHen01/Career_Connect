@@ -88,7 +88,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
 
           setState(() {
             List<String> notifyUser = [];
-            notifyUser.add(id.toString());
+            notifyUser.add(userid.toString());
             OneSignalController onesignal = OneSignalController();
             onesignal.SendNotification("Approval Success", "Your request is approved!", notifyUser);
           });
