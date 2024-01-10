@@ -190,7 +190,7 @@ class _CompanyHomeNaviState extends State<CompanyHomeNavi> {
           CompanyViewRequest(company: widget.company),
           CompanyAds(company: widget.company),
           UserForum(id: widget.id),
-          CompanyAccount(username: widget.username, company: widget.company),
+          CompanyAccount(username: widget.username, userid: widget.id, company: widget.company),
         ],
       ),
     );

@@ -170,7 +170,7 @@ class _SelectCompanyState extends State<SelectCompany> {
 
                               SizedBox(width: 5),
 
-                              Text("Select working day", style: GoogleFonts.poppins(
+                              Text("Select company", style: GoogleFonts.poppins(
                                 color: Colors.black, fontSize: 18,
                               )),
                             ],

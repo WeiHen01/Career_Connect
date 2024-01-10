@@ -17,8 +17,9 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Company Profile Edit.dart';
 
 class CompanyAccount extends StatefulWidget {
-  const CompanyAccount({Key? key, required this.username, required this.company}) : super(key: key);
+  const CompanyAccount({Key? key, required this.username, required this.userid, required this.company}) : super(key: key);
   final int company;
+  final int userid;
   final String username;
 
   @override
@@ -71,7 +72,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
         _user = user;
         userid = user.userId;
 
-
+        selectedCompanyId = _user?.company?.companyId;
         companyNameCtrl.text = _user?.company?.companyName ?? "";
         companyCityCtrl.text = _user?.company?.companyCity ?? "";
         companyStateCtrl.text = _user?.company?.companyState ?? "";
@@ -118,37 +119,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
    * lists to extract attributes needed
    */
   late List<String> companyNames = [];
-  late List<int> companyIds = [];
-  late List<dynamic> companyList = [];
-  Company? selectedCompany;
 
-  Future<void> getAllCompany() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? server = prefs.getString("localhost");
-    WebRequestController req = WebRequestController(
-        path: "/inployed/company",
-        server: "http://$server:8080");
-
-    await req.get();
-    try{
-      if (req.status() == 200) {
-        final List<dynamic> responseData = req.result();
-        setState(() {
-          company = responseData.map((json) => Company.fromJson(json)).toList();
-
-          print(company);
-          //print(companyList);
-          print("Number of company: ${company.length}");
-
-        });
-      } else {
-        throw Exception('Failed to load job applications');
-      }
-    } catch (e) {
-      print('Error fetching user resume: $e');
-      // Handle the exception as needed, for example, show an error message to the user
-    }
-  }
 
   Future<void> updateCompany(int id) async{
 
@@ -156,8 +127,6 @@ class _CompanyAccountState extends State<CompanyAccount> {
      * optionally update only the text field is not null
      */
     Map<String, dynamic> requestBody = {};
-
-
 
     if (companyNameCtrl.text != null && companyNameCtrl.text.isNotEmpty) {
       requestBody["companyName"] = companyNameCtrl.text;
@@ -220,13 +189,79 @@ class _CompanyAccountState extends State<CompanyAccount> {
   }
 
 
+  /**
+   * This is to retrieve all advertisements posted
+   */
+  late List<Company> companies = [];
+  Future<void> getCompanies() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(
+        path: "/inployed/company",
+        server: "http://$server:8080");
+
+    await req.get();
+
+    if (req.status() == 200) {
+      List<dynamic> data = req.result();
+      setState(() {
+        companies = data.map((json) => Company.fromJson(json)).toList();
+      });
+      //return data.map((company) => Company.fromJson(company)).toList();
+    } else {
+      throw Exception('Failed to fetch job');
+    }
+  }
+
+  int? selectedCompanyId;
+  String? selectedCompanyName;
+
+  /**
+   * Functions for Soft delete account
+   * by disable account status(update user status to inactive)
+   */
+  Future<void>updateUserCompany(int? company) async
+  {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController
+      (path: "/inployed/user/updateUserCompany/${widget.userid}/${company}",
+        server: "http://$server:8080");
+
+    await req.put();
+
+    print(req.result());
+
+    if(req.status() == 200) {
+      Fluttertoast.showToast(
+        msg: 'Update user company successfully',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: 'Update user company failed!',
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 3));
     getUser();
-    getAllCompany();
+    getCompanies();
   }
 
   /**
@@ -583,7 +618,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.all(15),
                     width: double.infinity,
-                    height: 250,
+                    height: 280,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
@@ -593,19 +628,217 @@ class _CompanyAccountState extends State<CompanyAccount> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                                "${
-                                    (_user?.company != null)
-                                     ? _user?.company?.companyName
-                                     : ""
-                                 }",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600 )
+                            Expanded(
+                              child: Text(
+                                  "${
+                                      (_user?.company != null)
+                                       ? _user?.company?.companyName
+                                       : ""
+                                   }",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600 )
+                              ),
                             ),
 
                             Spacer(),
 
+                            Column(
+                              children: [
+                                IconButton(onPressed:(){
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) => Center(
+                                        child: SingleChildScrollView(
+                                          child: Dialog(
+                                            elevation: 10,
+                                            child: Container(
+                                              padding: EdgeInsets.all(10),
+                                              width: 500,
+                                              height: 250,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    colors: [ Color.fromRGBO(249, 151, 119, 1),
+                                                      Color.fromRGBO(98, 58, 162, 1),]
+                                                ),
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                          "Edit your company",
+                                                          style: GoogleFonts.poppins(
+                                                            fontSize: 20, fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                          )
+                                                      ),
+
+                                                      Spacer(),
+
+                                                      GestureDetector(
+                                                        onTap: (){
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Icon(Icons.close, color: Colors.white,),
+                                                      )
+                                                    ],
+                                                  ),
+
+                                                  SizedBox(height: 10),
+
+                                                  Card(
+                                                    elevation: 4,
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white70,
+                                                          borderRadius: BorderRadius.circular(8)
+                                                      ),
+                                                      child: DropdownButton(
+                                                        isExpanded: true,
+                                                        onChanged: (dynamic newValue){
+                                                          setState(() {
+                                                            print(newValue);
+                                                            selectedCompanyId = newValue;
+
+                                                            // Get the selected company name based on the newValue
+                                                            Company selectedCompany = companies
+                                                                .firstWhere((company) => company.companyId == newValue);
+                                                            selectedCompanyName = selectedCompany.companyName;
+
+                                                          });
+                                                        },
+                                                        value: selectedCompanyId,
+                                                        hint: Container(
+                                                          padding: EdgeInsets.only(left: 10),
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons.date_range),
+
+                                                              SizedBox(width: 5),
+
+                                                              Text("Select company", style: GoogleFonts.poppins(
+                                                                color: Colors.black, fontSize: 18,
+                                                              )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        items: companies.map((Company company){
+                                                          return DropdownMenuItem(
+                                                            child: Container(
+                                                              color: Colors.white70,
+                                                              padding: EdgeInsets.only(left: 8),
+                                                              child: Text(
+                                                                "${company.companyName}", style: GoogleFonts.poppins(
+                                                                color: Colors.black, fontSize: 18,
+                                                              ),
+                                                              ),
+                                                            ),
+                                                            value: company.companyId,
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  Spacer(),
+
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () async
+                                                        {
+                                                          /**
+                                                           * Navigate to login() function
+                                                           * for web service request
+                                                           */
+                                                          print(companyNames);
+                                                          updateUserCompany(selectedCompanyId);
+
+                                                        },
+                                                        child: Container(
+                                                          width: 300,
+                                                          height: 40,
+                                                          decoration: BoxDecoration(
+                                                            gradient: LinearGradient(
+                                                                colors: [ Color.fromRGBO(249, 151, 119, 1),
+                                                                  Color.fromRGBO(98, 58, 162, 1),]
+                                                            ),
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Color(0xFF1f1f1f), // Shadow color
+                                                                offset: Offset(0, 2), // Offset of the shadow
+                                                                blurRadius: 4, // Spread of the shadow
+                                                                spreadRadius: 0, // Spread radius of the shadow
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          child: Center(
+                                                            child: Text(
+                                                                "Save",
+                                                                style: GoogleFonts.poppins(
+                                                                    fontSize: 20, color: Colors.white,
+                                                                    fontWeight: FontWeight.w600
+                                                                )),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+
+                                                  SizedBox(height: 20),
+
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                  );
+                                }, icon: Icon(Icons.mode_edit_outlined, color: Colors.black,)),
+                              ],
+                            ),
+
+
+                          ],
+                        ),
+
+                        Divider(
+                          thickness: 2
+                        ),
+
+                        SizedBox(height: 10),
+
+
+
+                        Text(
+                            'Address: ${_user?.company?.companyCity}, '
+                                      '${_user?.company?.companyState},'
+                                      '${_user?.company?.companyCountry}',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,),
+                            textAlign: TextAlign.justify,
+                        ),
+
+                        Text(
+                            'Contact: ${_user?.company?.companyContact}',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,)
+                        ),
+
+                        Text(
+                            'Email: ${_user?.company?.companyEmail}',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,)
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
                             IconButton(onPressed: (){
                               showDialog(
                                   context: context,
@@ -629,15 +862,15 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                             Row(
                                               children: [
                                                 Text(
-                                                    "Edit your company",
+                                                    "Edit your company details",
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 20, fontWeight: FontWeight.bold,
                                                       color: Colors.white,
                                                     )
                                                 ),
-                                    
+
                                                 Spacer(),
-                                    
+
                                                 GestureDetector(
                                                   onTap: (){
                                                     Navigator.of(context).pop();
@@ -646,247 +879,247 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                                 )
                                               ],
                                             ),
-                                    
+
                                             SizedBox(height: 10),
-                                    
+
                                             Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Colors.white,
-                                              ),
-                                              padding: EdgeInsets.all(5),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                      "Name: ",
-                                                      style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  TextField(
-                                                    controller: companyNameCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company name",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company name",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  color: Colors.white,
+                                                ),
+                                                padding: EdgeInsets.all(5),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        "Name: ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
-                                                    ),
-                                    
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  Text(
-                                                      "Email: ",
+
+                                                    SizedBox(height: 10),
+
+                                                    TextField(
+                                                      controller: companyNameCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company name",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company name",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
                                                       style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  TextField(
-                                                    controller: companyEmailCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company email",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company email",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
+                                                    ),
+
+                                                    SizedBox(height: 10),
+
+                                                    Text(
+                                                        "Email: ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
-                                                    ),
-                                    
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  Text(
-                                                      "Contact Number:  ",
+
+                                                    SizedBox(height: 10),
+
+                                                    TextField(
+                                                      controller: companyEmailCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company email",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company email",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
                                                       style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  TextField(
-                                                    controller: companyContactCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company contact",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company contact",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
+                                                    ),
+
+                                                    SizedBox(height: 10),
+
+                                                    Text(
+                                                        "Contact Number:  ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
-                                                    ),
-                                    
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  Text(
-                                                      "City:  ",
+
+                                                    SizedBox(height: 10),
+
+                                                    TextField(
+                                                      controller: companyContactCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company contact",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company contact",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
                                                       style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  TextField(
-                                                    controller: companyCityCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company city",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company city",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
+                                                    ),
+
+                                                    SizedBox(height: 10),
+
+                                                    Text(
+                                                        "City:  ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
-                                                    ),
-                                    
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  Text(
-                                                      "State:  ",
+
+                                                    SizedBox(height: 10),
+
+                                                    TextField(
+                                                      controller: companyCityCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company city",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company city",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
                                                       style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  TextField(
-                                                    controller: companyStateCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company state",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company state",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
+                                                    ),
+
+                                                    SizedBox(height: 10),
+
+                                                    Text(
+                                                        "State:  ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
-                                                    ),
-                                    
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  Text(
-                                                      "Country:  ",
+
+                                                    TextField(
+                                                      controller: companyStateCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company state",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company state",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
                                                       style: GoogleFonts.poppins(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                      )
-                                                  ),
-                                    
-                                                  SizedBox(height: 10),
-                                    
-                                                  TextField(
-                                                    controller: companyCountryCtrl,
-                                                    decoration: InputDecoration(
-                                                      //errorText: 'Please enter a valid value',
-                                                        prefixIcon: Icon(Icons.person),
-                                                        filled: true,
-                                                        fillColor: Colors.white70,
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          borderSide: BorderSide.none,
-                                                        ),
-                                                        hintText: "Enter company country",
-                                                        hintStyle: GoogleFonts.poppins(
-                                                            fontSize: 15, fontWeight: FontWeight.bold
-                                                        ),
-                                                        labelText: "Enter company country",
-                                                        labelStyle: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
+                                                    ),
+
+                                                    SizedBox(height: 10),
+
+                                                    Text(
+                                                        "Country:  ",
+                                                        style: GoogleFonts.poppins(
                                                           fontSize: 15,
+                                                          color: Colors.black,
                                                         )
                                                     ),
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 15
+
+                                                    SizedBox(height: 10),
+
+                                                    TextField(
+                                                      controller: companyCountryCtrl,
+                                                      decoration: InputDecoration(
+                                                        //errorText: 'Please enter a valid value',
+                                                          prefixIcon: Icon(Icons.person),
+                                                          filled: true,
+                                                          fillColor: Colors.white70,
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            borderSide: BorderSide.none,
+                                                          ),
+                                                          hintText: "Enter company country",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              fontSize: 15, fontWeight: FontWeight.bold
+                                                          ),
+                                                          labelText: "Enter company country",
+                                                          labelStyle: GoogleFonts.poppins(
+                                                            fontSize: 15,
+                                                          )
+                                                      ),
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 15
+                                                      ),
+
                                                     ),
-                                    
-                                                  ),
-                                                ],
-                                              )
+                                                  ],
+                                                )
                                             ),
-                                    
+
                                             Spacer(),
-                                    
+
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
@@ -899,7 +1132,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                                      */
                                                     print(companyNames);
                                                     updateCompany(_user?.company?.companyId ?? 0);
-                                    
+
                                                   },
                                                   child: Container(
                                                     width: 300,
@@ -931,9 +1164,9 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                                 ),
                                               ],
                                             ),
-                                    
+
                                             SizedBox(height: 20),
-                                    
+
                                           ],
                                         ),
                                       ),
@@ -944,34 +1177,6 @@ class _CompanyAccountState extends State<CompanyAccount> {
                           ],
                         ),
 
-                        SizedBox(height: 10),
-
-                        Text(
-                            "ID: ${_user?.company?.companyId}",
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,)
-                        ),
-
-                        Text(
-                            'Address: ${_user?.company?.companyCity}, '
-                                      '${_user?.company?.companyState},'
-                                      '${_user?.company?.companyCountry}',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,),
-                            textAlign: TextAlign.justify,
-                        ),
-
-                        Text(
-                            'Contact: ${_user?.company?.companyContact}',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,)
-                        ),
-
-                        Text(
-                            'Email: ${_user?.company?.companyEmail}',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,)
-                        ),
                       ],
                     )
                 ),
