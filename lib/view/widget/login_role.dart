@@ -48,7 +48,7 @@ class _UserRoleState extends State<UserRole> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: ()=>Navigator.pushReplacement(context,
+                    onTap: ()=>Navigator.push(context,
                         MaterialPageRoute(
                             builder: (context) => LoginPage()
                                 //HomeNavi(username: "Hafizah", tabIndexes: 0,),
@@ -77,7 +77,7 @@ class _UserRoleState extends State<UserRole> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: ()=>Navigator.pushReplacement(context,
+                    onTap: ()=>Navigator.push(context,
                         MaterialPageRoute(
                             builder: (context) => CompanyLogin()
                         )),
@@ -109,7 +109,7 @@ class _UserRoleState extends State<UserRole> {
 
               GestureDetector(
                 onTap: (){
-                  Navigator.pushReplacement(context,
+                  Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) => AdminLoginPage()
                       ));
