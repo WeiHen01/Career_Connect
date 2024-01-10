@@ -73,7 +73,7 @@ class _AdminStatsState extends State<AdminStats> {
   }
 
   //double JobSeekerPercent = 0.0;
- //double CompanyUserPercent = 0.0;
+  //double CompanyUserPercent = 0.0;
 
 
   List<PieChartSectionData> showingSections() {
@@ -114,6 +114,9 @@ class _AdminStatsState extends State<AdminStats> {
 
   int touchedIndex = -1;
 
+  /**
+   * For line graph purposes
+   */
   List<Color> gradientColors = [
     Colors.cyan,
     Colors.blue

@@ -254,7 +254,7 @@ class _AdminForumState extends State<AdminForum> {
             viewforum != null
               ? Container(
               padding: EdgeInsets.only(
-                left:10, right: 10, bottom:100,
+                left:10, right: 10, bottom:100, top: 5
               ),
               decoration: BoxDecoration(
                   color: Color(0xFFA6C1EE),
@@ -275,93 +275,114 @@ class _AdminForumState extends State<AdminForum> {
                             curve: Curves.fastOutSlowIn,
                           );
                         });
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            controller: _scrollController02,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: viewforum.length,
-                            itemBuilder: (BuildContext context, int index){
-                              final forums = viewforum[index];
-                              return OpenContainer(
-                                closedShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                        return Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Total Forum: ${viewforum.length}",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black, fontSize: 20
                                 ),
-                                closedColor: Color(0xFFA6C1EE),
-                                closedBuilder: (context, _) => Card(
-                                  elevation: 3,
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                '${forums.forumName}',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 18, color: Colors.black,
-                                                    fontWeight: FontWeight.bold
-                                                ), textAlign: TextAlign.justify,
-                                              ),
+                                textAlign: TextAlign.left,
+                              ),
+
+                              Divider(
+                                thickness: 2.0,
+                              ),
+
+                              Expanded(
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    controller: _scrollController02,
+                                    padding: const EdgeInsets.all(8),
+                                    itemCount: viewforum.length,
+                                    itemBuilder: (BuildContext context, int index){
+                                      final forums = viewforum[index];
+                                      return OpenContainer(
+                                        closedShape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        closedColor: Color(0xFFA6C1EE),
+                                        closedBuilder: (context, _) => Card(
+                                          elevation: 3,
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
                                             ),
-                                          ],
-                                        ),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${forums.forumName}',
+                                                        style: GoogleFonts.poppins(
+                                                            fontSize: 18, color: Colors.black,
+                                                            fontWeight: FontWeight.bold
+                                                        ), textAlign: TextAlign.justify,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
 
-                                        Divider(
-                                          thickness: 2.0,
-                                        ),
+                                                Divider(
+                                                  thickness: 2.0,
+                                                ),
 
-                                        Text(
-                                          forums.forumDesc,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 16, color: Colors.black,
+                                                Text(
+                                                  forums.forumDesc,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 16, color: Colors.black,
+                                                  ),
+                                                  maxLines: 5, // Set the maximum number of lines
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.justify,
+                                                ),
+
+                                                SizedBox(height: 10),
+
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "${forums.forumDate} ${forums.forumTime}",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 12, color: Colors.black,
+                                                          fontWeight: FontWeight.w600
+                                                      ),
+                                                      maxLines: 5, // Set the maximum number of lines
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.justify,
+                                                    ),
+
+                                                    Spacer(),
+
+                                                    Icon(Icons.navigate_next, color: Colors.indigo,),
+                                                    Text(
+                                                      "View More",
+                                                      style: GoogleFonts.poppins(
+                                                        fontSize: 16, color: Colors.indigo,
+                                                      ),
+                                                      maxLines: 5, // Set the maximum number of lines
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.justify,
+                                                    ),
+                                                  ],
+                                                )
+
+                                              ],
+                                            ),
                                           ),
-                                          maxLines: 5, // Set the maximum number of lines
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.justify,
                                         ),
-
-                                        SizedBox(height: 10),
-
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              "${forums.forumDate} ${forums.forumTime}",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12, color: Colors.black,
-                                                  fontWeight: FontWeight.w600
-                                              ),
-                                              maxLines: 5, // Set the maximum number of lines
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.justify,
-                                            ),
-
-                                            Spacer(),
-
-                                            Icon(Icons.navigate_next, color: Colors.indigo,),
-                                            Text(
-                                              "View More",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16, color: Colors.indigo,
-                                              ),
-                                              maxLines: 5, // Set the maximum number of lines
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.justify,
-                                            ),
-                                          ],
-                                        )
-
-                                      ],
-                                    ),
-                                  ),
+                                        openBuilder: (context, _) => ViewForum(forumId: forums?.forumId),
+                                      );
+                                    }
                                 ),
-                                openBuilder: (context, _) => ViewForum(forumId: forums?.forumId),
-                              );
-                            }
+                              ),
+                            ],
+                          ),
                         );
                       }
                   ),
@@ -376,7 +397,7 @@ class _AdminForumState extends State<AdminForum> {
             viewadminforum != null
                 ? Container(
                 padding: EdgeInsets.only(
-                    left: 10, right: 10, bottom: 100
+                    left: 10, right: 10, bottom: 100, top: 5
                 ),
                 decoration: BoxDecoration(
                   color: Color(0xFFA6C1EE),
@@ -397,93 +418,114 @@ class _AdminForumState extends State<AdminForum> {
                             curve: Curves.fastOutSlowIn,
                           );
                         });
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            controller: _scrollController02,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: viewadminforum.length,
-                            itemBuilder: (BuildContext context, int index){
-                              final forums = viewadminforum[index];
-                              return OpenContainer(
-                                closedShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                        return Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Forum created: ${viewforum.length}",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black, fontSize: 20
                                 ),
-                                closedColor: Color(0xFFA6C1EE),
-                                closedBuilder: (context, _) => Card(
-                                  elevation: 3,
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                '${forums.forumName}',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 18, color: Colors.black,
-                                                    fontWeight: FontWeight.bold
-                                                ), textAlign: TextAlign.justify,
-                                              ),
+                                textAlign: TextAlign.left,
+                              ),
+
+                              Divider(
+                                thickness: 2.0,
+                              ),
+
+                              Expanded(
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    controller: _scrollController02,
+                                    padding: const EdgeInsets.all(8),
+                                    itemCount: viewadminforum.length,
+                                    itemBuilder: (BuildContext context, int index){
+                                      final forums = viewadminforum[index];
+                                      return OpenContainer(
+                                        closedShape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        closedColor: Color(0xFFA6C1EE),
+                                        closedBuilder: (context, _) => Card(
+                                          elevation: 3,
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
                                             ),
-                                          ],
-                                        ),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${forums.forumName}',
+                                                        style: GoogleFonts.poppins(
+                                                            fontSize: 18, color: Colors.black,
+                                                            fontWeight: FontWeight.bold
+                                                        ), textAlign: TextAlign.justify,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
 
-                                        Divider(
-                                          thickness: 2.0,
-                                        ),
+                                                Divider(
+                                                  thickness: 2.0,
+                                                ),
 
-                                        Text(
-                                          forums.forumDesc,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 16, color: Colors.black,
+                                                Text(
+                                                  forums.forumDesc,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 16, color: Colors.black,
+                                                  ),
+                                                  maxLines: 5, // Set the maximum number of lines
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.justify,
+                                                ),
+
+                                                SizedBox(height: 10),
+
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "${forums.forumDate} ${forums.forumTime}",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 12, color: Colors.black,
+                                                          fontWeight: FontWeight.w600
+                                                      ),
+                                                      maxLines: 5, // Set the maximum number of lines
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.justify,
+                                                    ),
+
+                                                    Spacer(),
+
+                                                    Icon(Icons.navigate_next, color: Colors.indigo,),
+                                                    Text(
+                                                      "View More",
+                                                      style: GoogleFonts.poppins(
+                                                        fontSize: 16, color: Colors.indigo,
+                                                      ),
+                                                      maxLines: 5, // Set the maximum number of lines
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.justify,
+                                                    ),
+                                                  ],
+                                                )
+
+                                              ],
+                                            ),
                                           ),
-                                          maxLines: 5, // Set the maximum number of lines
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.justify,
                                         ),
-
-                                        SizedBox(height: 10),
-
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              "${forums.forumDate} ${forums.forumTime}",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12, color: Colors.black,
-                                                  fontWeight: FontWeight.w600
-                                              ),
-                                              maxLines: 5, // Set the maximum number of lines
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.justify,
-                                            ),
-
-                                            Spacer(),
-
-                                            Icon(Icons.navigate_next, color: Colors.indigo,),
-                                            Text(
-                                              "View More",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16, color: Colors.indigo,
-                                              ),
-                                              maxLines: 5, // Set the maximum number of lines
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.justify,
-                                            ),
-                                          ],
-                                        )
-
-                                      ],
-                                    ),
-                                  ),
+                                        openBuilder: (context, _) => ViewAdminForum(forumId: forums?.forumId),
+                                      );
+                                    }
                                 ),
-                                openBuilder: (context, _) => ViewAdminForum(forumId: forums?.forumId),
-                              );
-                            }
+                              ),
+                            ],
+                          ),
                         );
                       }
                   ),
@@ -529,6 +571,12 @@ class _AdminForumState extends State<AdminForum> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+
+                          Divider(
+                            thickness: 2,
+
+                          ),
+
                           Text(
                             "Forum Name",
                             style: GoogleFonts.poppins(
@@ -540,7 +588,7 @@ class _AdminForumState extends State<AdminForum> {
                           TextField(
                             controller: forumnameTextCtrl,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: Icon(Icons.forum_rounded),
                               filled: true,
                               fillColor: Colors.white70,
                               border: OutlineInputBorder(

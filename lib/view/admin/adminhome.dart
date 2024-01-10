@@ -4,6 +4,7 @@ import 'package:bitu3923_group05/models/user.dart';
 import 'package:bitu3923_group05/view/user/JobApplicationView.dart';
 import 'package:bitu3923_group05/view/admin/adminjobdescview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,6 +69,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
       setState(() {
         advertisements = data.map((json) => Advertisement.fromJson(json)).toList();
       });
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 1),
+            curve: Curves.fastOutSlowIn);
+      });
     } else {
       throw Exception('Failed to fetch job');
     }
@@ -79,6 +86,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
     super.initState();
     getUser();
     getAdvertisement();
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 1),
+          curve: Curves.fastOutSlowIn);
+    });
   }
 
   ScrollController _scrollController = ScrollController();

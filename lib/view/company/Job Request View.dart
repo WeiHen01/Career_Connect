@@ -71,6 +71,10 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
 
       print(req.result());
 
+      final userData = req.result();
+
+      var userid = userData["userID"]["userId"];
+
       if(req.status() == 200) {
         if(status == "Approved"){
           ArtSweetAlert.show(
@@ -82,10 +86,13 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
               )
           );
 
-          List<String> notifyUser = [];
-          notifyUser.add(id.toString());
-          OneSignalController onesignal = OneSignalController();
-          onesignal.SendNotification("Approval Success", "Your request is approved!", notifyUser);
+          setState(() {
+            List<String> notifyUser = [];
+            notifyUser.add(id.toString());
+            OneSignalController onesignal = OneSignalController();
+            onesignal.SendNotification("Approval Success", "Your request is approved!", notifyUser);
+          });
+
 
         }
         else{
@@ -98,10 +105,12 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
               )
           );
 
-          List<String> notifyUser2 = [];
-          notifyUser2.add(id.toString());
-          OneSignalController onesignal = OneSignalController();
-          onesignal.SendNotification("Approval Failed", "Your request is not approved!", notifyUser2);
+          setState(() {
+            List<String> notifyUser2 = [];
+            notifyUser2.add(id.toString());
+            OneSignalController onesignal = OneSignalController();
+            onesignal.SendNotification("Approval Failed", "Your request is not approved!", notifyUser2);
+          });
         }
 
         // Call getJobRequests to refresh the page

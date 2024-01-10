@@ -112,27 +112,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                     )
                 ),
               ),
-              actions: [
-                IconButton(onPressed: (){
-                  showMenu(
-                    context: context,
-                    position: RelativeRect.fromLTRB(100, 100, 0, 0),
-                    items: <PopupMenuEntry>[
-                      PopupMenuItem(
-                        child: Text('Notification 1'),
-                      ),
-                      PopupMenuItem(
-                        child: Text('Notification 2'),
-                      ),
-                      PopupMenuItem(
-                        child: Text('Option 3'),
-                      ),
-                    ],
-                  );
-                },
-                    icon: Icon(Icons.notifications, color: Colors.white,)
-                ),
-              ],
+
               bottom:  TabBar(
                 dividerColor: Colors.transparent,
                 tabs: <Widget>[

@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
           print("UserID: $notifyUser");
 
           OneSignalController onesignal = OneSignalController();
-          onesignal.SendNotification("Job Request Sent", "You have sent successfully", notifyUser);
+          onesignal.SendNotification("A new job request", "There is a new job request", notifyUser);
         });
       } else {
         throw Exception('Failed to fetch user');
