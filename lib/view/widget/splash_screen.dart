@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 
 // library to use Google Fonts
 import 'package:google_fonts/google_fonts.dart';
-
-import 'ip_address.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../company/CompanyHome_Navi.dart';
+import '../user/home_navi.dart';
+import 'login_role.dart';
+import 'onboard_screen.dart';
 
 /**
  * This is the splash screen or launching screen
@@ -31,10 +34,56 @@ class _SplashScreenState extends State<SplashScreen>
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(seconds: 5), ()
+    Future.delayed(Duration(seconds: 5), () async
     {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => IPAddressInput()));
+      final prefs = await SharedPreferences.getInstance();
+      String ip = "10.0.2.2";
+      await prefs.setString("localhost", ip);
+
+      int? userID = await prefs.getInt("loggedUserId");
+      String? username = await prefs.getString("loggedUsername");
+      String? usertype = await prefs.getString("usertype");
+      int? companyID = await prefs.getInt("company");
+
+
+      if(usertype == "Admin"){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => UserRole()
+        )
+        );
+      }
+      else if(usertype == "Company"){
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CompanyHomeNavi(
+                      username: username ?? "",
+                      id: userID ?? 0,
+                      tabIndexes: 0,
+                      company: companyID ?? 0),
+            ), (route) => false);
+      }
+      else if(usertype == "Job Seeker"){
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  HomeNavi(
+                      username: username ?? "",
+                      id: userID ?? 0,
+                      tabIndexes: 0
+                  ),
+            ), (route) => false);
+      }
+      else {
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => OnBoarding()
+        )
+        );
+      }
     });
 
     /**
