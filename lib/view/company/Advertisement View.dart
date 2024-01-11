@@ -115,6 +115,7 @@ class _CompanyAdsState extends State<CompanyAds> {
           "jobCommit": dropdownJobCommit,
           "salary": newSalary,
           "industry": industryCtrl.text,
+          "availability": "Available",
           "companyId": {
             "companyID": widget.company,
           },

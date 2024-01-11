@@ -5,6 +5,7 @@ import 'package:bitu3923_group05/view/user/JobApplicationView.dart';
 import 'package:bitu3923_group05/view/user/JobDescriptionView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:art_sweetalert/art_sweetalert.dart';
@@ -15,6 +16,7 @@ import '../../controller/OneSignalController.dart';
 import '../../controller/request_controller.dart';
 import '../../models/advertisement.dart';
 import '../../models/job_apply.dart';
+import 'home_navi.dart';
 
 
 /**
@@ -37,6 +39,10 @@ class _HomePageState extends State<HomePage> {
   User? _user;
   int userid = 0;
   int? companyId = 0;
+
+  /**
+   * get user information
+   */
   Future<void> getUser() async {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
@@ -62,46 +68,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  late List<User> companyUser = [];
-  List<int> userIds = [];
-
-  Future<void> getUserUnderSameCompany(int? company) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      String? server = prefs.getString("localhost");
-      WebRequestController req = WebRequestController(
-          path: "/inployed/user/getUserByCompany/$company",
-          server: "http://$server:8080");
-
-      await req.get();
-
-      if (req.status() == 200) {
-        setState(() {
-          List<dynamic> data = req.result();
-          companyUser = data.map((json) => User.fromJson(json)).toList();
-
-          print(companyUser);
-
-          // Extract user IDs and convert them to strings
-          List<String> notifyUser = companyUser.map((user) => user.userId.toString()).toList();
-
-          print("UserID: $notifyUser");
-
-          OneSignalController onesignal = OneSignalController();
-          onesignal.SendNotification("A new job request", "There is a new job request", notifyUser);
-        });
-      } else {
-        throw Exception('Failed to fetch user');
-      }
-    } catch (e) {
-      print('An error occurred: $e');
-      // Handle the error as needed, e.g., show an error message to the user.
-    }
-  }
-
-
   /**
-   * This is to retrieve all advertisements posted
+   * This is to retrieve all available advertisements posted
    */
   late List<Advertisement> advertisements = [];
   final ScrollController _scrollController = ScrollController();
@@ -109,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
     WebRequestController req = WebRequestController(
-        path: "/inployed/job",
+        path: "/inployed/job/available",
         server: "http://$server:8080");
 
     await req.get();
@@ -120,10 +88,7 @@ class _HomePageState extends State<HomePage> {
         advertisements = data.map((json) => Advertisement.fromJson(json)).toList();
         // Extract company IDs and convert them to strings
         List<String> companyIdsAsString = advertisements.map((ad) => ad.company.companyId.toString()).toList();
-
         print(companyIdsAsString);
-
-
       });
 
       SchedulerBinding.instance?.addPostFrameCallback((_) {
@@ -132,22 +97,10 @@ class _HomePageState extends State<HomePage> {
             duration: const Duration(milliseconds: 1),
             curve: Curves.fastOutSlowIn);
       });
-
-
     } else {
       throw Exception('Failed to fetch job');
     }
   }
-
-  JobApply apply = JobApply(
-      0,
-      User(0, "", "", "", "", "Job Seeker", "",
-      Company(0, "", "", "", "", "", "", ""),""),
-      Advertisement(0, "", "", "", "", "", "", "", "", "", "",
-          Company(0, "", "", "", "", "", "", "")
-      ),
-      "", "", "", "", ""
-  );
 
   /**
    * This is to retrieve all job apply made by the user
@@ -179,14 +132,19 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  /**
-   * This is to retrieve all job apply made by the user
-   */
 
+  /**
+   * Make job apply request steps:
+   * 1. Check whether the quota is exceed (job requests originally more than 3)
+   * 2. if job request < 3,
+   *    2.1 add job request -> send notification
+   *    2.2 update the number of job request and calculate the current list of job request by id
+   *    2.3 if the new job request = 3rd request then update job status to unavailable
+   *
+   *
+   */
   late List<JobApply> jobApplyRequests = [];
-  bool? enableButton;
-  Future<void> getJobApplyRequest(int user, int job, int? company) async {
-    print(job);
+  Future<void> checkExceedJobRequest(int user, int job, int? company) async {
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
     WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
@@ -198,29 +156,65 @@ class _HomePageState extends State<HomePage> {
       List<dynamic> data = req.result();
       setState(() {
         jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
-        print("Job Apply based on $job: ${jobApplyRequests.length}");
       });
 
       if(jobApplyRequests.length < 3){
+        /**
+         * add new job apply and also send notifications
+         */
         addJobApply(user, job, company);
+
+        /**
+         * checking again for the new number of job apply requests based on the job
+         */
+        final prefs = await SharedPreferences.getInstance();
+        String? server = prefs.getString("localhost");
+        WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
+            server: "http://$server:8080");
+
+        await req.get();
       }
-      else {
+      else{
+
         ArtSweetAlert.show(
             context: context,
             artDialogArgs: ArtDialogArgs(
               type: ArtSweetAlertType.danger,
-              title: 'FULL JOB REQUEST QUOTA!',
-              text: "Sorry, the quota for job request is full!",
+              title: "REQUEST QUOTA REACHED!",
+              text: "Sorry, the request quota is full",
             )
         );
+
+        /**
+         * update the job availability
+         */
+        final prefs = await SharedPreferences.getInstance();
+        String? server = prefs.getString("localhost");
+        WebRequestController req = WebRequestController
+          (path: "/inployed/job/updateJobStatus/${job}", server: "http://$server:8080");
+
+        await req.put();
+
+        if(req.status() == 200) {
+          Fluttertoast.showToast(
+            msg: 'This job is full of quota now',
+            backgroundColor: Colors.white,
+            textColor: Colors.red,
+            gravity: ToastGravity.CENTER,
+            toastLength: Toast.LENGTH_LONG,
+            fontSize: 16.0,
+          );
+        }
+
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) =>
+                HomeNavi(username: widget.username, id: widget.user ?? 0, tabIndexes: 0,)), (route) => false
+        );
       }
-
-
     } else {
       throw Exception('Failed to fetch job');
     }
   }
-
 
 
   String _getMonthName(int month) {
@@ -273,7 +267,6 @@ class _HomePageState extends State<HomePage> {
     DateTime EndDate = currentDate.add(Duration(days: 7));
     String applyEndDate = "${EndDate.day} ${_getMonthName(EndDate.month)} ${EndDate.year}";
 
-
     String applyStartTime = _formatTimeIn12Hour(currentDay);
 
     final prefs = await SharedPreferences.getInstance();
@@ -311,7 +304,6 @@ class _HomePageState extends State<HomePage> {
             text: "You have sent the job apply to the company!",
           )
       );
-
       getUserUnderSameCompany(company);
     }
     else
@@ -327,6 +319,50 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  /**
+   * Notification target user selection
+   */
+  late List<User> companyUser = [];
+  List<int> userIds = [];
+
+  Future<void> getUserUnderSameCompany(int? company) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      WebRequestController req = WebRequestController(
+          path: "/inployed/user/getUserByCompany/$company",
+          server: "http://$server:8080");
+
+      await req.get();
+
+      if (req.status() == 200) {
+        setState(() {
+          List<dynamic> data = req.result();
+          companyUser = data.map((json) => User.fromJson(json)).toList();
+
+          print(companyUser);
+
+          // Extract user IDs and convert them to strings
+          List<String> notifyUser = companyUser.map((user) => user.userId.toString()).toList();
+
+          print("UserID: $notifyUser");
+
+          OneSignalController onesignal = OneSignalController();
+          onesignal.SendNotification("A new job request", "There is a new job request", notifyUser);
+        });
+      } else {
+        throw Exception('Failed to fetch user');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      // Handle the error as needed, e.g., show an error message to the user.
+    }
+  }
+
+
+  /**
+   * Auto update approval status after the due date
+   */
   Future<void>autoUpdateApprovalStatus(int id, String status) async
   {
     print("id: $id");
@@ -347,6 +383,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -360,9 +397,6 @@ class _HomePageState extends State<HomePage> {
           duration: const Duration(milliseconds: 1),
           curve: Curves.fastOutSlowIn);
     });
-
-
-
   }
 
   @override
@@ -444,8 +478,6 @@ class _HomePageState extends State<HomePage> {
                             reverse: true,
                             itemBuilder: (context, index) {
                               final ad = advertisements[index];
-
-                              //getJobApplyRequest(ad.AdsId);
 
                               return OpenContainer(
                                   closedColor: Color(0xFFA6C1EE),
@@ -707,49 +739,52 @@ class _HomePageState extends State<HomePage> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () async {
-                                                          /**
-                                                           * Navigate to login() function
-                                                           * for web service request
-                                                           */
-                                                      getJobApplyRequest(userid, ad.AdsId, ad.company?.companyId);
-                                                    },
-                                                    child: Container(
-                                                      width: 100,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Color(0xFF1f1f1f), // Shadow color
-                                                            offset: Offset(0, 2), // Offset of the shadow
-                                                            blurRadius: 4, // Spread of the shadow
-                                                            spreadRadius: 0, // Spread radius of the shadow
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child: Center(
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            Icon(Icons.send,
-                                                                color: Colors.black),
-                                                            SizedBox(width: 5),
-                                                            Text(
-                                                                "Apply",
-                                                                style: GoogleFonts.poppins(
-                                                                    fontSize: 15,
-                                                                    color: Colors.black,
-                                                                    fontWeight: FontWeight.w600
-                                                                )
+
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        /**
+                                                         * Navigate to login() function
+                                                         * for web service request
+                                                         */
+                                                        checkExceedJobRequest(userid, ad.AdsId, ad.company?.companyId);
+
+
+                                                      },
+                                                      child: Container(
+                                                        width: 100,
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Color(0xFF1f1f1f), // Shadow color
+                                                              offset: Offset(0, 2), // Offset of the shadow
+                                                              blurRadius: 4, // Spread of the shadow
+                                                              spreadRadius: 0, // Spread radius of the shadow
                                                             ),
                                                           ],
                                                         ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              Icon(Icons.send,
+                                                                  color: Colors.black),
+                                                              SizedBox(width: 5),
+                                                              Text(
+                                                                  "Apply",
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize: 15,
+                                                                      color: Colors.black,
+                                                                      fontWeight: FontWeight.w600
+                                                                  )
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
                                                   SizedBox(width: 10),
                                                   InkWell(
                                                     onTap: ()
