@@ -60,7 +60,7 @@ class _HomeNaviState extends State<HomeNavi> {
         SnackBar(
           content: Text('Welcome! ${widget.username}'),
           backgroundColor: Colors.indigo,
-          duration: Duration(seconds: 10),
+          duration: Duration(seconds: 5),
         ),
       );
     });
