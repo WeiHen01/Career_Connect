@@ -839,7 +839,7 @@ class _HomePageState extends State<HomePage> {
                                                        */
                                                       Navigator.push(context,
                                                           MaterialPageRoute(
-                                                              builder: (context)=>JobDescView(advertisement: ad, user: userid)
+                                                              builder: (context)=>JobDescView(advertisement: ad, user: userid, username: widget.username,)
                                                           )
                                                       );
 
@@ -884,7 +884,7 @@ class _HomePageState extends State<HomePage> {
                                         )
                                     ),
                                   ),
-                                  openBuilder: (context, _) => JobDescView(advertisement: ad, user: userid),
+                                  openBuilder: (context, _) => JobDescView(advertisement: ad, user: userid, username: widget.username,),
                               );
                             },
                           );

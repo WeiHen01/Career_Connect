@@ -9,8 +9,9 @@ import '../../controller/request_controller.dart';
 import '../../models/advertisement.dart';
 
 class Search extends StatefulWidget {
-  const Search({required this.user});
+  const Search({required this.user, required this.username});
   final int user;
+  final String username;
 
   @override
   State<Search> createState() => _SearchState();
@@ -130,7 +131,7 @@ class _SearchState extends State<Search> {
                             (searchController.text.isNotEmpty && searchController.text != " ")
                             ? (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>JobSearchResult(searchQuery: searchController.text, user: widget.user,))
+                                  MaterialPageRoute(builder: (context)=>JobSearchResult(searchQuery: searchController.text, user: widget.user, username: widget.username,))
                               );
                             }
                             : null, icon: Icon(Icons.search)),
@@ -170,7 +171,7 @@ class _SearchState extends State<Search> {
                                 ),
                                 onTap: (){
                                   Navigator.push(context,
-                                      MaterialPageRoute(builder: (context)=>JobSearchResult(searchQuery: filteredAdvertisements[index].jobPosition, user: widget.user,))
+                                      MaterialPageRoute(builder: (context)=>JobSearchResult(searchQuery: filteredAdvertisements[index].jobPosition, user: widget.user, username: widget.username,))
                                   );
                                 },
                                 // Add other details as needed

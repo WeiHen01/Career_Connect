@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:art_sweetalert/art_sweetalert.dart';
@@ -9,11 +10,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/OneSignalController.dart';
 import '../../controller/request_controller.dart';
 import '../../models/advertisement.dart';
+import '../../models/job_apply.dart';
+import '../../models/user.dart';
+import 'home_navi.dart';
 
 class JobDescView extends StatefulWidget {
   final Advertisement? advertisement;
   final int user;
-  const JobDescView({required this.advertisement, required this.user});
+  final String username;
+  const JobDescView({required this.advertisement, required this.user, required this.username});
 
   @override
   State<JobDescView> createState() => _JobDescViewState();
@@ -33,6 +38,7 @@ class _JobDescViewState extends State<JobDescView> {
   String jobCommit = "";
   String salary = "";
   String industry = "";
+  int companyId = 0;
   String companyName = "";
   String companyState = "";
   String companyCity = "";
@@ -47,6 +53,73 @@ class _JobDescViewState extends State<JobDescView> {
     // Access the advertisement property and assign the AdsId to userId in initState
     adsId = widget.advertisement?.AdsId ?? 0;
     getAds();
+  }
+
+  /**
+   * Make job apply request steps:
+   * 1. Check whether the quota is exceed (job requests originally more than 3)
+   * 2. if job request < 3,
+   *    2.1 add job request -> send notification
+   *    2.2 update the number of job request and calculate the current list of job request by id
+   *    2.3 if the new job request = 3rd request then update job status to unavailable
+   *
+   *
+   */
+  late List<JobApply> jobApplyRequests = [];
+  Future<void> checkExceedJobRequest(int user, int job, int? company) async {
+    final prefs = await SharedPreferences.getInstance();
+    String? server = prefs.getString("localhost");
+    WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
+        server: "http://$server:8080");
+
+    await req.get();
+
+    if (req.status() == 200) {
+      List<dynamic> data = req.result();
+      setState(() {
+        jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
+      });
+
+      if(jobApplyRequests.length <= 3){
+        /**
+         * add new job apply and also send notifications
+         */
+        addJobApply(user, job, company);
+      }
+      else{
+
+        /**
+         * update the job availability
+         */
+        final prefs = await SharedPreferences.getInstance();
+        String? server = prefs.getString("localhost");
+        WebRequestController req = WebRequestController
+          (path: "/inployed/job/updateJobStatus/${job}", server: "http://$server:8080");
+
+        await req.put();
+
+        if(req.status() == 200) {
+          ArtSweetAlert.show(
+            context: context,
+            artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.danger,
+                title: "REQUEST QUOTA REACHED!",
+                text: "Sorry, the request quota is full",
+                onConfirm: (){
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) =>
+                          HomeNavi(username: widget.username, id: widget.user ?? 0, tabIndexes: 0,)), (route) => false
+                  );
+                }
+            ),
+          );
+        }
+
+
+      }
+    } else {
+      throw Exception('Failed to fetch job');
+    }
   }
 
   String _getMonthName(int month) {
@@ -87,7 +160,7 @@ class _JobDescViewState extends State<JobDescView> {
   /**
    * add job apply request
    */
-  Future<void> addJobApply(int user, int job) async{
+  Future<void> addJobApply(int user, int job, int? company) async{
     print(user);
 
     DateTime currentDay = DateTime.now();
@@ -98,7 +171,6 @@ class _JobDescViewState extends State<JobDescView> {
     // Calculate applyEndDate by adding 7 days to currentDate
     DateTime EndDate = currentDate.add(Duration(days: 7));
     String applyEndDate = "${EndDate.day} ${_getMonthName(EndDate.month)} ${EndDate.year}";
-
 
     String applyStartTime = _formatTimeIn12Hour(currentDay);
 
@@ -126,7 +198,7 @@ class _JobDescViewState extends State<JobDescView> {
     await req.post();
 
     print(req.result());
-
+    print(company);
 
     if (req.result() != null) {
       ArtSweetAlert.show(
@@ -137,12 +209,69 @@ class _JobDescViewState extends State<JobDescView> {
             text: "You have sent the job apply to the company!",
           )
       );
+      getUserUnderSameCompany(company);
 
-      OneSignalController onesignal = OneSignalController();
-      //onesignal.SendNotification("Job Request Sent", "You have sent successfully");
+      /**
+       * checking again for the new number of job apply requests based on the job
+       */
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
+          server: "http://$server:8080");
 
+      await req.get();
+
+      List<dynamic> data = req.result();
+      setState(() {
+        jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
+      });
+
+      if(jobApplyRequests.length == 3){
+        ArtSweetAlert.show(
+          context: context,
+          artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.info,
+              title: "LAST REQUEST QUOTA REACHED!",
+              text: "You are lucky!",
+              onConfirm: ()async{
+                /**
+                 * update the job availability
+                 */
+                final prefs = await SharedPreferences.getInstance();
+                String? server = prefs.getString("localhost");
+                WebRequestController req = WebRequestController
+                  (path: "/inployed/job/updateJobStatus/${job}", server: "http://$server:8080");
+
+                await req.put();
+
+                if(req.status() == 200) {
+
+                  Fluttertoast.showToast(
+                    msg: 'The job is currently unavailable now!',
+                    backgroundColor: Colors.white,
+                    textColor: Colors.red,
+                    gravity: ToastGravity.CENTER,
+                    toastLength: Toast.LENGTH_SHORT,
+                    fontSize: 16.0,
+                  );
+
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) =>
+                          HomeNavi(username: widget.username,
+                            id: widget.user ?? 0,
+                            tabIndexes: 0,)), (route) => false
+                  );
+                }
+              }
+          ),
+        );
+
+
+
+
+      }
     }
-    else
+    else if(jobApplyRequests.length > 3)
     {
       ArtSweetAlert.show(
           context: context,
@@ -152,6 +281,46 @@ class _JobDescViewState extends State<JobDescView> {
             text: "Sorry, the request is failed to sent!",
           )
       );
+    }
+  }
+
+  /**
+   * Notification target user selection
+   */
+  late List<User> companyUser = [];
+  List<int> userIds = [];
+
+  Future<void> getUserUnderSameCompany(int? company) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      WebRequestController req = WebRequestController(
+          path: "/inployed/user/getUserByCompany/$company",
+          server: "http://$server:8080");
+
+      await req.get();
+
+      if (req.status() == 200) {
+        setState(() {
+          List<dynamic> data = req.result();
+          companyUser = data.map((json) => User.fromJson(json)).toList();
+
+          print(companyUser);
+
+          // Extract user IDs and convert them to strings
+          List<String> notifyUser = companyUser.map((user) => user.userId.toString()).toList();
+
+          print("UserID: $notifyUser");
+
+          OneSignalController onesignal = OneSignalController();
+          onesignal.SendNotification("A new job request", "There is a new job request", notifyUser);
+        });
+      } else {
+        throw Exception('Failed to fetch user');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      // Handle the error as needed, e.g., show an error message to the user.
     }
   }
 
@@ -184,6 +353,7 @@ class _JobDescViewState extends State<JobDescView> {
         jobTime = ads.jobTime;
         AdsDate = ads.AdsDate;
         AdsTime = ads.AdsTime;
+        companyId = ads.company.companyId;
         jobCommit = ads.jobCommit;
         salary = ads.salary;
         industry = ads.industry;
@@ -457,8 +627,8 @@ class _JobDescViewState extends State<JobDescView> {
                          * Navigate to login() function
                          * for web service request
                          */
-                        addJobApply(widget.user, AdsId);
 
+                        checkExceedJobRequest(widget.user, AdsId, companyId);
 
                       },
                       child: Container(

@@ -12,8 +12,9 @@ import '../../models/advertisement.dart';
 
 class JobSearchResult extends StatefulWidget {
   final String searchQuery;
+  final String username;
   final int user;
-  const JobSearchResult({required this.searchQuery, required this.user});
+  const JobSearchResult({required this.searchQuery, required this.user, required this.username});
 
   @override
   State<JobSearchResult> createState() => _JobSearchResultState();
@@ -171,7 +172,7 @@ class _JobSearchResultState extends State<JobSearchResult> {
                                 ],
                               ),
                             ),
-                            openBuilder: (context, _) => JobDescView(advertisement: jobsSearch, user: widget.user,)
+                            openBuilder: (context, _) => JobDescView(advertisement: jobsSearch, user: widget.user, username: widget.username,)
                         ),
                       );
                     }

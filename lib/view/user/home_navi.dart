@@ -186,7 +186,7 @@ class _HomeNaviState extends State<HomeNavi> {
            * which is related to variable tabIndex later on
            */
           HomePage(username: widget.username, user: widget.id),
-          Search(user: widget.id),
+          Search(user: widget.id, username: widget.username,),
           UserForum(id: widget.id),
           Account(username: widget.username),
 
