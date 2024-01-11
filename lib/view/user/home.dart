@@ -158,32 +158,13 @@ class _HomePageState extends State<HomePage> {
         jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
       });
 
-      if(jobApplyRequests.length < 3){
+      if(jobApplyRequests.length <= 3){
         /**
          * add new job apply and also send notifications
          */
         addJobApply(user, job, company);
-
-        /**
-         * checking again for the new number of job apply requests based on the job
-         */
-        final prefs = await SharedPreferences.getInstance();
-        String? server = prefs.getString("localhost");
-        WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
-            server: "http://$server:8080");
-
-        await req.get();
       }
       else{
-
-        ArtSweetAlert.show(
-            context: context,
-            artDialogArgs: ArtDialogArgs(
-              type: ArtSweetAlertType.danger,
-              title: "REQUEST QUOTA REACHED!",
-              text: "Sorry, the request quota is full",
-            )
-        );
 
         /**
          * update the job availability
@@ -196,20 +177,23 @@ class _HomePageState extends State<HomePage> {
         await req.put();
 
         if(req.status() == 200) {
-          Fluttertoast.showToast(
-            msg: 'This job is full of quota now',
-            backgroundColor: Colors.white,
-            textColor: Colors.red,
-            gravity: ToastGravity.CENTER,
-            toastLength: Toast.LENGTH_LONG,
-            fontSize: 16.0,
+          ArtSweetAlert.show(
+              context: context,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.danger,
+                title: "REQUEST QUOTA REACHED!",
+                text: "Sorry, the request quota is full",
+                onConfirm: (){
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) =>
+                          HomeNavi(username: widget.username, id: widget.user ?? 0, tabIndexes: 0,)), (route) => false
+                  );
+                }
+              ),
           );
         }
 
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) =>
-                HomeNavi(username: widget.username, id: widget.user ?? 0, tabIndexes: 0,)), (route) => false
-        );
+
       }
     } else {
       throw Exception('Failed to fetch job');
@@ -305,8 +289,68 @@ class _HomePageState extends State<HomePage> {
           )
       );
       getUserUnderSameCompany(company);
+
+      /**
+       * checking again for the new number of job apply requests based on the job
+       */
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
+          server: "http://$server:8080");
+
+      await req.get();
+
+      List<dynamic> data = req.result();
+      setState(() {
+        jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
+      });
+
+      if(jobApplyRequests.length == 3){
+        ArtSweetAlert.show(
+          context: context,
+          artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.info,
+              title: "LAST REQUEST QUOTA REACHED!",
+              text: "You are lucky!",
+              onConfirm: ()async{
+                /**
+                 * update the job availability
+                 */
+                final prefs = await SharedPreferences.getInstance();
+                String? server = prefs.getString("localhost");
+                WebRequestController req = WebRequestController
+                  (path: "/inployed/job/updateJobStatus/${job}", server: "http://$server:8080");
+
+                await req.put();
+
+                if(req.status() == 200) {
+
+                  Fluttertoast.showToast(
+                    msg: 'The job is currently unavailable now!',
+                    backgroundColor: Colors.white,
+                    textColor: Colors.red,
+                    gravity: ToastGravity.CENTER,
+                    toastLength: Toast.LENGTH_SHORT,
+                    fontSize: 16.0,
+                  );
+
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) =>
+                          HomeNavi(username: widget.username,
+                            id: widget.user ?? 0,
+                            tabIndexes: 0,)), (route) => false
+                  );
+                }
+              }
+          ),
+        );
+
+
+
+
+      }
     }
-    else
+    else if(jobApplyRequests.length > 3)
     {
       ArtSweetAlert.show(
           context: context,
