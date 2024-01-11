@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(Duration(seconds: 5), () async
     {
       final prefs = await SharedPreferences.getInstance();
-      String ip = "192.168.109.212";
+      String ip = "10.131.72.44";
       await prefs.setString("localhost", ip);
 
       int? userID = await prefs.getInt("loggedUserId");

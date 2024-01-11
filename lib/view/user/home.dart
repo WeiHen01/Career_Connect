@@ -185,11 +185,11 @@ class _HomePageState extends State<HomePage> {
 
   late List<JobApply> jobApplyRequests = [];
   bool? enableButton;
-  Future<void> getJobApplyRequest(int? id) async {
-    print(id);
+  Future<void> getJobApplyRequest(int user, int job, int? company) async {
+    print(job);
     final prefs = await SharedPreferences.getInstance();
     String? server = prefs.getString("localhost");
-    WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$id",
+    WebRequestController req = WebRequestController(path: "/inployed/jobapply/applyStatus/$job",
         server: "http://$server:8080");
 
     await req.get();
@@ -198,18 +198,21 @@ class _HomePageState extends State<HomePage> {
       List<dynamic> data = req.result();
       setState(() {
         jobApplyRequests = data.map((json) => JobApply.fromJson(json)).toList();
-        print("Job Apply based on $id: ${jobApplyRequests.length}");
+        print("Job Apply based on $job: ${jobApplyRequests.length}");
       });
 
       if(jobApplyRequests.length < 3){
-        setState(() {
-          enableButton = true;
-        });
+        addJobApply(user, job, company);
       }
       else {
-        setState(() {
-          enableButton = false;
-        });
+        ArtSweetAlert.show(
+            context: context,
+            artDialogArgs: ArtDialogArgs(
+              type: ArtSweetAlertType.danger,
+              title: 'FULL JOB REQUEST QUOTA!',
+              text: "Sorry, the quota for job request is full!",
+            )
+        );
       }
 
 
@@ -710,8 +713,8 @@ class _HomePageState extends State<HomePage> {
                                                            * Navigate to login() function
                                                            * for web service request
                                                            */
-                                                            addJobApply(userid, ad.AdsId, ad.company?.companyId);
-                                                          } ,
+                                                      getJobApplyRequest(userid, ad.AdsId, ad.company?.companyId);
+                                                    },
                                                     child: Container(
                                                       width: 100,
                                                       height: 40,
