@@ -265,10 +265,6 @@ class _JobDescViewState extends State<JobDescView> {
               }
           ),
         );
-
-
-
-
       }
     }
     else if(jobApplyRequests.length > 3)
