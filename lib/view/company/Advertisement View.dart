@@ -5,10 +5,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controller/request_controller.dart';
+import 'CompanyHome_Navi.dart';
 
 class CompanyAds extends StatefulWidget {
   final int company;
-  const CompanyAds({required this.company});
+  final String? username;
+  const CompanyAds({required this.company, this.username});
 
   @override
   State<CompanyAds> createState() => _CompanyAdsState();
@@ -151,6 +153,14 @@ class _CompanyAdsState extends State<CompanyAds> {
         dropdownDate = "Select working day";
         dropdownRemote = "Job Remote";
       });
+
+      Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CompanyHomeNavi(
+                username: widget.username ?? '', id: widget.company, tabIndexes: 0, company: widget.company,
+              ),
+            ), (route) => false);
 
     }
 

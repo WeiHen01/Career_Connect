@@ -15,8 +15,9 @@ import 'own_JobPost.dart';
 
 
 class CompanyHome extends StatefulWidget {
-  const CompanyHome({required this.company});
-  final int company;
+  const CompanyHome({this.company, this.username});
+  final int? company;
+  final String? username;
 
   @override
   State<CompanyHome> createState() => _CompanyHomeState();

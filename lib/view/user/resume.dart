@@ -196,7 +196,7 @@ class _ResumeState extends State<UserResume> {
               children: [
                 Container(
                   width: double.infinity,
-                    height: 680,
+                    height: 1000,
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),

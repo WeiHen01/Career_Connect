@@ -157,142 +157,144 @@ class _NewResumeState extends State<NewResume> {
         padding: EdgeInsets.all(15),
           width: double.infinity,
           height: double.infinity,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                  height: 700,
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white30
-                  ),
-                  child: Column(
-                    children: [
-                      Image.asset("images/upload.png"),
-
-                      SizedBox(height: 15,),
-
-                      Text("Select files", style: GoogleFonts.poppins(
-                          fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-
-                      GestureDetector(
-                        onTap: uploadLocal,
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-                            child: DottedBorder(
-                              borderType: BorderType.RRect,
-                              radius: Radius.circular(10),
-                              dashPattern: [5, 6],
-                              strokeCap: StrokeCap.round,
-                              strokeWidth: 3,
-                              child: Container(
-                                width: 700,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.black38.withOpacity(0.4),
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.folder_open, color: Colors.white, size: 40,),
-                                    SizedBox(width: 15,),
-                                    Text('Select your file', style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),),
-                                  ],
-                                ),
-                              ),
-                            )
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                    height: 950,
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white30
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset("images/upload.png"),
+            
+                        SizedBox(height: 15,),
+            
+                        Text("Select files", style: GoogleFonts.poppins(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                         ),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text("Resume", textAlign: TextAlign.start,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20, color: Colors.black,
-                                    fontWeight: FontWeight.bold
+            
+                        GestureDetector(
+                          onTap: uploadLocal,
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                              child: DottedBorder(
+                                borderType: BorderType.RRect,
+                                radius: Radius.circular(10),
+                                dashPattern: [5, 6],
+                                strokeCap: StrokeCap.round,
+                                strokeWidth: 3,
+                                child: Container(
+                                  width: 700,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black38.withOpacity(0.4),
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.folder_open, color: Colors.white, size: 40,),
+                                      SizedBox(width: 15,),
+                                      Text('Select your file', style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              )
                           ),
-
-                          /**
-                           * File uploaded box view
-                           */
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+            
+                        SizedBox(height: 10),
+            
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.file_copy),
-                                    SizedBox(width: 10),
-
-                                    Text("$filename", textAlign: TextAlign.start,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15, color: Colors.black,
-                                      ), overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                                Text("Resume", textAlign: TextAlign.start,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20, color: Colors.black,
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 ),
-
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-
-                      InkWell(
-                        onTap: (){
-                          UploadFileToDatabase(filename, filepath);
-                        },
-                        child: Container(
-                          width: 300,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                  Color.fromRGBO(98, 58, 162, 1),]
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF1f1f1f), // Shadow color
-                                offset: Offset(0, 2), // Offset of the shadow
-                                blurRadius: 4, // Spread of the shadow
-                                spreadRadius: 0, // Spread radius of the shadow
+            
+                            /**
+                             * File uploaded box view
+                             */
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)
                               ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                                "Save",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20, color: Colors.white,
-                                    fontWeight: FontWeight.w600
-                                )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.file_copy),
+                                      SizedBox(width: 10),
+            
+                                      Text("$filename", textAlign: TextAlign.start,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 15, color: Colors.black,
+                                        ), overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+            
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+            
+                        InkWell(
+                          onTap: (){
+                            UploadFileToDatabase(filename, filepath);
+                          },
+                          child: Container(
+                            width: 300,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [ Color.fromRGBO(249, 151, 119, 1),
+                                    Color.fromRGBO(98, 58, 162, 1),]
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1f1f1f), // Shadow color
+                                  offset: Offset(0, 2), // Offset of the shadow
+                                  blurRadius: 4, // Spread of the shadow
+                                  spreadRadius: 0, // Spread radius of the shadow
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                  "Save",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20, color: Colors.white,
+                                      fontWeight: FontWeight.w600
+                                  )),
+                            ),
                           ),
                         ),
-                      ),
-
-                    ],
+            
+                      ],
+                    ),
+                ),
+                    ]
                   ),
-              ),
-        ]
-      ),
+          ),
       ),
     );
   }

@@ -23,11 +23,11 @@ import 'Job Request View.dart';
 class CompanyHomeNavi extends StatefulWidget {
 
   const CompanyHomeNavi({Key? key,
-    required this.username, required this.id, required this.tabIndexes,
+    required this.username, this.id, required this.tabIndexes,
     required this.company
   }): super(key: key);
   final String username;
-  final int id;
+  final int? id;
   final int company;
   final int tabIndexes;
   // const HomeNavi({required this.username});
@@ -186,11 +186,11 @@ class _CompanyHomeNaviState extends State<CompanyHomeNavi> {
            * The index of the screen starts from 0 in sequence
            * which is related to variable tabIndex later on
            */
-          CompanyHome(company: widget.company),
+          CompanyHome(company: widget.company, username: widget.username),
           CompanyViewRequest(company: widget.company),
-          CompanyAds(company: widget.company),
-          UserForum(id: widget.id),
-          CompanyAccount(username: widget.username, userid: widget.id, company: widget.company),
+          CompanyAds(company: widget.company, username: widget.username),
+          UserForum(id: widget.id ?? 0),
+          CompanyAccount(username: widget.username, userid: widget.id ?? 0, company: widget.company),
         ],
       ),
     );

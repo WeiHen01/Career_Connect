@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(Duration(seconds: 5), () async
     {
       final prefs = await SharedPreferences.getInstance();
-      String ip = "192.168.109.212";
+      String ip = "192.168.8.119";
       await prefs.setString("localhost", ip);
 
       int? userID = await prefs.getInt("loggedUserId");
@@ -101,6 +101,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
         padding: EdgeInsets.all(25),
           decoration: BoxDecoration(
             // Linear gradient for background
