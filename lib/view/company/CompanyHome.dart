@@ -140,7 +140,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
               ),
-              title: Image.asset('images/logo_company.png',
+              title: Image.asset('images/logo.png',
                 width: 100, height: 50,
               ),
             ),

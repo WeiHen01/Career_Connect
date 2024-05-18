@@ -92,7 +92,7 @@ dependencies:
 
 flutter_native_splash:
    color: "#FBC2EB"
-   image: "images/inployed.png"
+   image: "images/career.png"
 
 
 dev_dependencies:

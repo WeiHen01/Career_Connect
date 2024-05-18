@@ -105,20 +105,7 @@ class _SplashScreenState extends State<SplashScreen>
         padding: EdgeInsets.all(25),
           decoration: BoxDecoration(
             // Linear gradient for background
-            gradient: LinearGradient(
-
-              //determine the direction and angle of each color stop in gradient
-              begin: Alignment.topRight,
-              end: Alignment.bottomRight,
-
-              //0xFF is needed to convert RGB Hex code to int value
-              // Hex code here is 29539B and 1E3B70
-              // Gradient Name: Unloved Teen
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+            color: Color(0xFF0C2134),
           ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

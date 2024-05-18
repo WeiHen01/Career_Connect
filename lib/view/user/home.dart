@@ -495,7 +495,7 @@ class _HomePageState extends State<HomePage> {
             advertisements != null
                 ? Container(
                   decoration: BoxDecoration(
-                      color: Color(0xFF000fff),
+                    color: Color(0xFF0C2134),
                   ),
                   child: RefreshIndicator(
                     onRefresh: ()async{

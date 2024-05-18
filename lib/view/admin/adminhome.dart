@@ -115,7 +115,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 ),
               ),
 
-              title: Image.asset('images/logo_admin.png',
+              title: Image.asset('images/logo.png',
                 width: 140, height: 50,
               ),
             ),
