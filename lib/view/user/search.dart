@@ -80,14 +80,7 @@ class _SearchState extends State<Search> {
           width: screenSize.width,
           height: screenSize.height,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE),
-                ],
-                stops: [0.0, 0.9],
-                transform: GradientRotation(358.4 * (3.1415926 / 180)),
-              )
+            color: Color(0xFF0C2134)
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

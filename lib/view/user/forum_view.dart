@@ -68,14 +68,7 @@ class _UserForumState extends State<UserForum> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Forum", style: GoogleFonts.poppins(
@@ -92,14 +85,7 @@ class _UserForumState extends State<UserForum> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0C2134)
           ),
           child: RefreshIndicator(
             onRefresh: ()async{
@@ -123,14 +109,7 @@ class _UserForumState extends State<UserForum> {
                   ),
                     closedBuilder: (context, _) =>  Container(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              //Color(0xFFFBC2EB), // #fbc2eb
-                              //Color(0xFFA6C1EE), #a6c1ee
-                              Color.fromRGBO(249, 151, 119, 1),
-                              Color.fromRGBO(98, 58, 162, 1),
-                            ],
-                          ),
+                          color: Color(0xFF0C2134)
                       ),
                       child: Container(
                         decoration: BoxDecoration(
@@ -146,7 +125,8 @@ class _UserForumState extends State<UserForum> {
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(
-                                    colors: [ Color(0xFFFBC2EB), Color(0xFFA6C1EE),],
+                                    colors: [ Color(0xFFCBCACB), Color(
+                                        0xFFA0A0A0),],
                                   ),
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(10),
@@ -543,14 +523,7 @@ class _UserForumPostState extends State<UserForumPost> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Make Forum Post", style: GoogleFonts.poppins(
@@ -561,14 +534,7 @@ class _UserForumPostState extends State<UserForumPost> {
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                //Color(0xFFFBC2EB), // #fbc2eb
-                //Color(0xFFA6C1EE), #a6c1ee
-                Color.fromRGBO(249, 151, 119, 1),
-                Color.fromRGBO(98, 58, 162, 1),
-              ],
-            )
+          color: Color(0xFF0C2134),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -702,10 +668,7 @@ class _UserForumPostState extends State<UserForumPost> {
                               width: 120,
                               height: 40,
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                      Color.fromRGBO(98, 58, 162, 1),]
-                                ),
+                                color: Color(0xFF0CA437),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(

@@ -138,7 +138,9 @@ class _HomeNaviState extends State<HomeNavi> {
             color: Colors.white, fontWeight: FontWeight.bold
           ),),
         ],
-        color: Colors.white,
+        // 1. Tambah Color dan circleCOlor
+        color: Color.fromRGBO(11,59,123,1),
+        circleColor: Color(0xFFFEBD59),
         height: 60,
         circleWidth: 60,
         activeIndex: tabIndex,
@@ -156,17 +158,19 @@ class _HomeNaviState extends State<HomeNavi> {
         ),
         shadowColor: Colors.blueGrey,
         elevation: 10,
+
+        // 2. comment semua gradient
         /**
          * Background color of the bar
          */
-        gradient: LinearGradient(
+        /*gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            Color.fromRGBO(249, 151, 119, 1),
-            Color.fromRGBO(98, 58, 162, 1),
+            Color.fromRGBO(11,59,123,1),
+            Color.fromRGBO(98, 58, 162, 0),
           ],
-        ),
+        ),*/
       ),
       body: PageView(
         controller: pageController,

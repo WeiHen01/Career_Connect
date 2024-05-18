@@ -442,10 +442,10 @@ class _AccountState extends State<Account> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            Icon(Icons.lock, size: 26,),
+            Icon(Icons.lock, size: 26, color: Colors.white),
             SizedBox(width: 5),
             Text('${_user?.username ?? 'Loading username...'}', style: GoogleFonts.poppins(
-                fontSize: 25, fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -456,7 +456,7 @@ class _AccountState extends State<Account> {
                 _showBottomSheet(context);
               }, icon: Icon(Icons.more_vert),
                style: ButtonStyle(
-                   foregroundColor: MaterialStateProperty.all(Colors.black)
+                   foregroundColor: MaterialStateProperty.all(Colors.white)
                ),
               ),
             ],
@@ -464,40 +464,22 @@ class _AccountState extends State<Account> {
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color.fromRGBO(11,59,123,1),
           ),
         ),
       ),
       body:
          Container(
            decoration: BoxDecoration(
-             gradient: LinearGradient(
-               colors: [
-                 Color(0xFFFBC2EB), // #fbc2eb
-                 Color(0xFFA6C1EE), // #a6c1ee
-               ],
-             )
+             color: Color(0xFF0C2134),
            ),
            child: Column(
              children: [
                Container(
                  padding: EdgeInsets.all(10),
                  decoration: BoxDecoration(
-                   gradient: LinearGradient(
-                     colors: [
-                       Color.fromRGBO(249, 151, 119, 1),
-                       Color.fromRGBO(98, 58, 162, 1),
-                     ],
-                     stops: [0.0, 0.9],
-                     transform: GradientRotation(358.4 * (3.1415926 / 180)),
-                   ),
+                     color: Color(0xFF0087B2),
+
                    borderRadius: BorderRadius.only(
                        bottomLeft: Radius.circular(20),
                        bottomRight: Radius.circular(20),),
@@ -601,10 +583,7 @@ class _AccountState extends State<Account> {
                          width: double.infinity,
                          height: 40,
                          decoration: BoxDecoration(
-                           gradient: LinearGradient(
-                               colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                 Color.fromRGBO(98, 58, 162, 1),]
-                           ),
+                           color: Color(0xFF0CA437),
                            borderRadius: BorderRadius.circular(10),
                            boxShadow: [
                              BoxShadow(
@@ -694,8 +673,10 @@ class _AccountState extends State<Account> {
                                          height: 350,
                                          decoration: BoxDecoration(
                                            gradient: LinearGradient(
-                                               colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                 Color.fromRGBO(98, 58, 162, 1),]
+                                               colors: [ Color.fromRGBO(
+                                                   220, 220, 220, 1.0),
+                                                 Color.fromRGBO(
+                                                     173, 173, 173, 1.0),]
                                            ),
                                            borderRadius: BorderRadius.circular(8),
                                          ),
@@ -708,7 +689,7 @@ class _AccountState extends State<Account> {
                                                      "Edit your resume details",
                                                      style: GoogleFonts.poppins(
                                                          fontSize: 20, fontWeight: FontWeight.bold,
-                                                         color: Colors.white,
+                                                         color: Colors.black,
                                                      )
                                                  ),
 
@@ -812,10 +793,7 @@ class _AccountState extends State<Account> {
                                                      width: 300,
                                                      height: 40,
                                                      decoration: BoxDecoration(
-                                                       gradient: LinearGradient(
-                                                           colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                             Color.fromRGBO(98, 58, 162, 1),]
-                                                       ),
+                                                       color: Color(0xFF0CA437),
                                                        borderRadius: BorderRadius.circular(10),
                                                        boxShadow: [
                                                          BoxShadow(
@@ -868,10 +846,7 @@ class _AccountState extends State<Account> {
                        left: 5, top: 5, bottom: 5, right: 10
                    ),
                    decoration: BoxDecoration(
-                     gradient: LinearGradient(
-                         colors: [ Color.fromRGBO(249, 151, 119, 1),
-                           Color.fromRGBO(98, 58, 162, 1),]
-                     ),
+                     color: Color(0xFF0087B2),
                      borderRadius: BorderRadius.circular(8),
                    ),
                    child: Row(

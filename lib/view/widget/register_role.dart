@@ -23,12 +23,7 @@ class _UserRegisterRoleState extends State<UserRegisterRole> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(249, 151, 119, 1),
-                Color.fromRGBO(98, 58, 162, 1),
-              ]
-          ),
+            color: Color(0xFF0C2134)
         ),
         child: Center(
           child: Column(
@@ -121,7 +116,7 @@ class _UserRegisterRoleState extends State<UserRegisterRole> {
                   width: double.infinity,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFF0CA437),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -136,7 +131,7 @@ class _UserRegisterRoleState extends State<UserRegisterRole> {
                     child: Text(
                         "Go to Login",
                         style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.black,
+                            fontSize: 20, color: Colors.white,
                             fontWeight: FontWeight.w600
                         )),
                   ),

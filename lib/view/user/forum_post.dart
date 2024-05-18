@@ -143,27 +143,17 @@ class _ForumPostViewState extends State<ForumPostView> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text('View forum', style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            fontSize: 25
+            fontSize: 25, color: Colors.white
         ),),
       ),
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+            color: Color(0xFF0C2134)
         ),
         child: Stack (
           children: [
@@ -171,12 +161,7 @@ class _ForumPostViewState extends State<ForumPostView> {
             ? Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xFFFBC2EB), // #fbc2eb
-                        Color(0xFFA6C1EE), // #a6c1ee
-                      ],
-                    )
+                    color: Color(0xFF0C2134)
                 ),
                 margin: EdgeInsets.only(
                   top: 380, bottom: 30
@@ -188,7 +173,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                       children: [
                         Text('Posts', style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            fontSize: 25
+                            fontSize: 25, color: Colors.white
                         ),),
 
                         Spacer(),
@@ -201,11 +186,11 @@ class _ForumPostViewState extends State<ForumPostView> {
                           );
                         }, child: Row(
                           children: [
-                            Icon(Icons.post_add_outlined,  color: Colors.black,
+                            Icon(Icons.post_add_outlined,  color: Colors.white,
                               size: 25
                             ),
                             Text('Make Posts', style: GoogleFonts.poppins(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 20
                             ),),
                           ],

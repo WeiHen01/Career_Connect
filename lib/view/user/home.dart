@@ -453,12 +453,7 @@ class _HomePageState extends State<HomePage> {
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(249, 151, 119, 1),
-                    Color.fromRGBO(98, 58, 162, 1),// #a6c1ee
-                  ],
-                )
+                color: Color(0xFF0087B2)
             ),
           ),
           bottom:  TabBar(
@@ -474,13 +469,13 @@ class _HomePageState extends State<HomePage> {
             ],
             labelStyle: GoogleFonts.poppins(
                 fontSize: 18,
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.w600
             ),
             unselectedLabelColor: Colors.white,
-            indicatorColor: Colors.black,
+            indicatorColor: Colors.white,
             indicator: BoxDecoration(
-                color: Color(0xFFA6C1EE),
+                color: Color(0xFF0C2134),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
@@ -500,7 +495,7 @@ class _HomePageState extends State<HomePage> {
             advertisements != null
                 ? Container(
                   decoration: BoxDecoration(
-                      color: Color(0xFFA6C1EE),
+                      color: Color(0xFF000fff),
                   ),
                   child: RefreshIndicator(
                     onRefresh: ()async{
@@ -524,7 +519,7 @@ class _HomePageState extends State<HomePage> {
                               final ad = advertisements[index];
 
                               return OpenContainer(
-                                  closedColor: Color(0xFFA6C1EE),
+                                  closedColor: Color(0xFF0C2134),
                                   transitionType: ContainerTransitionType.fade,
                                   transitionDuration: Duration(seconds: 1),
                                   closedBuilder: (context, _) => Card(
@@ -903,7 +898,7 @@ class _HomePageState extends State<HomePage> {
                   left: 10, right: 10, bottom: 100
               ),
               decoration: BoxDecoration(
-                color: Color(0xFFA6C1EE),
+                color: Color(0xFF0C2134),
               ),
               child: RefreshIndicator(
                 onRefresh: ()async{

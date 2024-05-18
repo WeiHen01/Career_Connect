@@ -226,21 +226,7 @@ class _RegisterState extends State<Register> {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           // set the background color of the container to be gradient
-          gradient: LinearGradient(
-            // determine the direction and angle of each color stop in gradient
-              begin: Alignment.topRight,
-              end: Alignment.bottomRight,
-
-              /**
-               * 0xFF is needed to convert RGB Hex code to int value
-                  Hex code here is 29539B and 1E3B70
-                  Gradient Name: Unloved Teen
-               */
-            colors: [
-              Color(0xFFFBC2EB), // #fbc2eb
-              Color(0xFFA6C1EE), // #a6c1ee
-            ],
-          ),
+            color: Color(0xFF0C2134)
 
         ),
         child: SingleChildScrollView(
@@ -270,7 +256,7 @@ class _RegisterState extends State<Register> {
                             ),
                           ],
                           fontWeight: FontWeight.bold,
-                          fontSize: 40
+                          fontSize: 40, color: Colors.white
                       )
                   ),
                 ],
@@ -285,7 +271,11 @@ class _RegisterState extends State<Register> {
                         padding: EdgeInsets.all(15),
                         height: 600, width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Colors.white38,
+                            gradient: LinearGradient(
+                              begin: Alignment.center,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xFFF3F3F3), Color(0xFFC8C8C8)],
+                            ),
                             borderRadius: BorderRadius.circular(15)
                         ),
                       child: Column(
@@ -464,7 +454,7 @@ class _RegisterState extends State<Register> {
                               children: [
                                 Text("Already have an account?",
                                     style: GoogleFonts.poppins(
-
+                                      color: Colors.black,
                                     )),
                                 TextButton(onPressed: (){
                                   Navigator.push(context,
@@ -496,10 +486,7 @@ class _RegisterState extends State<Register> {
                                 width: double.infinity,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                        Color.fromRGBO(98, 58, 162, 1),]
-                                  ),
+                                  color: Color(0xFF0CA437),
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
