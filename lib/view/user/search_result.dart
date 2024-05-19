@@ -67,14 +67,7 @@ class _JobSearchResultState extends State<JobSearchResult> {
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
       ),
@@ -84,12 +77,7 @@ class _JobSearchResultState extends State<JobSearchResult> {
               left: 10, top: 5, right: 10
           ),
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+            color: Color(0xFF0C2134),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -97,11 +85,11 @@ class _JobSearchResultState extends State<JobSearchResult> {
               Row(
                 children: [
                   Text("Searching query: ", style: GoogleFonts.poppins(
-                      fontSize: 15,
+                      fontSize: 15,color:Colors.white
                   ),),
 
                   Text("${widget.searchQuery}", style: GoogleFonts.poppins(
-                    fontSize: 15, fontWeight: FontWeight.bold
+                    fontSize: 15, fontWeight: FontWeight.bold, color:Colors.white
                   ),),
                 ],
               ),
@@ -109,10 +97,10 @@ class _JobSearchResultState extends State<JobSearchResult> {
               Row(
                 children: [
                   Text("Results obtained: " , style: GoogleFonts.poppins(
-                    fontSize: 15,
+                    fontSize: 15,color:Colors.white
                   ),),
                   Text("${(jobQuery != null ? jobQuery.length : 0)}", style: GoogleFonts.poppins(
-                    fontSize: 15, fontWeight: FontWeight.bold
+                    fontSize: 15, fontWeight: FontWeight.bold,color:Colors.white
                   ),),
                 ],
               ),

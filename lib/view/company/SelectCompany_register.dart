@@ -111,14 +111,7 @@ class _SelectCompanyState extends State<SelectCompany> {
         height: double.infinity,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(249, 151, 119, 1),
-              Color.fromRGBO(98, 58, 162, 1),
-            ],
-            stops: [0.0, 0.9],
-            transform: GradientRotation(358.4 * (3.1415926 / 180)),
-          ),
+          color: Color(0xFF0C2134),
         ),
         child: Container(
           child: Center(

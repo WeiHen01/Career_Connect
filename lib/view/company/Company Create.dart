@@ -169,14 +169,7 @@ class _CreateCompanyState extends State<CreateCompany> {
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
       ),
@@ -185,14 +178,7 @@ class _CreateCompanyState extends State<CreateCompany> {
         height: double.infinity,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(249, 151, 119, 1),
-              Color.fromRGBO(98, 58, 162, 1),
-            ],
-            stops: [0.0, 0.9],
-            transform: GradientRotation(358.4 * (3.1415926 / 180)),
-          ),
+          color: Color(0xFF0C2134),
         ),
 
         child: Container(

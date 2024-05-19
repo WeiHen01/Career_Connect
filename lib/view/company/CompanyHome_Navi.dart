@@ -139,7 +139,8 @@ class _CompanyHomeNaviState extends State<CompanyHomeNavi> {
           ),),
 
         ],
-        color: Colors.white,
+        color: Color.fromRGBO(11,59,123,1),
+        circleColor: Color(0xFFFEBD59),
         height: 60,
         circleWidth: 60,
         activeIndex: tabIndex,
@@ -160,14 +161,7 @@ class _CompanyHomeNaviState extends State<CompanyHomeNavi> {
         /**
          * Background color of the bar
          */
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Color.fromRGBO(249, 151, 119, 1),
-            Color.fromRGBO(98, 58, 162, 1),
-          ],
-        ),
+        //
       ),
       body: PageView(
         controller: pageController,

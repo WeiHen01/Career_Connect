@@ -94,12 +94,7 @@ class _JobApplyViewState extends State<JobApplyView> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Job Description", style: GoogleFonts.poppins(
@@ -109,6 +104,9 @@ class _JobApplyViewState extends State<JobApplyView> {
         ),
       ),
       body: Container(
+        decoration: BoxDecoration(
+            color: Color(0xFF0C2134)
+        ),
         padding: EdgeInsets.all(10),
         child: Container(
           margin: EdgeInsets.only(
@@ -118,12 +116,7 @@ class _JobApplyViewState extends State<JobApplyView> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              ),
+              color: Color(0xFFECDDF6),
             borderRadius: BorderRadius.circular(15)
           ),
           child: SingleChildScrollView(

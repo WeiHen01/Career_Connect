@@ -73,22 +73,7 @@ class _OnBoardingState extends State<OnBoarding> {
           // set the decoration of the container
           decoration: BoxDecoration(
             // set the background color of the container to be gradient
-              gradient: LinearGradient(
-                // determine the direction and angle of each color stop in gradient
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomRight,
-
-                  /**
-                   * 0xFF is needed to convert RGB Hex code to int value
-                      Hex code here is 29539B and 1E3B70
-                      Gradient Name: Unloved Teen
-                   */
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              ),
-
+            color: Color(0xFF0C2134),
           ),
 
           child: PageView.builder(
@@ -150,7 +135,7 @@ class _OnBoardingState extends State<OnBoarding> {
                               style: GoogleFonts.poppins(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: Colors.white,
                               )
                           ),
 
@@ -168,7 +153,7 @@ class _OnBoardingState extends State<OnBoarding> {
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
-                                color: Colors.black,
+                                color: Colors.white,
                               )
                           ),
 
@@ -269,7 +254,7 @@ class _OnBoardingState extends State<OnBoarding> {
                                     MaterialPageRoute(builder: (context)=>UserRole()));
                                   }, child: Text("I already have an account",
                                       style: GoogleFonts.poppins(
-                                        fontSize: 15, color: Colors.black
+                                        fontSize: 15, color: Colors.white
                                       )))
 
                                 ],

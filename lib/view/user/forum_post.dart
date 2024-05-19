@@ -449,12 +449,7 @@ class _ForumPostViewState extends State<ForumPostView> {
                       appBar: AppBar(
                         flexibleSpace: Container(
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0xFFFBC2EB), // #fbc2eb
-                                  Color(0xFFA6C1EE), // #a6c1ee
-                                ],
-                              )
+                              color: Color(0xFF0087B2)
                           ),
                         ),
                         title: Text("Forum Details", style: GoogleFonts.poppins(

@@ -105,12 +105,7 @@ class _CompanyHomeState extends State<CompanyHome> {
               automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromRGBO(249, 151, 119, 1),
-                        Color.fromRGBO(98, 58, 162, 1),// #a6c1ee
-                      ],
-                    )
+                    color: Color(0xFF0087B2)
                 ),
               ),
 
@@ -126,13 +121,13 @@ class _CompanyHomeState extends State<CompanyHome> {
                 ],
                 labelStyle: GoogleFonts.poppins(
                     fontSize: 18,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.w600
                 ),
                 unselectedLabelColor: Colors.white,
                 indicatorColor: Colors.black,
                 indicator: BoxDecoration(
-                    color: Color(0xFFA6C1EE),
+                    color: Color(0xFF0C2134),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
@@ -152,202 +147,202 @@ class _CompanyHomeState extends State<CompanyHome> {
                   advertisements != null
                       ? Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFA6C1EE),
+                      color: Color(0xFF0C2134),
                     ),
-                    child: RefreshIndicator(
-                      onRefresh: ()async{
-                        Future.delayed(Duration(seconds: 10));
-                        getAdvertisement();
-                      },
-                      color: Colors.black,
-                      backgroundColor: Colors.yellow,
-                      child: Builder(
-                        builder: (context) {
-                          SchedulerBinding.instance?.addPostFrameCallback((_) {
-                            _scrollController.animateTo(
-                                _scrollController.position.maxScrollExtent,
-                                duration: const Duration(milliseconds: 1),
-                                curve: Curves.fastOutSlowIn);
-                          });
-                          getAdvertisement();
-                          getCompanyOwnAdvertisement();
+                        child: RefreshIndicator(
+                          onRefresh: ()async{
+                            Future.delayed(Duration(seconds: 10));
+                            getAdvertisement();
+                          },
+                          color: Colors.black,
+                          backgroundColor: Colors.yellow,
+                          child: Builder(
+                            builder: (context) {
+                              SchedulerBinding.instance?.addPostFrameCallback((_) {
+                                _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: const Duration(milliseconds: 1),
+                                    curve: Curves.fastOutSlowIn);
+                              });
+                              getAdvertisement();
+                              getCompanyOwnAdvertisement();
 
 
-                          return ListView.builder(
-                            controller: _scrollController,
-                            itemCount: advertisements.length,
-                            reverse: true,
-                            itemBuilder: (context, index) {
-                              final ad = advertisements[index];
-                              return OpenContainer(
-                                closedColor: Color(0xFFA6C1EE),
-                                transitionType: ContainerTransitionType.fade,
-                                transitionDuration: Duration(seconds: 1),
-                                closedBuilder: (context, _) => Card(
-                                  elevation: 4,
-                                  margin: EdgeInsets.only(
-                                      left: 10, top: 10, bottom: 10, right: 10
-                                  ),
-                                  child: Container(
-                                      height: 300,
-                                      padding: EdgeInsets.all(15),
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.blueGrey,
-                                            offset: Offset(2, 5),
-                                            blurRadius: 10,
-                                          ),
-                                        ],
+                              return ListView.builder(
+                                controller: _scrollController,
+                                itemCount: advertisements.length,
+                                reverse: true,
+                                itemBuilder: (context, index) {
+                                  final ad = advertisements[index];
+                                  return OpenContainer(
+                                    closedColor: Color(0xFF0C2134),
+                                    transitionType: ContainerTransitionType.fade,
+                                    transitionDuration: Duration(seconds: 1),
+                                    closedBuilder: (context, _) => Card(
+                                      elevation: 4,
+                                      margin: EdgeInsets.only(
+                                          left: 10, top: 10, bottom: 10, right: 10
                                       ),
                                       child: Container(
-                                        padding: EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white54,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                      ad.company.companyName,
-                                                      style: GoogleFonts.poppins(
-                                                          fontSize: 18, color: Colors.black,
-                                                          fontWeight: FontWeight.w800
-                                                      )
-                                                  ),
-                                                ),
-                                              ],
+                                          height: 300,
+                                          padding: EdgeInsets.all(15),
+                                          width: MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.blueGrey,
+                                                offset: Offset(2, 5),
+                                                blurRadius: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          child: Container(
+                                            padding: EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white54,
                                             ),
-
-                                            Row(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                          ad.company.companyName,
+                                                          style: GoogleFonts.poppins(
+                                                              fontSize: 18, color: Colors.black,
+                                                              fontWeight: FontWeight.w800
+                                                          )
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '${ad.AdsDate}',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 15, color: Colors.black,
+                                                          fontWeight: FontWeight.w600
+                                                      ), textAlign: TextAlign.justify,
+                                                    ),
+
+                                                    Spacer(),
+
+                                                    Text(
+                                                      '${ad.AdsTime}',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 15, color: Colors.black,
+                                                          fontWeight: FontWeight.w600
+                                                      ), textAlign: TextAlign.justify,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Divider(
+                                                  thickness: 2.0,
+                                                ),
+
                                                 Text(
-                                                  '${ad.AdsDate}',
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15, color: Colors.black,
-                                                      fontWeight: FontWeight.w600
-                                                  ), textAlign: TextAlign.justify,
+                                                    ad.jobPosition,
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 18, fontWeight: FontWeight.w600,
+                                                      color: Colors.black,
+                                                    )
+                                                ),
+
+                                                Text(
+                                                    ad.jobDescription,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 15, color: Colors.black,
+                                                    ), maxLines: 2, overflow: TextOverflow.ellipsis,
+                                                ),
+
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Icon(Icons.navigate_next_sharp, color: Colors.indigo,),
+
+                                                    SizedBox(width: 2),
+
+                                                    Text(
+                                                      "View More",
+                                                      style: GoogleFonts.poppins(
+                                                        fontSize: 15, color: Colors.indigo,
+                                                        fontWeight: FontWeight.w700
+                                                      ), maxLines: 2, overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
                                                 ),
 
                                                 Spacer(),
 
-                                                Text(
-                                                  '${ad.AdsTime}',
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15, color: Colors.black,
-                                                      fontWeight: FontWeight.w600
-                                                  ), textAlign: TextAlign.justify,
-                                                ),
-                                              ],
-                                            ),
-
-                                            Divider(
-                                              thickness: 2.0,
-                                            ),
-
-                                            Text(
-                                                ad.jobPosition,
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 18, fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                )
-                                            ),
-
-                                            Text(
-                                                ad.jobDescription,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 15, color: Colors.black,
-                                                ), maxLines: 2, overflow: TextOverflow.ellipsis,
-                                            ),
-
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                                Icon(Icons.navigate_next_sharp, color: Colors.indigo,),
-
-                                                SizedBox(width: 2),
-
-                                                Text(
-                                                  "View More",
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 15, color: Colors.indigo,
-                                                    fontWeight: FontWeight.w700
-                                                  ), maxLines: 2, overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-
-                                            Spacer(),
-
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                  onTap: ()
-                                                  {
-                                                    /**
-                                                     * Navigate to login() function
-                                                     * for web service request
-                                                     */
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(
-                                                            builder: (context)=>JobDetails(advertisement: ad)
-                                                        )
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    width: 155,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Color(0xFF1f1f1f), // Shadow color
-                                                          offset: Offset(0, 2), // Offset of the shadow
-                                                          blurRadius: 4, // Spread of the shadow
-                                                          spreadRadius: 0, // Spread radius of the shadow
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: ()
+                                                      {
+                                                        /**
+                                                         * Navigate to login() function
+                                                         * for web service request
+                                                         */
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(
+                                                                builder: (context)=>JobDetails(advertisement: ad)
+                                                            )
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 155,
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Color(0xFF1f1f1f), // Shadow color
+                                                              offset: Offset(0, 2), // Offset of the shadow
+                                                              blurRadius: 4, // Spread of the shadow
+                                                              spreadRadius: 0, // Spread radius of the shadow
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Icon(Icons.description, color: Colors.black,),
-                                                          SizedBox(width: 5,),
-                                                          Text(
-                                                              "Description",
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize: 15, color: Colors.black,
-                                                                  fontWeight: FontWeight.w600
-                                                              )
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              Icon(Icons.description, color: Colors.black,),
+                                                              SizedBox(width: 5,),
+                                                              Text(
+                                                                  "Description",
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize: 15, color: Colors.black,
+                                                                      fontWeight: FontWeight.w600
+                                                                  )
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                      )
-                                  ),
-                                ),
-                                openBuilder: (context, _) => JobDetails(advertisement: ad),
+                                          )
+                                      ),
+                                    ),
+                                    openBuilder: (context, _) => JobDetails(advertisement: ad),
+                                  );
+                                },
                               );
-                            },
-                          );
-                        }
-                      ),
-                    ),
+                            }
+                          ),
+                        ),
                   )
                    : Center(child: CircularProgressIndicator(),),
 
@@ -474,7 +469,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                       )
                   )
                       : Center(
-                    child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(),
                   ),
 
 
