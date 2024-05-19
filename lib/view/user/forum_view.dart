@@ -223,16 +223,11 @@ class _UserForumState extends State<UserForum> {
                       appBar: AppBar(
                         flexibleSpace: Container(
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0xFFFBC2EB), // #fbc2eb
-                                  Color(0xFFA6C1EE), // #a6c1ee
-                                ],
-                              )
+                              color: Color(0xFF0087B2)
                           ),
                         ),
                         title: Text("Forum Details", style: GoogleFonts.poppins(
-                            fontSize: 23, color: Colors.black,
+                            fontSize: 23, color: Colors.white,
                             fontWeight: FontWeight.bold
                         ),),
                       ),
@@ -241,12 +236,10 @@ class _UserForumState extends State<UserForum> {
                             padding: EdgeInsets.all(10),
                             height: MediaQuery.of(context).size.height,
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xFFFBC2EB), // #fbc2eb
-                                    Color(0xFFA6C1EE), // #a6c1ee
-                                  ],
-                                )
+                              gradient: LinearGradient(
+                                colors: [ Color(0xFFCBCACB), Color(
+                                    0xFFA0A0A0),],
+                              ),
                             ),
                             child: Container(
                               padding: EdgeInsets.all(10),

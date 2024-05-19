@@ -132,21 +132,17 @@ class _JobDetailsState extends State<JobDetails> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Job Description", style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            fontSize: 25
+            fontSize: 25,color: Colors.white
         ),
         ),
       ),
       body: Container(
+        color: Color(0xFF0C2134),
         padding: EdgeInsets.all(10),
         child: Container(
           margin: EdgeInsets.only(
@@ -156,12 +152,7 @@ class _JobDetailsState extends State<JobDetails> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              ),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(15)
           ),
           child: SingleChildScrollView(

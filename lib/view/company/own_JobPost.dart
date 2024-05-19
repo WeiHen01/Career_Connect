@@ -127,12 +127,7 @@ class _OwnJobPostState extends State<OwnJobPost> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Job Description", style: GoogleFonts.poppins(
@@ -142,6 +137,7 @@ class _OwnJobPostState extends State<OwnJobPost> {
         ),
       ),
       body: Container(
+        color: Color(0xFF0C2134),
         padding: EdgeInsets.all(10),
         child: Container(
           margin: EdgeInsets.only(
@@ -152,10 +148,7 @@ class _OwnJobPostState extends State<OwnJobPost> {
           height: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
+                colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
               ),
               borderRadius: BorderRadius.circular(15)
           ),

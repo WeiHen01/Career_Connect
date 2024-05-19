@@ -426,6 +426,16 @@ class _CompanyAccountState extends State<CompanyAccount> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            Icon(Icons.lock, size: 26, color: Colors.white),
+            SizedBox(width: 5),
+            Text('${_user?.username ?? 'Loading username...'}', style: GoogleFonts.poppins(
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         actions: [
           Row(
             children: [
@@ -441,39 +451,20 @@ class _CompanyAccountState extends State<CompanyAccount> {
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color.fromRGBO(11,59,123,1),
           ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+          color: Color(0xFF0C2134),
         ),
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(249, 151, 119, 1),
-                    Color.fromRGBO(98, 58, 162, 1),
-                  ],
-                  stops: [0.0, 0.9],
-                  transform: GradientRotation(358.4 * (3.1415926 / 180)),
-                ),
+                color: Color(0xFF0087B2),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),),
@@ -580,10 +571,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                       width: double.infinity,
                       height: 40,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [ Color.fromRGBO(249, 151, 119, 1),
-                              Color.fromRGBO(98, 58, 162, 1),]
-                        ),
+                        color: Color(0xFF0CA437),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -618,7 +606,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.all(15),
                     width: double.infinity,
-                    height: 260,
+                    height: 280,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
@@ -655,12 +643,9 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                             child: Container(
                                               padding: EdgeInsets.all(10),
                                               width: 500,
-                                              height: 250,
+                                              height: 290,
                                               decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                      Color.fromRGBO(98, 58, 162, 1),]
-                                                ),
+                                                color: Color(0xFF0C2134),
                                                 borderRadius: BorderRadius.circular(8),
                                               ),
                                               child: Column(
@@ -763,10 +748,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                                           width: 300,
                                                           height: 40,
                                                           decoration: BoxDecoration(
-                                                            gradient: LinearGradient(
-                                                                colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                                  Color.fromRGBO(98, 58, 162, 1),]
-                                                            ),
+                                                            color: Color(0xFF0CA437),
                                                             borderRadius: BorderRadius.circular(10),
                                                             boxShadow: [
                                                               BoxShadow(
@@ -850,10 +832,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                         width: 500,
                                         height: 750,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                Color.fromRGBO(98, 58, 162, 1),]
-                                          ),
+                                          color: Color(0xFF0C2134),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: Column(
@@ -1138,10 +1117,7 @@ class _CompanyAccountState extends State<CompanyAccount> {
                                                     width: 300,
                                                     height: 40,
                                                     decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
-                                                          colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                                            Color.fromRGBO(98, 58, 162, 1),]
-                                                      ),
+                                                      color: Color(0xFF0CA437),
                                                       borderRadius: BorderRadius.circular(10),
                                                       boxShadow: [
                                                         BoxShadow(

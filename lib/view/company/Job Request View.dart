@@ -145,14 +145,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Job Request", style: GoogleFonts.poppins(
@@ -163,12 +156,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
       body: requestsList!=null
         ? Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+          color: Color(0xFF0C2134),
         ),
         padding: EdgeInsets.only(
             left: 10, top: 10, right: 10, bottom:  10
@@ -180,7 +168,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
           children: [
             Text("Notifications", style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
-              fontSize: 25,
+              fontSize: 25, color: Colors.white
             ),),
 
             Divider(
@@ -250,10 +238,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
 
                       height: 250,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                Color.fromRGBO(98, 58, 162, 1),]
-                          ),
+                          color: Color.fromRGBO(169, 198, 245, 1.0),
                           borderRadius: BorderRadius.circular(10)
                       ),
                       child: Column(
@@ -274,7 +259,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
                                 Text("User: ${request.user.username}",
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white, fontSize: 20
+                                    color: Colors.black, fontSize: 20
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
@@ -284,7 +269,7 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
                                 Text("Apply ID: ${request.ApplyId}",
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white, fontSize: 20
+                                      color: Colors.black, fontSize: 20
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
@@ -296,19 +281,19 @@ class _CompanyViewRequestState extends State<CompanyViewRequest> {
 
 
                           Divider(
-                            thickness: 2.0,
+                            thickness: 3.0,
                             color: Colors.white,
                           ),
 
                           Text(request.adsId.jobPosition, style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
-                              color: Colors.white, fontSize: 18
+                              color: Colors.black, fontSize: 20
                           ),),
 
                           SizedBox(height: 5),
 
                           Text("${request.adsId.jobDescription}", style: GoogleFonts.poppins(
-                              color: Colors.white, fontSize: 14
+                              color: Colors.black, fontSize: 16
                           ), textAlign: TextAlign.justify,
                             maxLines: 2, overflow: TextOverflow.clip,
                           ),

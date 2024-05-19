@@ -105,7 +105,7 @@ class _CompanyHomeState extends State<CompanyHome> {
               automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xFF0087B2)
+                    color: Color.fromRGBO(104, 153, 231, 1.0)
                 ),
               ),
 
@@ -136,7 +136,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                 indicatorSize: TabBarIndicatorSize.tab,
               ),
               title: Image.asset('images/logo.png',
-                width: 100, height: 50,
+                width: 270, height: 150,
               ),
             ),
             body: TabBarView(
@@ -347,7 +347,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                    : Center(child: CircularProgressIndicator(),),
 
                   /**
-                   * Tab 2 - Application
+                   * Tab 2 - Own Post
                    */
                   ownAds != null
                       ? Container(
@@ -355,7 +355,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                           left: 10, right: 10, bottom: 100
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xFFA6C1EE),
+                        color: Color(0xFF0C2134),
                       ),
                       child: RefreshIndicator(
                         onRefresh: ()async{
@@ -384,7 +384,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                         closedShape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(8),
                                         ),
-                                        closedColor: Color(0xFFA6C1EE),
+                                        closedColor: Color(0xFF0C2134),
                                         closedBuilder: (context, _) => Card(
                                           elevation: 3,
                                           child: Container(

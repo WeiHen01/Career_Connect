@@ -453,7 +453,7 @@ class _HomePageState extends State<HomePage> {
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-                color: Color(0xFF0087B2)
+              color: Color.fromRGBO(104, 153, 231, 1.0)
             ),
           ),
           bottom:  TabBar(
@@ -484,7 +484,7 @@ class _HomePageState extends State<HomePage> {
             indicatorSize: TabBarIndicatorSize.tab,
           ),
           title: Image.asset('images/logo.png',
-            width: 140, height: 50,
+            width: 270, height: 150,
           ),
         ),
         body: TabBarView(

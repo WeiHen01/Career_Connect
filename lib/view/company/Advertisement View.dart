@@ -186,14 +186,7 @@ class _CompanyAdsState extends State<CompanyAds> {
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("New Job Post", style: GoogleFonts.poppins(
@@ -206,12 +199,7 @@ class _CompanyAdsState extends State<CompanyAds> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+          color: Color(0xFF0C2134),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -220,7 +208,7 @@ class _CompanyAdsState extends State<CompanyAds> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("New Job", style: GoogleFonts.poppins(
-                      color: Colors.black, fontSize: 28,
+                      color: Colors.white, fontSize: 28,
                       fontWeight: FontWeight.bold
                   )),
                 ],
@@ -235,7 +223,9 @@ class _CompanyAdsState extends State<CompanyAds> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.white54,
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
+                    ),
                   ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -631,10 +621,7 @@ class _CompanyAdsState extends State<CompanyAds> {
                         width: double.infinity,
                         height: 50,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                Color.fromRGBO(98, 58, 162, 1),]
-                          ),
+                          color: Color(0xFF0CA437),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
