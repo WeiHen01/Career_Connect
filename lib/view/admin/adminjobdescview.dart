@@ -177,21 +177,17 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Job Description", style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            fontSize: 25
+            fontSize: 25, color: Colors.white
         ),
         ),
       ),
       body: Container(
+        color: Color(0xFF0C2134),
         padding: EdgeInsets.all(10),
         child: Container(
           margin: EdgeInsets.only(
@@ -202,10 +198,7 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
           height: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFBC2EB), // #fbc2eb
-                  Color(0xFFA6C1EE), // #a6c1ee
-                ],
+                colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
               ),
               borderRadius: BorderRadius.circular(15)
           ),
@@ -386,9 +379,7 @@ class _AdminJobDescViewState extends State<AdminJobDescView> {
                         width: 150,
                         height: 55,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
-                          ),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(

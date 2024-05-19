@@ -106,24 +106,19 @@ class _AdminHomePageState extends State<AdminHomePage> {
               automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromRGBO(249, 151, 119, 1),
-                        Color.fromRGBO(98, 58, 162, 1),// #a6c1ee
-                      ],
-                    )
+                    color: Color.fromRGBO(104, 153, 231, 1.0)
                 ),
               ),
 
               title: Image.asset('images/logo.png',
-                width: 140, height: 50,
+                width: 270, height: 150,
               ),
             ),
             body: advertisements != null
                 ? Container(
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                  color: Color(0xFFA6C1EE),
+                    color: Color(0xFF0C2134),
                 ),
                   child: RefreshIndicator(
                     onRefresh: () async{
@@ -144,7 +139,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             Text("Dashboard",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 25, color: Colors.white
                                 )
                             ),
                           ],
@@ -159,7 +154,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             itemBuilder: (context, index) {
                               final ad = advertisements[index];
                               return OpenContainer(
-                                closedColor: Color(0xFFA6C1EE),
+                                closedColor: Color(0xFF0C2134),
                                 transitionType: ContainerTransitionType.fade,
                                 transitionDuration: Duration(seconds: 1),
                                 closedBuilder: (context, _) => Card(

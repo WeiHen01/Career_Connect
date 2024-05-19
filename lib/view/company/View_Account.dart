@@ -160,40 +160,21 @@ class _ViewOtherAccountState extends State<ViewOtherAccount> {
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color.fromRGBO(11,59,123,1),
           ),
         ),
       ),
       body:
       Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFBC2EB), // #fbc2eb
-                Color(0xFFA6C1EE), // #a6c1ee
-              ],
-            )
+          color: Color(0xFF0C2134),
         ),
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(249, 151, 119, 1),
-                    Color.fromRGBO(98, 58, 162, 1),
-                  ],
-                  stops: [0.0, 0.9],
-                  transform: GradientRotation(358.4 * (3.1415926 / 180)),
-                ),
+                color: Color(0xFF0087B2),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),),
@@ -342,10 +323,7 @@ class _ViewOtherAccountState extends State<ViewOtherAccount> {
                     left: 5, top: 5, bottom: 5, right: 10
                 ),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [ Color.fromRGBO(249, 151, 119, 1),
-                        Color.fromRGBO(98, 58, 162, 1),]
-                  ),
+                  color: Color(0xFF0087B2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(

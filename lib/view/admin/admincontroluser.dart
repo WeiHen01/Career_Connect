@@ -276,12 +276,7 @@ Widget build(BuildContext context) {
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),// #a6c1ee
-                ],
-              )
+                  color: Color(0xFF0087B2)
           ),
       ),
 
@@ -302,13 +297,14 @@ Widget build(BuildContext context) {
 
             labelStyle: GoogleFonts.poppins(
                 fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.w600
+                color: Colors.lightBlue,
+                fontWeight: FontWeight.w800
             ),
+
             unselectedLabelColor: Colors.white,
             indicatorColor: Colors.black,
             indicator: BoxDecoration(
-                color: Color(0xFFA6C1EE),
+                color: Color(0xFF0C2134),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
@@ -329,12 +325,7 @@ Widget build(BuildContext context) {
                 viewalluser != null
                     ? Container(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFFBC2EB), // #fbc2eb
-                          Color(0xFFA6C1EE), // #a6c1ee
-                        ],
-                      )
+                    color: Color(0xFF0C2134),
                     ),
                     padding: EdgeInsets.only(
                         left: 10, top: 10, right: 10, bottom:  10
@@ -347,7 +338,7 @@ Widget build(BuildContext context) {
                           Text("Total User: ${viewalluser.length}",
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black, fontSize: 20
+                                color: Colors.white, fontSize: 20
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -376,8 +367,7 @@ Widget build(BuildContext context) {
                                   height: 140,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                          colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                            Color.fromRGBO(98, 58, 162, 1),]
+                                        colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
                                       ),
                                       borderRadius: BorderRadius.circular(10)
                                   ),
@@ -392,7 +382,7 @@ Widget build(BuildContext context) {
                                             Text("User: ${request.username}",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white, fontSize: 20
+                                                  color: Colors.black, fontSize: 20
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -402,7 +392,7 @@ Widget build(BuildContext context) {
                                             Text("ID USER: ${request.userId}",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white, fontSize: 20
+                                                  color: Colors.black, fontSize: 20
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -422,7 +412,7 @@ Widget build(BuildContext context) {
                                             Text("Position: ",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white, fontSize: 15
+                                                  color: Colors.black, fontSize: 15
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -430,7 +420,7 @@ Widget build(BuildContext context) {
                                             Expanded(
                                               child: Text("${request.userPosition}",
                                                 style: GoogleFonts.poppins(
-                                                    color: Colors.white, fontSize: 15
+                                                    color: Colors.black, fontSize: 15
                                                 ),
                                                 textAlign: TextAlign.left,
                                               ),
@@ -453,12 +443,7 @@ Widget build(BuildContext context) {
                   jobseekers != null
                     ? Container(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFFFBC2EB), // #fbc2eb
-                            Color(0xFFA6C1EE), // #a6c1ee
-                          ],
-                        )
+                      color: Color(0xFF0C2134),
                     ),
                     padding: EdgeInsets.only(
                         left: 10, top: 10, right: 10, bottom:  10
@@ -471,7 +456,7 @@ Widget build(BuildContext context) {
                           Text("Total Job Seekers: ${jobseekers.length}",
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black, fontSize: 20
+                                color: Colors.white, fontSize: 20
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -500,8 +485,7 @@ Widget build(BuildContext context) {
                                   height: 170,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                          colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                            Color.fromRGBO(98, 58, 162, 1),]
+                                        colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
                                       ),
                                       borderRadius: BorderRadius.circular(10)
                                   ),
@@ -523,7 +507,7 @@ Widget build(BuildContext context) {
                                             Text("User: ${request.username}",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white, fontSize: 20
+                                                  color: Colors.black, fontSize: 20
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -533,7 +517,7 @@ Widget build(BuildContext context) {
                                             Text("ID USER: ${request.userId}",
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white, fontSize: 20
+                                                  color: Colors.black, fontSize: 20
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -548,13 +532,13 @@ Widget build(BuildContext context) {
 
                                       Text("Last Access to the system: ${request.lastAccessDate}  ${request.lastAccessTime}",
                                           style: GoogleFonts.poppins(
-                                              fontSize: 12, color: Colors.white
+                                              fontSize: 12, color: Colors.black
                                           )
                                       ),
 
                                       Text("Last Updated to the system: ${request.lastUpdateDate} ${request.lastUpdateTime}",
                                           style: GoogleFonts.poppins(
-                                              fontSize: 12, color: Colors.white
+                                              fontSize: 12, color: Colors.black
                                           )
                                       ),
 
@@ -626,12 +610,7 @@ Widget build(BuildContext context) {
                 companyuser != null
                     ? Container(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFFFBC2EB), // #fbc2eb
-                            Color(0xFFA6C1EE), // #a6c1ee
-                          ],
-                        )
+                      color: Color(0xFF0C2134),
                     ),
                     padding: EdgeInsets.only(
                         left: 10, top: 10, right: 10, bottom:  10
@@ -645,7 +624,7 @@ Widget build(BuildContext context) {
                             Text("Total Company User: ${companyuser.length}",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black, fontSize: 20
+                                  color: Colors.white, fontSize: 20
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -674,8 +653,7 @@ Widget build(BuildContext context) {
                                     height: 190,
                                     decoration: BoxDecoration(
                                         gradient: LinearGradient(
-                                            colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                              Color.fromRGBO(98, 58, 162, 1),]
+                                          colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
                                         ),
                                         borderRadius: BorderRadius.circular(10)
                                     ),
@@ -697,7 +675,7 @@ Widget build(BuildContext context) {
                                               Text("User: ${request.username}",
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.white, fontSize: 20
+                                                    color: Colors.black, fontSize: 20
                                                 ),
                                                 textAlign: TextAlign.left,
                                               ),
@@ -707,7 +685,7 @@ Widget build(BuildContext context) {
                                               Text("ID USER: ${request.userId}",
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.white, fontSize: 20
+                                                    color: Colors.black, fontSize: 20
                                                 ),
                                                 textAlign: TextAlign.left,
                                               ),
@@ -722,13 +700,13 @@ Widget build(BuildContext context) {
 
                                         Text("Last Access to the system: ${request.lastAccessDate}  ${request.lastAccessTime}",
                                             style: GoogleFonts.poppins(
-                                                fontSize: 12, color: Colors.white
+                                                fontSize: 12, color: Colors.black
                                             )
                                         ),
 
                                         Text("Last Updated to the system: ${request.lastUpdateDate} ${request.lastUpdateTime}",
                                             style: GoogleFonts.poppins(
-                                                fontSize: 12, color: Colors.white
+                                                fontSize: 12, color: Colors.black
                                             )
                                         ),
 
