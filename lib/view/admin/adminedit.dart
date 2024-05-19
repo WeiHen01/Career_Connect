@@ -331,14 +331,7 @@ class _AdminEditState extends State<AdminEdit> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text("Edit your profile", style: GoogleFonts.poppins(
@@ -350,14 +343,7 @@ class _AdminEditState extends State<AdminEdit> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color(0xFF0C2134),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -461,6 +447,7 @@ class _AdminEditState extends State<AdminEdit> {
                   children: [
                     Text("Username",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                      color: Colors.white
                     ),),
 
                     SizedBox(width: 10,),
@@ -480,7 +467,8 @@ class _AdminEditState extends State<AdminEdit> {
                             ),
                             hintText: "Set your new username",
                             hintStyle: GoogleFonts.poppins(
-                                fontSize: 15, fontWeight: FontWeight.bold
+                                fontSize: 15, fontWeight: FontWeight.bold,
+                                color: Colors.white
                             ),
                             labelText: "$username",
                             labelStyle: GoogleFonts.poppins(
@@ -501,6 +489,7 @@ class _AdminEditState extends State<AdminEdit> {
                   children: [
                     Text("Email",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                        color: Colors.white
                     ),),
 
                     SizedBox(width: 48,),
@@ -541,6 +530,7 @@ class _AdminEditState extends State<AdminEdit> {
                   children: [
                     Text("Position",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                        color: Colors.white
                     ),),
 
                     SizedBox(width: 28,),
@@ -581,6 +571,7 @@ class _AdminEditState extends State<AdminEdit> {
                   children: [
                     Text("Password",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                        color: Colors.white
                     ),),
 
                     SizedBox(width: 15,),
@@ -634,10 +625,7 @@ class _AdminEditState extends State<AdminEdit> {
                         width: 120,
                         height: 40,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                Color.fromRGBO(98, 58, 162, 1),]
-                          ),
+                          color: Color(0xFF0CA437),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(

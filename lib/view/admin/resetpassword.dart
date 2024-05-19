@@ -130,21 +130,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           // set the background color of the container to be gradient
-          gradient: LinearGradient(
-            // determine the direction and angle of each color stop in gradient
-            begin: Alignment.topRight,
-            end: Alignment.bottomRight,
-
-            /**
-             * 0xFF is needed to convert RGB Hex code to int value
-                Hex code here is 29539B and 1E3B70
-                Gradient Name: Unloved Teen
-             */
-            colors: [
-              Color.fromRGBO(249, 151, 119, 1),
-              Color.fromRGBO(98, 58, 162, 1),// #a6c1ee
-            ],
-          ),
+          color: Color(0xFF0C2134),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -268,10 +254,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   width: double.infinity,
                   height: 40,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [ Color.fromRGBO(249, 151, 119, 1),
-                          Color.fromRGBO(98, 58, 162, 1),]
-                    ),
+                    color: Color(0xFF0CA437),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(

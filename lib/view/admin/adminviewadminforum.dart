@@ -129,12 +129,7 @@ class _ViewAdminForumState extends State<ViewAdminForum> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(249, 151, 119, 1),
-                Color.fromRGBO(98, 58, 162, 1),
-              ],
-            ),
+              color: Color(0xFF0087B2)
           ),
         ),
         title: Text(
@@ -156,12 +151,7 @@ class _ViewAdminForumState extends State<ViewAdminForum> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(249, 151, 119, 1),
-              Color.fromRGBO(98, 58, 162, 1),
-            ],
-          ),
+          color: Color(0xFFE5D2F8),
         ),
         child: RefreshIndicator(
           onRefresh: () async {
