@@ -462,12 +462,10 @@ class _ForumPostViewState extends State<ForumPostView> {
                             padding: EdgeInsets.all(10),
                             height: MediaQuery.of(context).size.height,
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xFFFBC2EB), // #fbc2eb
-                                    Color(0xFFA6C1EE), // #a6c1ee
-                                  ],
-                                )
+                              gradient: LinearGradient(
+                                colors: [ Color(0xFFCBCACB), Color(
+                                    0xFFA0A0A0),],
+                              ),
                             ),
                             child: Container(
                               padding: EdgeInsets.all(10),

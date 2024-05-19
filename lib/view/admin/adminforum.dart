@@ -200,12 +200,7 @@ class _AdminForumState extends State<AdminForum> {
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              ),
+                color: Color(0xFF0087B2)
             ),
           ),
           bottom: TabBar(
@@ -223,13 +218,13 @@ class _AdminForumState extends State<AdminForum> {
             ],
             labelStyle: GoogleFonts.poppins(
               fontSize: 18,
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.w600,
             ),
-            unselectedLabelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
             indicatorColor: Colors.black,
             indicator: BoxDecoration(
-              color: Color(0xFFA6C1EE),
+              color: Color(0xFF0C2134),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
@@ -257,7 +252,7 @@ class _AdminForumState extends State<AdminForum> {
                 left:10, right: 10, bottom:100, top: 5
               ),
               decoration: BoxDecoration(
-                  color: Color(0xFFA6C1EE),
+                color: Color(0xFF0C2134),
                 ),
                   child: RefreshIndicator(
                   onRefresh: ()async{
@@ -282,7 +277,7 @@ class _AdminForumState extends State<AdminForum> {
                               Text("Total Forum: ${viewforum.length}",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black, fontSize: 20
+                                    color: Colors.white, fontSize: 20
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -303,7 +298,7 @@ class _AdminForumState extends State<AdminForum> {
                                         closedShape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(8),
                                         ),
-                                        closedColor: Color(0xFFA6C1EE),
+                                        closedColor:Color(0xFF0C2134),
                                         closedBuilder: (context, _) => Card(
                                           elevation: 3,
                                           child: Container(
@@ -400,7 +395,7 @@ class _AdminForumState extends State<AdminForum> {
                     left: 10, right: 10, bottom: 100, top: 5
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFFA6C1EE),
+                  color: Color(0xFF0C2134),
                 ),
                   child: RefreshIndicator(
                   onRefresh: ()async{
@@ -425,7 +420,7 @@ class _AdminForumState extends State<AdminForum> {
                               Text("Forum created: ${viewforum.length}",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black, fontSize: 20
+                                    color: Colors.white, fontSize: 20
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -446,7 +441,7 @@ class _AdminForumState extends State<AdminForum> {
                                         closedShape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(8),
                                         ),
-                                        closedColor: Color(0xFFA6C1EE),
+                                        closedColor: Color(0xFF0C2134),
                                         closedBuilder: (context, _) => Card(
                                           elevation: 3,
                                           child: Container(
@@ -543,12 +538,7 @@ class _AdminForumState extends State<AdminForum> {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFFBC2EB),
-                    Color(0xFFA6C1EE),
-                  ],
-                ),
+                color: Color(0xFF0C2134),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -653,12 +643,7 @@ class _AdminForumState extends State<AdminForum> {
                               width: double.infinity,
                               height: 50,
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromRGBO(249, 151, 119, 1),
-                                    Color.fromRGBO(98, 58, 162, 1),
-                                  ],
-                                ),
+                                color: Color(0xFF0CA437),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(

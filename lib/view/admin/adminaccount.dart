@@ -81,6 +81,16 @@ class _AdminAccountState extends State<AdminAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            Icon(Icons.lock, size: 26, color: Colors.white),
+            SizedBox(width: 5),
+            Text('${_user?.username ?? 'Loading username...'}', style: GoogleFonts.poppins(
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         actions: [
           Row(
             children: [
@@ -98,38 +108,21 @@ class _AdminAccountState extends State<AdminAccount> {
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                Color.fromRGBO(249, 151, 119, 1),
-                Color.fromRGBO(98, 58, 162, 1),
-              ],
-            ),
+            color: Color.fromRGBO(11,59,123,1),
           ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFFFBC2EB),
-              Color(0xFFA6C1EE),
-            ],
-          ),
+          color: Color(0xFF0C2134)
         ),
         child: Column(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    Color.fromRGBO(249, 151, 119, 1),
-                    Color.fromRGBO(98, 58, 162, 1),
-                  ],
-                  stops: [0.0, 0.9],
-                  transform: GradientRotation(358.4 * (3.1415926 / 180)),
-                ),
-                borderRadius: const BorderRadius.only(
+                  color: Color(0xFF0087B2),
+                  borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
@@ -238,10 +231,7 @@ class _AdminAccountState extends State<AdminAccount> {
                       width: double.infinity,
                       height: 40,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [ Color.fromRGBO(249, 151, 119, 1),
-                              Color.fromRGBO(98, 58, 162, 1),]
-                        ),
+                        color: Color(0xFF0CA437),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -264,8 +254,6 @@ class _AdminAccountState extends State<AdminAccount> {
                   ),
 
                   SizedBox(height: 10),
-
-                  Image.asset("images/admin.png")
 
                 ],
               ),

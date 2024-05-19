@@ -127,12 +127,7 @@ class _AdminStatsState extends State<AdminStats> {
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(249, 151, 119, 1),
-                    Color.fromRGBO(98, 58, 162, 1),
-                  ],
-                ),
+                  color: Color(0xFF0087B2)
               ),
             ),
             title: Text(
@@ -154,13 +149,13 @@ class _AdminStatsState extends State<AdminStats> {
               ],
               labelStyle: GoogleFonts.poppins(
                   fontSize: 18,
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600
               ),
               unselectedLabelColor: Colors.white,
               indicatorColor: Colors.black,
               indicator: BoxDecoration(
-                  color: Color(0xFFA6C1EE),
+                  color: Color(0xFF0C2134),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
@@ -178,10 +173,7 @@ class _AdminStatsState extends State<AdminStats> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        Color(0xFFFBC2EB), // #fbc2eb
-                        Color(0xFFA6C1EE), // #a6c1ee
-                      ],
+                      colors: [Color(0xFFE5D2F8), Color(0xFF908E8E)],
                     ),
                   ),
                   child: jobseekers.isNotEmpty && companyuser.isNotEmpty

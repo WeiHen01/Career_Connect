@@ -974,7 +974,7 @@ class _HomePageState extends State<HomePage> {
                               closedShape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              closedColor: Color(0xFFA6C1EE),
+                              closedColor: Color(0xFF0C2134),
                               closedBuilder: (context, _) => Card(
                                 elevation: 3,
                                 child: Container(

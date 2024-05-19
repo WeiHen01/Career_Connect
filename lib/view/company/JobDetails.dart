@@ -161,8 +161,8 @@ class _JobDetailsState extends State<JobDetails> {
               children: [
                 Row(
                   children: [
-                    Image.asset('images/logo.png', width: 160, height: 60,),
-                    SizedBox(width: 15,),
+                    Image.asset('images/logo.png', width: 140, height: 120,),
+                    SizedBox(width: 10,),
                     Expanded(
                       child: Text(companyName, style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
