@@ -343,18 +343,11 @@ class _CompanyEditState extends State<CompanyEdit> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color.fromRGBO(11,59,123,1)
           ),
         ),
         title: Text("Edit your profile", style: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold, fontSize: 25,
+          fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white
         ),),
       ),
       body: Container(
@@ -362,14 +355,7 @@ class _CompanyEditState extends State<CompanyEdit> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  //Color(0xFFFBC2EB), // #fbc2eb
-                  //Color(0xFFA6C1EE), #a6c1ee
-                  Color.fromRGBO(249, 151, 119, 1),
-                  Color.fromRGBO(98, 58, 162, 1),
-                ],
-              )
+            color: Color(0xFF0C2134),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -473,6 +459,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   children: [
                     Text("Username",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                      color: Colors.white,
                     ),),
 
                     SizedBox(width: 10,),
@@ -496,7 +483,8 @@ class _CompanyEditState extends State<CompanyEdit> {
                             ),
                             labelText: "Set your new username",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -513,6 +501,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   children: [
                     Text("Email",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                      color: Colors.white,
                     ),),
 
                     SizedBox(width: 48,),
@@ -536,7 +525,8 @@ class _CompanyEditState extends State<CompanyEdit> {
                             ),
                             labelText: "Set your new email",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -553,6 +543,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   children: [
                     Text("Position",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                      color: Colors.white,
                     ),),
 
                     SizedBox(width: 28,),
@@ -576,7 +567,8 @@ class _CompanyEditState extends State<CompanyEdit> {
                             ),
                             labelText: "Set your new position",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -593,6 +585,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   children: [
                     Text("Password",style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold, fontSize: 15,
+                      color: Colors.white,
                     ),),
 
                     SizedBox(width: 15,),
@@ -626,7 +619,8 @@ class _CompanyEditState extends State<CompanyEdit> {
                             ),
                             labelText: "Set your new password",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -656,10 +650,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                         width: 120,
                         height: 40,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [ Color.fromRGBO(249, 151, 119, 1),
-                                Color.fromRGBO(98, 58, 162, 1),]
-                          ),
+                          color: Color(0xFF0CA437),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(

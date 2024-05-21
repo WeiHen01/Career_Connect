@@ -131,7 +131,7 @@ class _OwnJobPostState extends State<OwnJobPost> {
           ),
         ),
         title: Text("Job Description", style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold, color: Colors.white,
             fontSize: 25
         ),
         ),

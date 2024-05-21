@@ -2,6 +2,7 @@ import 'package:bitu3923_group05/models/user.dart';
 import 'package:bitu3923_group05/view/company/Company%20Login.dart';
 import 'package:bitu3923_group05/view/widget/login_role.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:convert';
@@ -9,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:http/http.dart' as http;
 import '../../controller/request_controller.dart';
 import '../../models/company.dart';
 import '../widget/register_role.dart';
@@ -74,12 +76,11 @@ class _CompanyRegisterState extends State<CompanyRegister> {
   /**
    * User registration web service function
    */
-  Future register() async{
-
+  Future register() async {
     // empty input validation
-    if(usernameTextCtrl.text == "" || passwordTextCtrl.text == ""
+    if (usernameTextCtrl.text == "" || passwordTextCtrl.text == ""
         || emailTextCtrl.text == "" || positionTextCtrl.text == ""
-        || confirmPassTextCtrl.text == ""){
+        || confirmPassTextCtrl.text == "") {
       Fluttertoast.showToast(
         msg: 'All text fields cannot be blank',
         backgroundColor: Colors.white,
@@ -89,9 +90,9 @@ class _CompanyRegisterState extends State<CompanyRegister> {
         fontSize: 16.0,
       );
     }
-    else{
+    else {
       // password and confirm password validation
-      if(passwordTextCtrl.text != confirmPassTextCtrl.text){
+      if (passwordTextCtrl.text != confirmPassTextCtrl.text) {
         Fluttertoast.showToast(
           msg: 'Your password is not matched with confirm password field!',
           backgroundColor: Colors.white,
@@ -101,11 +102,12 @@ class _CompanyRegisterState extends State<CompanyRegister> {
           fontSize: 16.0,
         );
       }
-      else{
+      else {
         user.username = usernameTextCtrl.text;
         user.userEmail = emailTextCtrl.text;
         user.userPosition = positionTextCtrl.text;
-        user.password = md5.convert(utf8.encode(passwordTextCtrl.text)).toString();
+        user.password =
+            md5.convert(utf8.encode(passwordTextCtrl.text)).toString();
 
         /**
          * save the data registered to database
@@ -134,10 +136,12 @@ class _CompanyRegisterState extends State<CompanyRegister> {
         print(req.result());
 
 
-        if (req.result()!= null) {
-
+        if (req.result() != null) {
           var responseBody = req.result();
           var userString = responseBody['userId'];
+          print(userString);
+
+          uploadImage(userString);
 
           Fluttertoast.showToast(
             msg: 'Successful registered! You will be redirected to',
@@ -158,8 +162,7 @@ class _CompanyRegisterState extends State<CompanyRegister> {
           });
         }
 
-        else
-        {
+        else {
           Fluttertoast.showToast(
             msg: 'Registration failed!',
             backgroundColor: Colors.white,
@@ -172,6 +175,41 @@ class _CompanyRegisterState extends State<CompanyRegister> {
       }
     }
   }
+
+    Future<String> uploadImage(int? userId) async {
+      final prefs = await SharedPreferences.getInstance();
+      String? server = prefs.getString("localhost");
+      try {
+        // Load the image from assets
+        final ByteData data = await rootBundle.load('images/avatar01.jpg');
+        List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+        // Create a MultipartRequest
+        var request = http.MultipartRequest('POST', Uri.parse('http://$server:8080/inployed/image/uploadSingleImage/$userId'));
+
+        // Add the file to the request
+        request.files.add(http.MultipartFile.fromBytes(
+          'image', // This should match the name expected by your Spring Boot server
+          bytes,
+          filename: 'avatar01.jpg', // The filename
+          // Optionally add the content type
+          // contentType: MediaType('image', 'jpeg'),
+        ));
+
+        // Send the request
+        var response = await request.send();
+
+        // Check the response status
+        if (response.statusCode == 200) {
+          return "Image uploaded successfully";
+        } else {
+          return "Failed to upload image";
+        }
+      } catch (e) {
+        return "Error: ${e.toString()}";
+      }
+    }
+
 
   @override
   Widget build(BuildContext context) {

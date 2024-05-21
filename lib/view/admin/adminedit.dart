@@ -336,6 +336,7 @@ class _AdminEditState extends State<AdminEdit> {
         ),
         title: Text("Edit your profile", style: GoogleFonts.poppins(
           fontWeight: FontWeight.bold, fontSize: 25,
+          color: Colors.white
         ),),
       ),
       body: Container(
@@ -467,12 +468,13 @@ class _AdminEditState extends State<AdminEdit> {
                             ),
                             hintText: "Set your new username",
                             hintStyle: GoogleFonts.poppins(
-                                fontSize: 15, fontWeight: FontWeight.bold,
-                                color: Colors.white
+                                fontSize: 15, fontWeight: FontWeight.bold
+
                             ),
-                            labelText: "$username",
+                            labelText: "Set your new username",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -511,9 +513,10 @@ class _AdminEditState extends State<AdminEdit> {
                             hintStyle: GoogleFonts.poppins(
                                 fontSize: 15, fontWeight: FontWeight.bold
                             ),
-                            labelText: "$email",
+                            labelText: "Set your new email",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -552,9 +555,10 @@ class _AdminEditState extends State<AdminEdit> {
                             hintStyle: GoogleFonts.poppins(
                                 fontSize: 15, fontWeight: FontWeight.bold
                             ),
-                            labelText: "$position",
+                            labelText: "Set your new position",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
@@ -593,9 +597,10 @@ class _AdminEditState extends State<AdminEdit> {
                             hintStyle: GoogleFonts.poppins(
                                 fontSize: 15, fontWeight: FontWeight.bold
                             ),
-                            labelText: "$password",
+                            labelText: "Set your new password",
                             labelStyle: GoogleFonts.poppins(
-                                fontSize: 15, color: Colors.black
+                                fontSize: 15, color: Colors.white,
+                                fontWeight: FontWeight.bold
                             )
                         ),
                         style: GoogleFonts.poppins(
